@@ -6,7 +6,7 @@ FILES := main.cpp Server.cpp
 SRCS := ${addprefix ${PATH_S}/, ${FILES}}
 OBJS := ${SRCS:.cpp=.o}
 HEADER := Server.hpp
-HEADER := ${addprefix ${PATH_I}/, Server.hpp}
+HEADER := ${addprefix ${PATH_I}/, ${HEADER}}
 
 INC		:= -I${PATH_I}
 CC		:= c++
