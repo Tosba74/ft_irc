@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/04 20:09:25 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/07 14:52:13 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,35 @@
 
 #include <iostream>
 #include <string>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+
 
 class Server
 {
 	private:
-		int				_port;
-		std::string		_pass;
+		int				port;
+		std::string		ip;
+		std::string 	password;
+		int				sock;
+		int 			*clients;
+		int 			nb_client;
+		int 			max_client;
+		struct sockaddr_in server_in;
+		struct sockaddr_in client_in;
+		char			buffer[1024];
 		
-		Server(const Server & rhs);
+		Server(int port, std::string ip);
+		Server(int port, std::string ip, std::string password);
+		// forme canonique
 		Server();
-		
-		Server operator=(const Server & rhs);
+		Server(Server const &src);
+		Server &operator=(Server const &rhs);
+		~Server();
 		
 	public:
 		Server(int port, std::string password);
 		~Server();
-		
-		int				getPort(void);
-		std::string		getPass(void);
 };

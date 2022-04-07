@@ -1,0 +1,7 @@
+.vscode
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
