@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.cpp                                         :+:      :+:    :+:   */
+/*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/07 14:53:53 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:34:42 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server.hpp"
+#include "Server.hpp"
 
 Server::Server(int port, std::string ip): port(port), ip(ip)
 {
@@ -86,6 +86,7 @@ Server& Server::operator=(Server const &rhs)
 	clients = new int[max_client];
 	for (int i = 0; i < nb_client; i++)
 		clients[i] = rhs.clients[i];
+	return (*this);
 }
 
 Server::~Server()

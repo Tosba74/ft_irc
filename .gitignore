@@ -1,4 +1,6 @@
+ircserver
 .vscode
+.
 *.o
 *.obj
 *.a

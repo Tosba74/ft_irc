@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/07 14:52:13 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:16:42 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,12 @@ class Server
 		struct sockaddr_in client_in;
 		char			buffer[1024];
 		
+		
+	public:
 		Server(int port, std::string ip);
 		Server(int port, std::string ip, std::string password);
-		// forme canonique
 		Server();
 		Server(Server const &src);
 		Server &operator=(Server const &rhs);
-		~Server();
-		
-	public:
-		Server(int port, std::string password);
 		~Server();
 };
