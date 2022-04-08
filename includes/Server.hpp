@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/08 18:01:36 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:23:19 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
+#include <vector>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -25,12 +26,12 @@
 class Server
 {
 	private:
-		int				port;
-		std::string		ip;
-		std::string 	password;
-		int				server_fd;
-		
-		struct sockaddr_in server_in;
+		int						port;
+		std::string				ip;
+		std::string 			password;
+		int						server_fd;
+		std::vector<Client*>	clients;
+		struct sockaddr_in 		server_in;
 		
 		
 	public:
@@ -40,4 +41,17 @@ class Server
 		Server(Server const &src);
 		Server &operator=(Server const &rhs);
 		~Server();
+
+		//setters
+		void setPort(int port);
+		void setIp(std::string ip);
+		void setPassword(std::string password);
+		
+		//getters
+		int getPort();
+		std::string getIp();
+		std::string getPassword();
+
+		//methods
+		int loop();
 };

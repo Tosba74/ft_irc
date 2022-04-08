@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/08 18:01:24 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:23:26 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,16 @@ Server& Server::operator=(Server const &rhs)
 Server::~Server()
 {
 	close(server_fd);
+}
+
+int Server::loop()
+{
+	while(1)
+	{
+		Client *client = new Client(server_fd);
+		if (client == NULL && client->getFd() == -1)
+			throw std::runtime_error("new Client() failed");
+		clients.push_back(client);
+	}
+	
 }

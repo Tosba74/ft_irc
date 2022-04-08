@@ -11,15 +11,13 @@
 class Client
 {
     private:
-        int port;
         int client_fd;
         int server_fd;
         socklen_t client_in_size;
-        std::string address;
-        struct sockaddr_in client_in;
+        struct sockaddr client_in;
     
     public:
-        Client(int id, int sock, std::string address);
+        Client(int sock);
         Client(Client const &src);
         Client &operator=(Client const &rhs);
         ~Client();
@@ -29,10 +27,8 @@ class Client
 
         // getters
         int getFd();
-        std::string getAddress();
          // setters
         void setFd(int id);
-        void setAddress(std::string address);
 
 
 
