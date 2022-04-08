@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.hpp                                         :+:      :+:    :+:   */
+/*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/07 15:16:42 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:01:36 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
+#include "Client.hpp"
+
 
 class Server
 {
@@ -26,13 +28,9 @@ class Server
 		int				port;
 		std::string		ip;
 		std::string 	password;
-		int				sock;
-		int 			*clients;
-		int 			nb_client;
-		int 			max_client;
+		int				server_fd;
+		
 		struct sockaddr_in server_in;
-		struct sockaddr_in client_in;
-		char			buffer[1024];
 		
 		
 	public:
