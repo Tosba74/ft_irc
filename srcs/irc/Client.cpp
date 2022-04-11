@@ -1,4 +1,4 @@
-#include "Client.hpp"
+#include "irc/Client.hpp"
 
 Client::Client(int sock): server_fd(sock)
 {

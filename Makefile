@@ -2,10 +2,14 @@ override PATH_I		:= includes
 override PATH_S		:= srcs
 
 NAME := ircserver
-FILES := main.cpp Server.cpp Client.cpp
+
+IRC:= $(addprefix irc/, Server Client)
+SOCKET := $(addprefix socket/, Socket SocketConnection SocketListen SocketServer)
+
+FILES := main.cpp ${addsuffix .cpp, ${IRC}} ${addsuffix .cpp, ${SOCKET}}
 SRCS := ${addprefix ${PATH_S}/, ${FILES}}
 OBJS := ${SRCS:.cpp=.o}
-HEADER := Server.hpp Client.hpp
+HEADER := ${addsuffix .hpp, ${IRC}} ${addsuffix .hpp, ${SOCKET}}
 HEADER := ${addprefix ${PATH_I}/, ${HEADER}}
 
 INC		:= -I${PATH_I}

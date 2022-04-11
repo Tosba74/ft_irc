@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/08 18:23:26 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/11 15:50:43 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server.hpp"
+#include "irc/Server.hpp"
 
 Server::Server(int port, std::string ip): port(port), ip(ip)
 {

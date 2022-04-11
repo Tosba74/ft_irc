@@ -6,11 +6,11 @@
 /*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:38 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/07 16:34:45 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/11 15:48:22 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server.hpp"
+#include "irc/Server.hpp"
 
 int main(int ac, char **av)
 {
