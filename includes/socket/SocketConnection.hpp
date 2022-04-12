@@ -14,13 +14,14 @@ class SocketConnection: public Socket
         std::string     writeBuffer;
     public:
         std::string     readBuffer;
-        SocketConnection(int sock, sockaddr_in addr);
-        SocketConnection(SocketConnection const &src);
+        SocketConnection(int sock, sockaddr_in &addr) throw();
+        SocketConnection(SocketConnection const &src) throw();
         SocketConnection &operator=(SocketConnection const &rhs);
         ~SocketConnection();
 
         std::string getAddr();
         socklen_t getAddrsize();
+        int getPort();
 
         void flush();
         int  receive();

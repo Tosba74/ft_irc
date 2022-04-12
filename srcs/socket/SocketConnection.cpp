@@ -1,10 +1,10 @@
 #include "socket/SocketConnection.hpp"
 
-SocketConnection::SocketConnection(int sock, sockaddr_in addr): Socket(sock), addr(addr), addrsize(sizeof(addr))
+SocketConnection::SocketConnection(int sock, sockaddr_in &addr) throw() : Socket(sock), addr(addr), addrsize(sizeof(addr))
 {
 }
 
-SocketConnection::SocketConnection(SocketConnection const &src): Socket(src), addr(addr), addrsize(sizeof(addr))
+SocketConnection::SocketConnection(SocketConnection const &src) throw() : Socket(src), addr(src.addr), addrsize(sizeof(src.addr))
 {
 }
 
@@ -67,4 +67,9 @@ SocketConnection &SocketConnection::operator>>(std::string &msg)
     msg = this->readBuffer;
     this->readBuffer.clear();
     return *this;
+}
+
+int SocketConnection::getPort()
+{
+    return ntohs(this->addr.sin_port);
 }

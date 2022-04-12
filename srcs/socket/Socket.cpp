@@ -4,7 +4,7 @@ Socket::Socket(int sock): sock(sock)
 {
 }
 
-Socket::Socket(int type = SOCK_STREAM, int opt = SOCK_NONBLOCK, int proto = IPPROTO_IP): sock(socket(AF_INET, type, proto))
+Socket::Socket(int type, int opt, int proto): sock(socket(type, opt, proto))
 {
     if (sock == -1)
         throw SocketException("Socket creation failed");
