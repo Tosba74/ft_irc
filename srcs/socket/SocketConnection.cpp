@@ -2,6 +2,7 @@
 
 SocketConnection::SocketConnection(int sock, sockaddr_in &addr) throw() : Socket(sock), addr(addr), addrsize(sizeof(addr))
 {
+    fcntl(sock, F_SETFL, O_NONBLOCK);
 }
 
 SocketConnection::SocketConnection(SocketConnection const &src) throw() : Socket(src), addr(src.addr), addrsize(sizeof(src.addr))
@@ -64,6 +65,7 @@ SocketConnection &SocketConnection::operator<<(std::string const &msg)
 
 SocketConnection &SocketConnection::operator>>(std::string &msg)
 {
+    receive();
     msg = this->readBuffer;
     this->readBuffer.clear();
     return *this;

@@ -6,6 +6,7 @@ SocketListener::~SocketListener() throw()
 
 SocketListener::SocketListener(int type, int opt , int proto) throw() : Socket(type, opt, proto), listening(false)
 {
+    fcntl(sock, F_SETFL, opt | O_NONBLOCK);
 }
 
 void SocketListener::bind(std::string const& hostname, int service, int type)
@@ -36,7 +37,7 @@ void SocketListener::listen()
 
 int SocketListener::accept(sockaddr_in &clientAddr)
 {
-    socklen_t addrsize = sizeof(clientAddr);
+    socklen_t addrsize;
     int sock = ::accept(this->sock, (struct sockaddr *)&clientAddr, &addrsize);
     if (sock == -1)
         throw SocketException("Socket accept failed");

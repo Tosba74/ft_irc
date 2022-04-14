@@ -24,14 +24,24 @@ SocketConnection*	SocketServer::onConnection(int connectionFd, sockaddr_in& addr
     return new SocketConnection(connectionFd, address);
 }
 
-void	SocketServer::onDisconnection(connection* connection)
+void	SocketServer::onDisconnection(Connection* connection)
 {
     std::cout << "Disconnection from " << connection->getAddr()<< ":" << connection->getPort() << std::endl;
+    for(ConnectionMap::iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it)
+    {
+        if (it->second == connection)
+        {
+            fdConnectionMap.erase(it);
+            break;
+        }
+    }
     delete connection;
 }
 
-void	SocketServer::onMessage(connection* connection, std::string const& message)
+void	SocketServer::onMessage(Connection* connection, std::string const& message)
 {
+    if (message.empty())
+        return;
     std::cout << "Message from " << connection->getAddr() << ":" << connection->getPort() << ": " << message << std::endl;
 }
 
@@ -44,16 +54,17 @@ void SocketServer::start()
     {
         try
         {
+            for (ConnectionMap::iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it)
+            {
+                threadConnection(it->second);
+            }
             int connectionFd = accept(addr);
-            if (connectionFd == -1)
-                throw SocketException("Socket accept failed");
-            connection* connection = onConnection(connectionFd, addr);
-            
+            Connection* connection = onConnection(connectionFd, addr);
             fdConnectionMap[connectionFd] = connection;
         }
         catch (SocketException const& e)
         {
-            std::cerr << e.what() << std::endl;
+            // std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -61,4 +72,26 @@ void SocketServer::start()
 void SocketServer::stop()
 {
     isRunning = false;
+}
+
+void SocketServer::threadConnection(Connection *connection)
+{
+    try
+    {
+        std::string buffer;
+        *connection >> buffer;
+        onMessage(connection, buffer);
+    }
+    catch (SocketException const& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    try
+    {
+        connection->flush();
+        }
+    catch (SocketException const& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
 }

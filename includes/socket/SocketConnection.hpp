@@ -13,6 +13,7 @@ class SocketConnection: public Socket
         socklen_t       addrsize;
         std::string     writeBuffer;
     public:
+        pthread_t       thread;
         std::string     readBuffer;
         SocketConnection(int sock, sockaddr_in &addr) throw();
         SocketConnection(SocketConnection const &src) throw();
@@ -25,6 +26,7 @@ class SocketConnection: public Socket
 
         void flush();
         int  receive();
+        int isConnected(){return this->getSock() != -1;}
 
         SocketConnection &operator<<(std::string const &msg);
         SocketConnection &operator>>(std::string &msg);

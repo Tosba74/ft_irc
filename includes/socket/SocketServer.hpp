@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <map>
 #include <queue>
+#include <pthread.h>
 #include "Socket.hpp"
 #include "SocketConnection.hpp"
 #include "SocketListener.hpp"
@@ -16,18 +17,19 @@ class SocketServer: public SocketListener
      private:
         int isRunning;
     protected:
-        typedef SocketConnection                connection;
-        typedef	std::pair<int, connection*>     connectionPair;
-	    typedef	std::map<int, connection*>		connectionMap;
-	    typedef	std::queue<int>					connectionQueue;
+        typedef SocketConnection                Connection;
+        typedef	std::pair<int, Connection*>     ConnectionPair;
+	    typedef	std::map<int, Connection*>		ConnectionMap;
+	    typedef	std::queue<int>					ConnectionQueue;
+        typedef void * (*THREADFUNCPTR)(void *);
 
-        std::string     hostname;
-        int             service;
+        std::string                             hostname;
+        int                                     service;
         
         struct sockaddr_in                      addr;
         socklen_t                               addrsize;
-        connectionMap		                    fdConnectionMap;
-	    connectionQueue		                    disconnectedFds;
+        ConnectionMap		                    fdConnectionMap;
+	    ConnectionQueue		                    disconnectedFds;
 
 
 
@@ -37,10 +39,11 @@ class SocketServer: public SocketListener
         SocketServer &operator=(SocketServer const &rhs);
         ~SocketServer() throw();
 
-        virtual connection*	onConnection(int connectionFd, sockaddr_in& address);
-	    virtual void		onDisconnection(connection* connection);
-	    virtual void		onMessage(connection* connection, std::string const& message);
+        virtual Connection*	onConnection(int connectionFd, sockaddr_in& address);
+	    virtual void		onDisconnection(Connection* connection);
+	    virtual void		onMessage(Connection* connection, std::string const& message);
 
         void start();
         void stop();
+        void threadConnection(Connection* connection);
 };
