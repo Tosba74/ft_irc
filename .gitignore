@@ -7,3 +7,4 @@ ircserver
 *.lib
 *.so
 *.dylib
+.bin
