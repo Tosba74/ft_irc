@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Makefile copy                                      :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/04/15 11:22:43 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2022/04/15 11:10:22 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ override PATH_C		:= ${PATH_U}/command
 
 override VPATH		:= ${addprefix ${PATH_S}/, ${PATH_IRC}} \
 					${addprefix ${PATH_S}/, ${PATH_SOCK}} \
-					${addprefix ${PATH_S}/, ${PATH_U}} \
 					${PATH_S}
 
 NAME := ircserv
@@ -33,7 +32,6 @@ FILES_COMMAND		:= Command
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
 					${addprefix ${PATH_SOCK}/, ${FILES_SOCK}} \
 					${addprefix ${PATH_U}/, ${FILES_USER}}
-					
 # ${addprefix ${PATH_C}/, ${FILES_COMMAND}}
 
 SRCS				= ${addprefix ${PATH_S}/, ${addsuffix .cpp, ${FILES}}} main.cpp

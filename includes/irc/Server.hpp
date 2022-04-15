@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/08 18:23:19 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/15 11:29:29 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
-#include "Client.hpp"
+#include "user/Client.hpp"
 
 
 class Server
