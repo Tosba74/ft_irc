@@ -1,15 +1,17 @@
 #pragma once
 #include <iostream>
 #include <sys/socket.h>
+#include <sys/poll.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <map>
 #include <queue>
-#include <pthread.h>
 #include "Socket.hpp"
 #include "SocketConnection.hpp"
 #include "SocketListener.hpp"
+
+#define TIMEOUT 3*60*1000
 
 
 class SocketServer: public SocketListener
@@ -21,7 +23,6 @@ class SocketServer: public SocketListener
         typedef	std::pair<int, Connection*>     ConnectionPair;
 	    typedef	std::map<int, Connection*>		ConnectionMap;
 	    typedef	std::queue<int>					ConnectionQueue;
-        typedef void * (*THREADFUNCPTR)(void *);
 
         std::string                             hostname;
         int                                     service;
@@ -30,6 +31,10 @@ class SocketServer: public SocketListener
         socklen_t                               addrsize;
         ConnectionMap		                    fdConnectionMap;
 	    ConnectionQueue		                    disconnectedFds;
+
+        pollfd                                  *pollFds;
+        int                                     pollFdsSize;
+        int                                     timeout;
 
 
 

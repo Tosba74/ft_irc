@@ -6,6 +6,8 @@ SocketListener::~SocketListener() throw()
 
 SocketListener::SocketListener(int type, int opt , int proto) throw() : Socket(type, opt, proto), listening(false)
 {
+    if (socket < 0)
+        throw SocketException("Socket creation failed");
     fcntl(sock, F_SETFL, opt | O_NONBLOCK);
 }
 

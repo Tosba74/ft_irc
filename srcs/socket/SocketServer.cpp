@@ -1,7 +1,9 @@
 #include "socket/SocketServer.hpp"
 
-SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service)
+SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT)
 {
+    pollFds[0].fd = sock;
+    pollFds[0].events = POLLIN;
 }
 
 SocketServer::SocketServer(SocketServer const &src): SocketListener(src)
@@ -52,6 +54,7 @@ void SocketServer::start()
     isRunning = true;
     while (isRunning)
     {
+        poll(pollFds, pollFdsSize, timeout);
         try
         {
             for (ConnectionMap::iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it)
@@ -64,7 +67,7 @@ void SocketServer::start()
         }
         catch (SocketException const& e)
         {
-            // std::cerr << e.what() << std::endl;
+            std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -89,7 +92,7 @@ void SocketServer::threadConnection(Connection *connection)
     try
     {
         connection->flush();
-        }
+    }
     catch (SocketException const& e)
     {
         std::cerr << e.what() << std::endl;
