@@ -1,11 +1,13 @@
 #include "socket/SocketServer.hpp"
 
-SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service)
+SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT)
 {
+   pushFd(sock, POLLIN);
 }
 
 SocketServer::SocketServer(SocketServer const &src): SocketListener(src)
 {
+    pushFd(src.sock, POLLIN);
 }
 
 SocketServer &SocketServer::operator=(SocketServer const &rhs)
@@ -16,11 +18,13 @@ SocketServer &SocketServer::operator=(SocketServer const &rhs)
 
 SocketServer::~SocketServer() throw()
 {
+    popFd(sock);
 }
 
 SocketConnection*	SocketServer::onConnection(int connectionFd, sockaddr_in& address)
 {
     std::cout << "New connection from " << inet_ntoa(address.sin_addr) << ":" << ntohs(address.sin_port) << std::endl;
+    pushFd(connectionFd, POLLIN | POLLHUP);
     return new SocketConnection(connectionFd, address);
 }
 
@@ -35,6 +39,8 @@ void	SocketServer::onDisconnection(Connection* connection)
             break;
         }
     }
+    connection->close();
+    popFd(connection->getSock());
     delete connection;
 }
 
@@ -52,19 +58,42 @@ void SocketServer::start()
     isRunning = true;
     while (isRunning)
     {
+        
+        poll();
         try
         {
-            for (ConnectionMap::iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it)
+            std::vector<pollfd>::iterator ite = pollFds.end();
+            for (std::vector<pollfd>::iterator it = pollFds.begin(); it != ite; ++it)
             {
-                threadConnection(it->second);
+                if (it->revents & POLLHUP)
+                {
+                    Connection* connection = fdConnectionMap[it->fd];
+                    if (connection)
+                        onDisconnection(connection);
+                }
+                else if (it->revents & POLLIN)
+                {
+                    if (it->fd == sock)
+                    {
+                        int connectionFd = accept(addr);
+                        if (connectionFd != -1)
+                        {
+                            Connection* connection = onConnection(connectionFd, addr);
+                            fdConnectionMap[connectionFd] = connection;
+
+                        }
+                    }
+                    else
+                    {
+                        Connection* connection = fdConnectionMap[it->fd];
+                        receiveAndSend(connection);
+                    }
+                }
             }
-            int connectionFd = accept(addr);
-            Connection* connection = onConnection(connectionFd, addr);
-            fdConnectionMap[connectionFd] = connection;
         }
         catch (SocketException const& e)
         {
-            // std::cerr << e.what() << std::endl;
+            std::cerr << e.what() << std::endl;
         }
     }
 }
@@ -74,7 +103,7 @@ void SocketServer::stop()
     isRunning = false;
 }
 
-void SocketServer::threadConnection(Connection *connection)
+void SocketServer::receiveAndSend(Connection *connection)
 {
     try
     {
@@ -89,9 +118,36 @@ void SocketServer::threadConnection(Connection *connection)
     try
     {
         connection->flush();
-        }
+    }
     catch (SocketException const& e)
     {
         std::cerr << e.what() << std::endl;
     }
+}
+
+void SocketServer::pushFd(int fd, int events)
+{
+    pollfd pollfd;
+    pollfd.fd = fd;
+    pollfd.events = events;
+    pollFds.push_back(pollfd);
+}
+
+void SocketServer::popFd(int fd)
+{
+    for (std::vector<pollfd>::iterator it = pollFds.begin(); it != pollFds.end(); ++it)
+    {
+        if (it->fd == fd)
+        {
+            pollFds.erase(it);
+            break;
+        }
+    }
+}
+
+void SocketServer::poll()
+{
+    int ret = ::poll((pollfd *)&pollFds[0], pollFds.size(), -1);
+    if (ret == -1)
+        throw SocketException("poll");
 }

@@ -41,8 +41,8 @@ HEADER				:= ${addprefix ${PATH_I}/, ${addsuffix .hpp, ${FILES}}}
 OBJS				:= ${addprefix ${PATH_B}/, ${notdir ${SRCS:.cpp=.o}}}
 
 INC		:= -I${PATH_I}
-CC		:= c++
-FLAG	:= -Wall -Werror -Wextra
+CC		:= g++
+FLAG	:= -Wall -Werror -Wextra -g3 -fsanitize=address
 CPP_V	:= -std=c++98
 CCF		:= ${CC} ${FLAG} ${CPP_V} ${INC}
 RM		:= rm -rf
