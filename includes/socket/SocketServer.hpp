@@ -18,6 +18,8 @@ class SocketServer: public SocketListener
 {
      private:
         int isRunning;
+        void pushFd(int fd, int events);
+        void popFd(int fd);
     protected:
         typedef SocketConnection                Connection;
         typedef	std::pair<int, Connection*>     ConnectionPair;
@@ -32,8 +34,7 @@ class SocketServer: public SocketListener
         ConnectionMap		                    fdConnectionMap;
 	    ConnectionQueue		                    disconnectedFds;
 
-        pollfd                                  *pollFds;
-        int                                     pollFdsSize;
+        std::vector<pollfd*>                     pollFds;
         int                                     timeout;
 
 
@@ -50,5 +51,5 @@ class SocketServer: public SocketListener
 
         void start();
         void stop();
-        void threadConnection(Connection* connection);
+        void receiveAndSend(Connection* connection);
 };

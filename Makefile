@@ -13,8 +13,8 @@ HEADER := ${addsuffix .hpp, ${IRC}} ${addsuffix .hpp, ${SOCKET}}
 HEADER := ${addprefix ${PATH_I}/, ${HEADER}}
 
 INC		:= -I${PATH_I}
-CC		:= c++
-FLAG	:= -Wall -Werror -Wextra
+CC		:= g++
+FLAG	:= -Wall -Werror -Wextra -g3 -fsanitize=address
 CPP_V	:= -std=c++98
 CCF		:= ${CC} ${FLAG} ${CPP_V} ${INC}
 RM		:= rm -rf
