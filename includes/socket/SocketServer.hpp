@@ -1,15 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   SocketServer.hpp                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
+/*   Updated: 2022/04/19 23:36:47 by bmangin          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
-#include <iostream>
-#include <sys/socket.h>
+
 #include <sys/poll.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <map>
-#include <queue>
-#include "Socket.hpp"
-#include "SocketConnection.hpp"
-#include "SocketListener.hpp"
+#include "socket/SocketConnection.hpp"
+#include "socket/SocketListener.hpp"
 
 #define TIMEOUT 3*60*1000
 

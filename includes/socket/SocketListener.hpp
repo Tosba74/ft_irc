@@ -1,10 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   SocketListener.hpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 23:30:15 by bmangin           #+#    #+#             */
+/*   Updated: 2022/04/19 23:30:27 by bmangin          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
 
-#include <string> // using std::string
+#include <socket/Socket.hpp>
 
-#include <socket/Socket.hpp> // using Socket
-
-class SocketListener	:	public Socket
+class SocketListener : public Socket
 {
 protected:
 	bool	listening;

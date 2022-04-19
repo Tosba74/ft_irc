@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/04/19 19:44:17 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/19 23:41:26 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 #include "irc/Channel.hpp"
 #include "socket/SocketConnection.hpp"
 
+class Channel;
+
 class Client: public SocketConnection
 {
     private:
         std::string                         _username;
         std::string                         _nickname;
         std::string                         _password;
+        std::string                         _mode;
         std::map<std::string ,Channel*>     _channels;
         bool                                _register;
         bool                                _op;
@@ -30,6 +33,19 @@ class Client: public SocketConnection
         Client(int sock, sockaddr_in &addr);
         Client(Client const &src);
         Client  operator=(Client const &rhs);
-        ~Client(;
+        ~Client() throw();
 
+        void                                setNickname(std::string nickname);
+        void                                setPassword(std::string password);
+        
+        std::string                         getUsername() const;
+        std::string                         getNickname() const;
+        std::string                         getPassword() const;
+        std::map<std::string ,Channel*>     getChannels() const;
+        bool                                getRegister() const;
+        bool                                getOp() const;
+        
+        bool                                isInChannel(std::string name) const;
 };
+
+std::ostream&                       operator<<(std::ostream& o, Client const& rhs);

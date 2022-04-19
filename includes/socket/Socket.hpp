@@ -1,5 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Socket.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 23:28:41 by bmangin           #+#    #+#             */
+/*   Updated: 2022/04/19 23:38:26 by bmangin          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #pragma once
+
 #include <iostream>
+#include <string>
+#include <vector>
+#include <queue>
+#include <map>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>

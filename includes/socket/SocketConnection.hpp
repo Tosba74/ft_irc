@@ -1,10 +1,18 @@
-// include socket
-#include <iostream>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   SocketConnection.hpp                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 23:14:43 by bmangin           #+#    #+#             */
+/*   Updated: 2022/04/19 23:39:32 by bmangin          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "Socket.hpp"
+#pragma once
+
+#include "socket/Socket.hpp"
 
 class SocketConnection: public Socket
 {
