@@ -34,7 +34,7 @@ class SocketServer: public SocketListener
         ConnectionMap		                    fdConnectionMap;
 	    ConnectionQueue		                    disconnectedFds;
 
-        std::vector<pollfd*>                     pollFds;
+        std::vector<pollfd>                     pollFds;
         int                                     timeout;
 
 
@@ -52,4 +52,5 @@ class SocketServer: public SocketListener
         void start();
         void stop();
         void receiveAndSend(Connection* connection);
+        void poll();
 };
