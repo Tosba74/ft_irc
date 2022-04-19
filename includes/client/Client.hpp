@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/04/19 23:41:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/20 00:07:44 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ class Client: public SocketConnection
         std::string                         getUsername() const;
         std::string                         getNickname() const;
         std::string                         getPassword() const;
+        std::string                         getMode() const;
         std::map<std::string ,Channel*>     getChannels() const;
         bool                                getRegister() const;
         bool                                getOp() const;

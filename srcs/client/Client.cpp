@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/19 23:41:45 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/20 00:08:21 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ std::string                         Client::getNickname() const
 std::string                         Client::getPassword() const
 {
 	return _password;
+}
+std::string                         Client::getMode() const
+{
+	return _mode;
 }
 std::map<std::string ,Channel*>     Client::getChannels() const
 {

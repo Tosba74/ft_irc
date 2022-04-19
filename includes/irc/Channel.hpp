@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/19 21:39:17 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/20 00:04:49 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ class Channel
 		void							setName(std::string name);
 		void							addClient(Client* client);
 		void							removeClient(Client* client);
-
 };
+
+std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);
