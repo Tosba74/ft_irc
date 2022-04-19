@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: emenella <emenella@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/04/15 11:22:43 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2022/04/19 19:12:40 by emenella         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ override PATH_I		:= includes
 override PATH_S		:= srcs
 override PATH_IRC	:= irc
 override PATH_SOCK	:= socket
-override PATH_U		:= user
+override PATH_U		:= client
 override PATH_C		:= ${PATH_U}/command
 
 override VPATH		:= ${addprefix ${PATH_S}/, ${PATH_IRC}} \
