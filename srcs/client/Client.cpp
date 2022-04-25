@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/20 00:08:21 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 17:34:15 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr),
 }
 
 Client::~Client() throw()
-{	
+{
+	SocketConnection::~SocketConnection();
 }
 
 void                                Client::setNickname(std::string nickname)
