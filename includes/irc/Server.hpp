@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/19 23:50:43 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 16:52:40 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "socket/SocketServer.hpp"
 #include "irc/Channel.hpp"
 #include "client/Client.hpp"
+
+class Client;
 
 class Server: public SocketServer
 {
@@ -30,7 +32,7 @@ class Server: public SocketServer
 
 		void			setPassword(std::string password);
 
-		// Connection*		onConnection(int connectionFd, sockaddr_in& address);
-		// void			onDisconnection(Connection* connection);
-		// void			onMessage(Connection* connection, std::string const& message);
+		void			onConnection(int connectionFd, sockaddr_in& address);
+		void			onDisconnection(Connection& connection);
+		void			onMessage(Connection& connection, std::string const& message);
 };

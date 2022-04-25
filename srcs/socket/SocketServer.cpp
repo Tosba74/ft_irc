@@ -21,34 +21,33 @@ SocketServer::~SocketServer() throw()
     popFd(sock);
 }
 
-SocketConnection*	SocketServer::onConnection(int connectionFd, sockaddr_in& address)
+void	SocketServer::onConnection(int connectionFd, sockaddr_in& address)
 {
-    std::cout << "New connection from " << inet_ntoa(address.sin_addr) << ":" << ntohs(address.sin_port) << std::endl;
+    (void)address;
+    #ifdef DEBUG
+        std::cout << "New connection from " << inet_ntoa(address.sin_addr) << ":" << ntohs(address.sin_port) << std::endl;
+    #endif
     pushFd(connectionFd, POLLIN | POLLHUP);
-    return new SocketConnection(connectionFd, address);
 }
 
 void	SocketServer::onDisconnection(Connection& connection)
 {
-    std::cout << "Disconnection from " << connection.getAddr()<< ":" << connection.getPort() << std::endl;
-    for(ConnectionMap::iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it)
-    {
-        if (*it->second == connection)
-        {
-            fdConnectionMap.erase(it);
-            break;
-        }
-    }
-    connection.close();
+    (void)connection;
+    #ifdef DEBUG
+        std::cout << "Disconnection from " << connection.getAddr()<< ":" << connection.getPort() << std::endl;
+    #endif
     popFd(connection.getSock());
-    delete &connection;
+    connection.close();
 }
 
 void	SocketServer::onMessage(Connection& connection, std::string const& message)
 {
+    (void)connection;
     if (message.empty())
         return;
-    std::cout << "Message from " << connection.getAddr() << ":" << connection.getPort() << ": " << message << std::endl;
+    #ifdef DEBUG
+        std::cout << "Message from " << connection.getAddr() << ":" << connection.getPort() << ": " << message << std::endl;
+    #endif
 }
 
 void SocketServer::start()
@@ -67,7 +66,7 @@ void SocketServer::start()
             {
                 if (it->revents & POLLHUP)
                 {
-                    Connection* connection = fdConnectionMap[it->fd];
+                    Connection *connection = fdConnectionMap.at(it->fd);
                     if (connection)
                         onDisconnection(*connection);
                 }
@@ -78,8 +77,7 @@ void SocketServer::start()
                         int connectionFd = accept(addr);
                         if (connectionFd != -1)
                         {
-                            Connection* connection = onConnection(connectionFd, addr);
-                            fdConnectionMap[connectionFd] = connection;
+                            onConnection(connectionFd, addr);
 
                         }
                     }

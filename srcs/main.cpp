@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:38 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/15 11:28:17 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 15:54:16 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "socket/SocketServer.hpp"
+#include "irc/Server.hpp"
 #include <cstdlib>
 
 int main(int ac, char **av)
@@ -19,7 +20,7 @@ int main(int ac, char **av)
     (void)av;
     try
     {
-        SocketServer server(av[1], std::atoi(av[2]));
+        Server server(std::atoi(av[1]), av[2]);
         server.start();
     }
     catch(std::exception &e)

@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/04/20 00:07:44 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 16:08:56 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-
-#include "irc/Server.hpp"
+#include <iostream>
 #include "irc/Channel.hpp"
 #include "socket/SocketConnection.hpp"
 

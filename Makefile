@@ -6,7 +6,7 @@
 #    By: emenella <emenella@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/04/25 14:20:22 by emenella         ###   ########.fr        #
+#    Updated: 2022/04/25 16:18:42 by emenella         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ all: bin $(NAME)
 
 bin:
 	mkdir -p ${PATH_B}
-	
+
 $(NAME): $(OBJS)
 	$(CCF) -o $(NAME) $(OBJS)
 
