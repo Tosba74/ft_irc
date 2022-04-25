@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketConnection.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:14:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/19 23:39:32 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 14:22:55 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ class SocketConnection: public Socket
         socklen_t       addrsize;
         std::string     writeBuffer;
     public:
-        pthread_t       thread;
         std::string     readBuffer;
         SocketConnection(int sock, sockaddr_in &addr) throw();
         SocketConnection(SocketConnection const &src) throw();
@@ -38,4 +37,5 @@ class SocketConnection: public Socket
 
         SocketConnection &operator<<(std::string const &msg);
         SocketConnection &operator>>(std::string &msg);
+        bool operator==(SocketConnection const &rhs);
 };

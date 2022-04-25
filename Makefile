@@ -6,7 +6,7 @@
 #    By: emenella <emenella@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/04/19 19:12:40 by emenella         ###   ########.fr        #
+#    Updated: 2022/04/25 14:20:22 by emenella         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ OBJS				:= ${addprefix ${PATH_B}/, ${notdir ${SRCS:.cpp=.o}}}
 
 INC		:= -I${PATH_I}
 CC		:= g++
-FLAG	:= -Wall -Werror -Wextra -g3 -fsanitize=address
+FLAG	:= -Wall -Werror -Wextra
 CPP_V	:= -std=c++98
 CCF		:= ${CC} ${FLAG} ${CPP_V} ${INC}
 RM		:= rm -rf

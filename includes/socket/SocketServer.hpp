@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketServer.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/19 23:36:47 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 14:19:53 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ class SocketServer: public SocketListener
         ~SocketServer() throw();
 
         virtual Connection*	onConnection(int connectionFd, sockaddr_in& address);
-	    virtual void		onDisconnection(Connection* connection);
-	    virtual void		onMessage(Connection* connection, std::string const& message);
+	    virtual void		onDisconnection(Connection& connection);
+	    virtual void		onMessage(Connection& connection, std::string const& message);
 
         void start();
         void stop();
-        void receiveAndSend(Connection* connection);
+        void receiveAndSend(Connection& connection);
         void poll();
 };

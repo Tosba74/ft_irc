@@ -28,27 +28,27 @@ SocketConnection*	SocketServer::onConnection(int connectionFd, sockaddr_in& addr
     return new SocketConnection(connectionFd, address);
 }
 
-void	SocketServer::onDisconnection(Connection* connection)
+void	SocketServer::onDisconnection(Connection& connection)
 {
-    std::cout << "Disconnection from " << connection->getAddr()<< ":" << connection->getPort() << std::endl;
+    std::cout << "Disconnection from " << connection.getAddr()<< ":" << connection.getPort() << std::endl;
     for(ConnectionMap::iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it)
     {
-        if (it->second == connection)
+        if (*it->second == connection)
         {
             fdConnectionMap.erase(it);
             break;
         }
     }
-    connection->close();
-    popFd(connection->getSock());
-    delete connection;
+    connection.close();
+    popFd(connection.getSock());
+    delete &connection;
 }
 
-void	SocketServer::onMessage(Connection* connection, std::string const& message)
+void	SocketServer::onMessage(Connection& connection, std::string const& message)
 {
     if (message.empty())
         return;
-    std::cout << "Message from " << connection->getAddr() << ":" << connection->getPort() << ": " << message << std::endl;
+    std::cout << "Message from " << connection.getAddr() << ":" << connection.getPort() << ": " << message << std::endl;
 }
 
 void SocketServer::start()
@@ -69,7 +69,7 @@ void SocketServer::start()
                 {
                     Connection* connection = fdConnectionMap[it->fd];
                     if (connection)
-                        onDisconnection(connection);
+                        onDisconnection(*connection);
                 }
                 else if (it->revents & POLLIN)
                 {
@@ -86,7 +86,7 @@ void SocketServer::start()
                     else
                     {
                         Connection* connection = fdConnectionMap[it->fd];
-                        receiveAndSend(connection);
+                        receiveAndSend(*connection);
                     }
                 }
             }
@@ -103,13 +103,14 @@ void SocketServer::stop()
     isRunning = false;
 }
 
-void SocketServer::receiveAndSend(Connection *connection)
+void SocketServer::receiveAndSend(Connection &connection)
 {
     try
     {
-        std::string buffer;
-        *connection >> buffer;
-        onMessage(connection, buffer);
+        std::string message;
+        connection >> message;
+        onMessage(connection, message);
+        message.clear();
     }
     catch (SocketException const& e)
     {
@@ -117,7 +118,7 @@ void SocketServer::receiveAndSend(Connection *connection)
     }
     try
     {
-        connection->flush();
+        connection.flush();
     }
     catch (SocketException const& e)
     {

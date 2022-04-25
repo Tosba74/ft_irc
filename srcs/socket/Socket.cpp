@@ -25,7 +25,7 @@ Socket::~Socket()
     this->close();
 }
 
-int Socket::getSock()
+int Socket::getSock() const
 {
     return this->sock;
 }

@@ -51,6 +51,7 @@ int  SocketConnection::receive()
     int  n;
 
     n = ::read(this->sock, buffer, 4096);
+    buffer[n] = '\0';
     if (n > 0)
     {
         this->readBuffer += buffer;
@@ -69,6 +70,11 @@ SocketConnection &SocketConnection::operator>>(std::string &msg)
     msg = this->readBuffer;
     this->readBuffer.clear();
     return *this;
+}
+
+bool SocketConnection::operator==(SocketConnection const &rhs)
+{
+    return (this->getSock() == rhs.getSock());
 }
 
 int SocketConnection::getPort()

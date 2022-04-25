@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:28:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/19 23:38:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/04/25 14:25:21 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ class Socket
                 virtual ~SocketException() throw() {}
                 virtual const char *what() const throw(){ return msg.c_str();}
         };
-        int getSock();
+        int getSock() const;
         void setSock(int sock);
         void close();
 };
