@@ -48,6 +48,8 @@ void	SocketServer::onMessage(Connection& connection, std::string const& message)
     #ifdef DEBUG
         std::cout << "Message from " << connection.getAddr() << ":" << connection.getPort() << ": " << message << std::endl;
     #endif
+    // ACommand obj(*this, connection, message);
+    // obj.parc();
 }
 
 void SocketServer::start()

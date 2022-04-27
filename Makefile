@@ -44,7 +44,9 @@ INC		:= -I${PATH_I}
 CC		:= g++
 FLAG	:= -Wall -Werror -Wextra
 CPP_V	:= -std=c++98
+DEB		:= -D DEBUG=1
 CCF		:= ${CC} ${FLAG} ${CPP_V} ${INC}
+CCD		:= ${CC} ${FLAG} ${CPP_V} ${INC} ${DEB}
 RM		:= rm -rf
 
 all: bin $(NAME)
@@ -55,6 +57,9 @@ bin:
 $(NAME): $(OBJS)
 	$(CCF) -o $(NAME) $(OBJS)
 
+deb: $(OBJS)
+	$(CCD) -o $(NAME) $(OBJS)
+
 ${PATH_B}/%.o: %.cpp ${HEADER}
 	$(CCF) -o $@ -c $<
 
@@ -63,5 +68,7 @@ clean:
 
 fclean:
 	${RM} $(NAME) $(OBJS) 
+
+debug: fclean deb
 
 re: fclean all
