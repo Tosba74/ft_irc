@@ -21,6 +21,7 @@ override PATH_C		:= ${PATH_U}/command
 override VPATH		:= ${addprefix ${PATH_S}/, ${PATH_IRC}} \
 					${addprefix ${PATH_S}/, ${PATH_SOCK}} \
 					${addprefix ${PATH_S}/, ${PATH_U}} \
+					${addprefix ${PATH_S}/, ${PATH_C}} \
 					${PATH_S}
 
 NAME := ircserv
@@ -28,13 +29,12 @@ NAME := ircserv
 FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
 FILES_USER			:= Client
-FILES_COMMAND		:= Command
+FILES_COMMAND		:= ACommand
 
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
 					${addprefix ${PATH_SOCK}/, ${FILES_SOCK}} \
-					${addprefix ${PATH_U}/, ${FILES_USER}}
-					
-# ${addprefix ${PATH_C}/, ${FILES_COMMAND}}
+					${addprefix ${PATH_U}/, ${FILES_USER}} \
+					${addprefix ${PATH_C}/, ${FILES_COMMAND}}
 
 SRCS				= ${addprefix ${PATH_S}/, ${addsuffix .cpp, ${FILES}}} main.cpp
 HEADER				:= ${addprefix ${PATH_I}/, ${addsuffix .hpp, ${FILES}}}

@@ -1,4 +1,8 @@
 #include "socket/SocketServer.hpp"
+#include "client/command/ACommand.hpp"
+
+class Acommand;
+class NIMP;
 
 SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT)
 {
@@ -42,14 +46,13 @@ void	SocketServer::onDisconnection(Connection& connection)
 
 void	SocketServer::onMessage(Connection& connection, std::string const& message)
 {
-    (void)connection;
+    // (void)connection;
     if (message.empty())
         return;
     #ifdef DEBUG
         std::cout << "Message from " << connection.getAddr() << ":" << connection.getPort() << ": " << message << std::endl;
     #endif
-    // ACommand obj(*this, connection, message);
-    // obj.parc();
+    NIMP nimp(this, connection, message);
 }
 
 void SocketServer::start()

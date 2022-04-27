@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#define PURE = 0;
 class Socket
 {
     protected:
