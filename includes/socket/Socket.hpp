@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:28:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/25 14:25:21 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/02 18:50:19 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 class Socket
 {
+    private:
+        virtual void close();
     protected:
         int sock;
 
@@ -46,5 +48,4 @@ class Socket
         };
         int getSock() const;
         void setSock(int sock);
-        void close();
 };

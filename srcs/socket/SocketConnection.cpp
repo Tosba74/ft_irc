@@ -22,8 +22,8 @@ SocketConnection &SocketConnection::operator=(SocketConnection const &rhs)
 SocketConnection::~SocketConnection()
 {
     this->flush();
-    this->close();
     readBuffer.clear();
+    Socket::~Socket();
 }
 
 std::string SocketConnection::getAddr()

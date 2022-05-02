@@ -2,6 +2,8 @@
 
 SocketListener::~SocketListener() throw()
 {
+    close();
+    Socket::~Socket();
 }
 
 SocketListener::SocketListener(int type, int opt , int proto) throw() : Socket(type, opt, proto), listening(false)
@@ -46,7 +48,5 @@ int SocketListener::accept(sockaddr_in &clientAddr)
 
 void SocketListener::close() throw()
 {
-    ::close(this->sock);
-    this->sock = -1;
     listening = false;
 }
