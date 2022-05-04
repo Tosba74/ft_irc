@@ -1,5 +1,6 @@
 #include "socket/SocketServer.hpp"
-#include "client/command/ACommand.hpp"
+#include "client/ACommand.hpp"
+#include "client/command/NIMP.hpp"
 
 class Acommand;
 class NIMP;
@@ -46,13 +47,12 @@ void	SocketServer::onDisconnection(Connection& connection)
 
 void	SocketServer::onMessage(Connection& connection, std::string const& message)
 {
-    // (void)connection;
+    (void)connection;
     if (message.empty())
         return;
     #ifdef DEBUG
         std::cout << "Message from " << connection.getAddr() << ":" << connection.getPort() << ": " << message << std::endl;
     #endif
-    NIMP nimp(this, connection, message);
 }
 
 void SocketServer::start()

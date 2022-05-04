@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/25 17:34:15 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/04 17:55:11 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,17 @@ Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr),
 {
 }
 
+Client::Client(Client const &rhs) : SocketConnection(rhs)
+{
+}
 Client::~Client() throw()
 {
 	SocketConnection::~SocketConnection();
+}
+Client								Client::operator=(Client const &rhs)
+{
+	(void)rhs;
+	return (*this);
 }
 
 void                                Client::setNickname(std::string nickname)
@@ -62,6 +70,14 @@ bool                                Client::getOp() const
 	return _op;
 }
 
+void                                Client::readChannels() const
+{
+	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
+	{
+		std::cout << it->first << std::endl;
+	}
+}
+		
 bool                                Client::isInChannel(std::string name) const
 {
 	for (std::map<std::string ,Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)

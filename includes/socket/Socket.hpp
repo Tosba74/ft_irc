@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:28:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/25 14:25:21 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/28 16:47:06 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#define PURE = 0;
+#define PURE = 0
+
 class Socket
 {
     protected:
