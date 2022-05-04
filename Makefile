@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: emenella <emenella@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/04/28 22:04:11 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2022/05/04 20:05:26 by emenella         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ CC		:= g++
 FLAG	:= -Wall -Werror -Wextra
 CPP_V	:= -std=c++98
 DEB		:= -D DEBUG=1
-FS		:= -g -fsanitize=address 
+FS		:= -g3 -fsanitize=address 
 CCF		:= ${CC} ${FLAG} ${CPP_V} ${INC}
 CCFS	:= ${CC} ${FLAG} ${CPP_V} ${FS} ${INC} ${DEB}
 CCD		:= ${CC} ${FLAG} ${CPP_V} ${INC} ${DEB}

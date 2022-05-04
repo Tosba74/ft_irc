@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NIMP.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:05 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 17:39:05 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/04 19:46:00 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ NIMP::~NIMP()
 int		NIMP::execute()
 {
 	std::cout << "Connard: " << getClient().getUsername() << std::endl;
+	_client << "Connard\n";
 	return 0;
 };

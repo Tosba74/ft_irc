@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 18:05:54 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/04 19:42:31 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password)
 {
 }
+
 Server::~Server() throw()
 {
 	for (ConnectionMap::iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it)
@@ -52,8 +53,26 @@ void Server::onMessage(Connection& connection, std::string const& message)
 {
 	SocketServer::onMessage(connection, message);
 	std::cout << "Message IRC from " << connection.getAddr() << ":" << connection.getPort() << " = " << message;
-    NIMP *nimp = new NIMP(this, dynamic_cast<Client&>(connection), message);
-	nimp->execute();
-	delete nimp;
+	ACommand *command = parseCommand(dynamic_cast<Client&>(connection), message);
+	command->execute();
+	delete command;
 }
 
+ACommand 		*Server::parseCommand(Client &client, std::string const &message)
+{
+	size_t i = 0;
+	size_t pos;
+	std::vector<std::string> command;
+
+	while (pos = message.find(' ', i), pos != std::string::npos)
+	{
+		command.push_back(message.substr(i, pos - i));
+		i = pos + 1;
+	}
+	command.push_back(message.substr(i));
+	for (std::vector<std::string>::iterator it = command.begin(); it != command.end(); ++it)
+	{
+		std::cout << "From: " << client.getAddr() << " >> "<< *it << std::endl;
+	}
+	return new NIMP(this, dynamic_cast<Client&>(client), message);;
+}

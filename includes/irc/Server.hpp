@@ -6,19 +6,21 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 18:01:02 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/04 19:02:18 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <map>
+#include <string>
 #include "socket/SocketServer.hpp"
 #include "irc/Channel.hpp"
 #include "client/Client.hpp"
+#include "client/ACommand.hpp"
 
 class Client;
-class Icommand;
+class ACommand;
 
 class Server: public SocketServer
 {
@@ -39,5 +41,5 @@ class Server: public SocketServer
 		void			onDisconnection(Connection& connection);
 		void			onMessage(Connection& connection, std::string const& message);
 
-		// ACommand 			parseMsg(Client &client, std::string const &message);
+		ACommand 		*parseCommand(Client &client, std::string const &message);
 };
