@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/02 19:15:28 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:01:09 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,8 @@ void Server::onMessage(Connection& connection, std::string const& message)
 	SocketServer::onMessage(connection, message);
 	std::cout << "Message IRC from " << connection.getAddr() << ":" << connection.getPort() << " = " << message;
 }
+
+// void parseCommand(Client &client, std::string const &message)
+// {
+	
+// }
