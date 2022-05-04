@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 17:42:39 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/04 18:00:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void Server::onMessage(Connection& connection, std::string const& message)
 {
 	SocketServer::onMessage(connection, message);
 	std::cout << "Message IRC from " << connection.getAddr() << ":" << connection.getPort() << " = " << message;
-    NIMP *nimp = new NIMP(this, dynamic_cast<Client&>(connection), message);
+    // NIMP *nimp = new NIMP(this, dynamic_cast<Client&>(connection), message);
+	ACommand nimp = parseCommand(dynamic_cast<Client&>(connection), message);
 	nimp->execute();
 	delete nimp;
 }
