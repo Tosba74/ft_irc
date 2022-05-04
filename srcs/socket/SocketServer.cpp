@@ -1,4 +1,9 @@
 #include "socket/SocketServer.hpp"
+#include "client/ACommand.hpp"
+#include "client/command/NIMP.hpp"
+
+class Acommand;
+class NIMP;
 
 SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT)
 {

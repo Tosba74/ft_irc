@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emenella <emenella@student.42.fr>          +#+  +:+       +#+         #
+#    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/04/25 16:18:42 by emenella         ###   ########.fr        #
+#    Updated: 2022/04/28 22:04:11 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,20 +21,20 @@ override PATH_C		:= ${PATH_U}/command
 override VPATH		:= ${addprefix ${PATH_S}/, ${PATH_IRC}} \
 					${addprefix ${PATH_S}/, ${PATH_SOCK}} \
 					${addprefix ${PATH_S}/, ${PATH_U}} \
+					${addprefix ${PATH_S}/, ${PATH_C}} \
 					${PATH_S}
 
 NAME := ircserv
 
 FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
-FILES_USER			:= Client
-FILES_COMMAND		:= Command
+FILES_USER			:= Client ACommand
+FILES_COMMAND		:= NIMP
 
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
 					${addprefix ${PATH_SOCK}/, ${FILES_SOCK}} \
-					${addprefix ${PATH_U}/, ${FILES_USER}}
-					
-# ${addprefix ${PATH_C}/, ${FILES_COMMAND}}
+					${addprefix ${PATH_U}/, ${FILES_USER}} \
+					${addprefix ${PATH_C}/, ${FILES_COMMAND}}
 
 SRCS				= ${addprefix ${PATH_S}/, ${addsuffix .cpp, ${FILES}}} main.cpp
 HEADER				:= ${addprefix ${PATH_I}/, ${addsuffix .hpp, ${FILES}}}
@@ -44,7 +44,11 @@ INC		:= -I${PATH_I}
 CC		:= g++
 FLAG	:= -Wall -Werror -Wextra
 CPP_V	:= -std=c++98
+DEB		:= -D DEBUG=1
+FS		:= -g -fsanitize=address 
 CCF		:= ${CC} ${FLAG} ${CPP_V} ${INC}
+CCFS	:= ${CC} ${FLAG} ${CPP_V} ${FS} ${INC} ${DEB}
+CCD		:= ${CC} ${FLAG} ${CPP_V} ${INC} ${DEB}
 RM		:= rm -rf
 
 all: bin $(NAME)
@@ -55,6 +59,12 @@ bin:
 $(NAME): $(OBJS)
 	$(CCF) -o $(NAME) $(OBJS)
 
+deb: $(OBJS)
+	$(CCD) -o $(NAME) $(OBJS)
+
+fs: $(OBJS)
+	$(CCFS) -o $(NAME) $(OBJS)
+	
 ${PATH_B}/%.o: %.cpp ${HEADER}
 	$(CCF) -o $@ -c $<
 
@@ -63,5 +73,9 @@ clean:
 
 fclean:
 	${RM} $(NAME) $(OBJS) 
+
+debug: fclean deb
+
+seg: fclean fs
 
 re: fclean all

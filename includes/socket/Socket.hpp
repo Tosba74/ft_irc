@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:28:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/02 18:50:19 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:02:37 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fcntl.h>
+
+#define PURE = 0
 
 class Socket
 {

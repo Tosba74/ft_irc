@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/04/25 16:08:56 by emenella         ###   ########.fr       */
+/*   Updated: 2022/04/28 18:38:52 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ class Client: public SocketConnection
         std::map<std::string ,Channel*>     getChannels() const;
         bool                                getRegister() const;
         bool                                getOp() const;
+        
+        void                                readChannels() const;
         
         bool                                isInChannel(std::string name) const;
 };

@@ -6,11 +6,13 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/02 19:15:28 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/04 18:03:01 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
+#include "client/ACommand.hpp"
+#include "client/command/NIMP.hpp"
 
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password)
 {
@@ -50,4 +52,8 @@ void Server::onMessage(Connection& connection, std::string const& message)
 {
 	SocketServer::onMessage(connection, message);
 	std::cout << "Message IRC from " << connection.getAddr() << ":" << connection.getPort() << " = " << message;
+    NIMP *nimp = new NIMP(this, dynamic_cast<Client&>(connection), message);
+	nimp->execute();
+	delete nimp;
 }
+
