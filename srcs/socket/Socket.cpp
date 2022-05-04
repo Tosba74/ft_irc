@@ -1,16 +1,16 @@
 #include "socket/Socket.hpp"
 
-Socket::Socket(int sock): sock(sock)
+Socket::Socket(int sock) : sock(sock)
 {
 }
 
-Socket::Socket(int type, int opt, int proto): sock(socket(type, opt, proto))
+Socket::Socket(int type, int opt, int proto) : sock(socket(type, opt, proto))
 {
     if (sock == -1)
         throw SocketException("Socket creation failed");
 }
 
-Socket::Socket(Socket const &src): sock(src.sock)
+Socket::Socket(Socket const &src) : sock(src.sock)
 {
 }
 
