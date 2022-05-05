@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 19:42:31 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/05 17:44:54 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password)
 {
+	_commandes["NIMP"] = new NIMP(this);
 }
 
 Server::~Server() throw()
@@ -53,26 +54,26 @@ void Server::onMessage(Connection& connection, std::string const& message)
 {
 	SocketServer::onMessage(connection, message);
 	std::cout << "Message IRC from " << connection.getAddr() << ":" << connection.getPort() << " = " << message;
-	ACommand *command = parseCommand(dynamic_cast<Client&>(connection), message);
-	command->execute();
-	delete command;
+	parseCommand(message, dynamic_cast<Client&>(connection));
 }
 
-ACommand 		*Server::parseCommand(Client &client, std::string const &message)
+void 		Server::parseCommand(std::string const &message, Client& client)
 {
 	size_t i = 0;
 	size_t pos;
-	std::vector<std::string> command;
+	std::vector<std::string> str;
 
 	while (pos = message.find(' ', i), pos != std::string::npos)
 	{
-		command.push_back(message.substr(i, pos - i));
+		str.push_back(message.substr(i, pos - i));
 		i = pos + 1;
 	}
-	command.push_back(message.substr(i));
-	for (std::vector<std::string>::iterator it = command.begin(); it != command.end(); ++it)
+	str.push_back(message.substr(i));
+	CommandMap::iterator it = _commandes.find(str[0]);
+	if (it != _commandes.end())
 	{
-		std::cout << "From: " << client.getAddr() << " >> "<< *it << std::endl;
+		ACommand *command = it->second;
+		command->execute(client, str.begin(), str.end());
 	}
-	return new NIMP(this, dynamic_cast<Client&>(client), message);;
+	
 }

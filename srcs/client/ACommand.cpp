@@ -16,7 +16,7 @@
 #include "irc/Server.hpp"
 #include "client/Client.hpp"
 
-ACommand::ACommand(Server *serv, Client & clicli, std::string msg) : _msg(msg), _serv(serv), _client(clicli)
+ACommand::ACommand(Server *serv) : _serv(serv)
 {
 	// this->execute();
 };
@@ -33,7 +33,7 @@ ACommand::ACommand(Server *serv, Client & clicli, std::string msg) : _msg(msg), 
         // std::cout << "Default Constructeur Called" << std::endl;
     // #endif
 // }
-ACommand::ACommand(ACommand const& src)  : _msg(src._msg), _serv(src._serv), _client(src._client)
+ACommand::ACommand(ACommand const& src)  : _serv(src._serv)
 {
     #ifdef DEBUG
         std::cout << "Copy Constructeur Called" << std::endl;
@@ -50,22 +50,12 @@ ACommand&   ACommand::operator=(ACommand const& rhs)
 {
 	if (this != &rhs)
 	{
-		this->_msg = rhs._msg;
 		this->_serv = rhs._serv;
-		this->_client = rhs._client;
 	}
 	return *this;
 }
 
-const std::string &    		ACommand::getMsg() const
-{
-	return this->_msg;
-}
 const Server *				ACommand::getServ() const
 {
 	return this->_serv;
-}
-const Client &				ACommand::getClient() const
-{
-	return this->_client;
 }

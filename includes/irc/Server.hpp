@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 19:02:18 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/05 17:36:51 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ class ACommand;
 
 class Server: public SocketServer
 {
+	typedef std::map<std::string, ACommand*> CommandMap;
 	private:
 		std::string		_password;
-		// std::map<std::string, Icommand> _commandes;
+		CommandMap _commandes;
 	public:
 		Server(int port, std::string password);
 		// Server(SocketServer const &src);
@@ -41,5 +42,5 @@ class Server: public SocketServer
 		void			onDisconnection(Connection& connection);
 		void			onMessage(Connection& connection, std::string const& message);
 
-		ACommand 		*parseCommand(Client &client, std::string const &message);
+		void 			parseCommand(std::string const &message, Client& client);
 };

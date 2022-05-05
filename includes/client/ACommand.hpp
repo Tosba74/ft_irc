@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ACommand.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 17:36:32 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/05 17:46:33 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,20 @@
 class Server;
 class Client;
 
-class InterPars
-{
-    public:
-        virtual int         execute() PURE;
-};
 
-class ACommand: public InterPars
+class ACommand
 {
     protected:
-        std::string             _msg;
         Server *                _serv;
-        Client &                _client; 
 
     public:
-        ACommand(Server *serv, Client &clicli, std::string msg);
+        ACommand(Server *serv);
         ACommand(ACommand const& src);
         virtual ~ACommand();
         
-        ACommand&           operator=(ACommand const& rhs);
+        ACommand& operator=(ACommand const& rhs);
         
-        const std::string &     getMsg() const;
         const Server *          getServ() const;
-        const Client &          getClient() const;
+        virtual int execute(Client &clicli, std::vector<std::string>::iterator begin, std::vector<std::string>::iterator end) = 0;
 };
+
