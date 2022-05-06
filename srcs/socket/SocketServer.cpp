@@ -42,7 +42,7 @@ void	SocketServer::onDisconnection(Connection& connection)
         std::cout << "Disconnection from " << connection.getAddr()<< ":" << connection.getPort() << std::endl;
     #endif
     popFd(connection.getSock());
-    connection.close();
+    delete &connection;
 }
 
 void	SocketServer::onMessage(Connection& connection, std::string const& message)

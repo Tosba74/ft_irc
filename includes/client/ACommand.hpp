@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 17:36:32 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/06 17:48:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,21 @@ class InterPars
 
 class ACommand: public InterPars
 {
-    protected:
-        std::string             _msg;
+    
+    typedef std::vector<std::string>    args_t;
+    private:
+        args_t                  _arg;
         Server *                _serv;
         Client &                _client; 
 
     public:
-        ACommand(Server *serv, Client &clicli, std::string msg);
+        ACommand(Server *serv, Client &clicli, std::string &arg);
         ACommand(ACommand const& src);
         virtual ~ACommand();
         
         ACommand&           operator=(ACommand const& rhs);
         
-        const std::string &     getMsg() const;
+        const args_t &          getMsg() const;
         const Server *          getServ() const;
         const Client &          getClient() const;
 };

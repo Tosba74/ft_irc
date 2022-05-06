@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:28:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/28 16:47:06 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/04 18:02:37 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 class Socket
 {
+    private:
+        virtual void close();
     protected:
         int sock;
 
@@ -48,5 +50,4 @@ class Socket
         };
         int getSock() const;
         void setSock(int sock);
-        void close();
 };

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 18:01:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/06 17:31:53 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ class ACommand;
 
 class Server: public SocketServer
 {
+	// define std::vector<std::string>   cmd_list = {
+		
+	// };
 	private:
 		std::string		_password;
 	public:
