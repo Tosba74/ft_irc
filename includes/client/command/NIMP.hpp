@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NIMP.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:02 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/07 15:03:58 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/07 13:26:55 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 #include "client/ACommand.hpp"
 #include "client/Client.hpp"
-
-class Server;
 
 class NIMP: public ACommand
 {

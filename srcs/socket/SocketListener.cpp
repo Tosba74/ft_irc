@@ -1,12 +1,11 @@
 #include "socket/SocketListener.hpp"
 
-SocketListener::~SocketListener() throw()
+SocketListener::~SocketListener()
 {
     close();
-    Socket::~Socket();
 }
 
-SocketListener::SocketListener(int type, int opt , int proto) throw() : Socket(type, opt, proto), listening(false)
+SocketListener::SocketListener(int type, int opt , int proto): Socket(type, opt, proto), listening(false)
 {
     fcntl(sock, F_SETFL, opt | O_NONBLOCK);
 }

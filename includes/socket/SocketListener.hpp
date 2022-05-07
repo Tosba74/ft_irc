@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketListener.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:30:15 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/02 18:51:30 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/07 13:17:29 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ class SocketListener : public Socket
 		bool	listening;
 
 	public:
-		~SocketListener() throw();
-		SocketListener(int type = AF_INET, int opt = SOCK_STREAM, int proto = IPPROTO_IP) throw();
+		virtual ~SocketListener();
+		SocketListener(int type = AF_INET, int opt = SOCK_STREAM, int proto = IPPROTO_IP);
 		void bind(std::string const& hostname, int service, int type = AF_INET);
 		void listen();
 		virtual int accept(sockaddr_in &clientAddr);
-		bool	isListening() const throw()
+		bool	isListening() const
 		{ return listening; }
 };

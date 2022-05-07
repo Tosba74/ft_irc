@@ -11,15 +11,11 @@
 /* ************************************************************************** */
 
 #include "client/ACommand.hpp"
-#include "client/command/NIMP.hpp"
-#include "socket/SocketConnection.hpp"
-#include "irc/Server.hpp"
-#include "client/Client.hpp"
 
 ACommand::ACommand(Server *serv) : _serv(serv)
 {
 	// this->execute();
-};
+}
 	// try
 	// {
 	// 	_client = dynamic_cast<Client&>(clicli);

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   NICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/07 15:09:33 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/07 13:44:27 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/command/NICK.hpp"
-#include "irc/Server.hpp"
 
 NICK::NICK(Server *serv) : ACommand(serv)
 {
@@ -26,9 +25,20 @@ NICK::NICK(NICK const& src) : ACommand(src)
 	}
 }
 
-void NICK::execute(Client &clicli, std::vector<std::string>::iterator begin, std::vector<std::string>::iterator end)
+NICK::~NICK()
 {
-	if (begin != end)
-		clicli.setUsername(*(begin + 1));
-	std::cout << "NICK: " << clicli.getUsername() << std::endl;	
+}
+
+int NICK::execute(Client &clicli, args_t::iterator begin, args_t::iterator end)
+{
+	for (args_t::iterator it = begin; it != end; it++)
+	{
+		if (*it != "NICK")
+		{
+			clicli.setNickname(*(begin + 1));
+			break;
+		}
+	}
+	std::cout << "NICK: " << clicli.getUsername() << std::endl;
+	return 0;
 }

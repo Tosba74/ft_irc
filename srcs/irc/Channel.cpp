@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/20 00:13:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/07 13:16:52 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,7 @@ void							Channel::addClient(Client* client)
 }
 void							Channel::removeClient(Client* client)
 {
-	for (std::map<int, Client*>::const_iterator it = getClients().begin(); it != getClients().end(); ++it)
-		if (it->second == client)
-		{
-			_clients.erase(it);
-			return ;
-		}
+	_clients.erase(client->getSock());
 }
 
 std::ostream&                       operator<<(std::ostream& o, Channel const& rhs)

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ACommand.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/07 15:04:40 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/07 13:33:03 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-
-#include "irc/Server.hpp"
-#include "client/Client.hpp"
+#include <string>
+#include <vector>
+#include <iostream>
 
 class Server;
 class Client;

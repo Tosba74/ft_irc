@@ -1,9 +1,4 @@
 #include "socket/SocketServer.hpp"
-#include "client/ACommand.hpp"
-#include "client/command/NIMP.hpp"
-
-class Acommand;
-class NIMP;
 
 SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT)
 {
@@ -21,7 +16,7 @@ SocketServer &SocketServer::operator=(SocketServer const &rhs)
     return *this;
 }
 
-SocketServer::~SocketServer() throw()
+SocketServer::~SocketServer()
 {
     popFd(sock);
 }

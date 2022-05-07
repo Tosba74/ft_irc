@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/04 17:55:11 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/07 13:18:17 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr),
 Client::Client(Client const &rhs) : SocketConnection(rhs)
 {
 }
+
 Client::~Client() throw()
 {
-	SocketConnection::~SocketConnection();
 }
+
 Client								Client::operator=(Client const &rhs)
 {
 	(void)rhs;
