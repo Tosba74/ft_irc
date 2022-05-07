@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/05 17:44:54 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/06 19:32:53 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
-#include "client/ACommand.hpp"
-#include "client/command/NIMP.hpp"
 
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password)
 {
 	_commandes["NIMP"] = new NIMP(this);
+	_commandes["NICK"] = new NICK(this);
 }
 
 Server::~Server() throw()
@@ -53,7 +52,7 @@ void Server::onDisconnection(Connection& connection)
 void Server::onMessage(Connection& connection, std::string const& message)
 {
 	SocketServer::onMessage(connection, message);
-	std::cout << "Message IRC from " << connection.getAddr() << ":" << connection.getPort() << " = " << message;
+	std::cout << "Message IRC from " << connection.getAddr() << ":" << connection.getPort() << " = " << message << std::endl;
 	parseCommand(message, dynamic_cast<Client&>(connection));
 }
 

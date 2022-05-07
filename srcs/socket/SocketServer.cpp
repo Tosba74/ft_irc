@@ -112,7 +112,15 @@ void SocketServer::receiveAndSend(Connection &connection)
     {
         std::string message;
         connection >> message;
-        onMessage(connection, message);
+        for (size_t i = 0; i < message.size(); i++)
+        {
+            if (message[i] == '\n')
+            {
+                onMessage(connection, message.substr(0, i));
+                message = message.substr(i + 1);
+                i = 0;
+            }
+        }
         message.clear();
     }
     catch (SocketException const& e)

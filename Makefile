@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emenella <emenella@student.42.fr>          +#+  +:+       +#+         #
+#    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/05/04 20:06:07 by emenella         ###   ########.fr        #
+#    Updated: 2022/05/06 19:42:38 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 

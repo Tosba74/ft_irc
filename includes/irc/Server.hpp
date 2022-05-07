@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/05 17:36:51 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/06 19:33:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #include "socket/SocketServer.hpp"
 #include "irc/Channel.hpp"
 #include "client/Client.hpp"
-#include "client/ACommand.hpp"
+#include "client/command/NIMP.hpp"
+#include "client/command/NICK.hpp"
 
 class Client;
 class ACommand;
@@ -27,7 +28,7 @@ class Server: public SocketServer
 	typedef std::map<std::string, ACommand*> CommandMap;
 	private:
 		std::string		_password;
-		CommandMap _commandes;
+		CommandMap 		_commandes;
 	public:
 		Server(int port, std::string password);
 		// Server(SocketServer const &src);

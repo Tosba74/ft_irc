@@ -21,8 +21,8 @@ SocketConnection &SocketConnection::operator=(SocketConnection const &rhs)
 
 SocketConnection::~SocketConnection()
 {
-    this->flush();
-    readBuffer.clear();
+    // this->flush();
+    // readBuffer.clear();
     Socket::~Socket();
 }
 
