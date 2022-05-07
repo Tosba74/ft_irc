@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/07 13:19:36 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/07 16:29:17 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void Server::onDisconnection(Connection& connection)
 {
 	std::cout << "Disconnection IRC of " << connection.getAddr() << ":" << connection.getPort() << std::endl;
 	SocketServer::onDisconnection(connection);
+	fdConnectionMap.erase(connection.getSock());
 }
 void Server::onMessage(Connection& connection, std::string const& message)
 {

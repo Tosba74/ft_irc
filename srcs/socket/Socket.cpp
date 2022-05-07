@@ -23,6 +23,9 @@ Socket &Socket::operator=(Socket const &rhs)
 Socket::~Socket()
 {
     this->close();
+    #ifdef DEBUG
+        std::cout << "SocketListener::~SocketListener()" << std::endl;
+    #endif
 }
 
 int Socket::getSock() const

@@ -19,6 +19,9 @@ SocketServer &SocketServer::operator=(SocketServer const &rhs)
 SocketServer::~SocketServer()
 {
     popFd(sock);
+    #ifdef DEBUG
+        std::cout << "SocketServer::~SocketServer()" << std::endl;
+    #endif
 }
 
 void	SocketServer::onConnection(int connectionFd, sockaddr_in& address)
@@ -32,7 +35,6 @@ void	SocketServer::onConnection(int connectionFd, sockaddr_in& address)
 
 void	SocketServer::onDisconnection(Connection& connection)
 {
-    (void)connection;
     #ifdef DEBUG
         std::cout << "Disconnection from " << connection.getAddr()<< ":" << connection.getPort() << std::endl;
     #endif

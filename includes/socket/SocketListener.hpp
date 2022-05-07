@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:30:15 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/07 13:17:29 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/07 16:21:20 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 class SocketListener : public Socket
 {
 	private:
-		virtual void close() throw();
+		virtual void close();
 	protected:
 		bool	listening;
 

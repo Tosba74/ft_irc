@@ -23,6 +23,9 @@ SocketConnection::~SocketConnection()
 {
     this->flush();
     readBuffer.clear();
+    #ifdef DEBUG
+        std::cout << "SocketConnection::~SocketConnection()" << std::endl;
+    #endif
 }
 
 std::string SocketConnection::getAddr()

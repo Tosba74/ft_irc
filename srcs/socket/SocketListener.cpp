@@ -3,6 +3,9 @@
 SocketListener::~SocketListener()
 {
     close();
+    #ifdef DEBUG
+        std::cout << "SocketListener::~SocketListener()" << std::endl;
+    #endif
 }
 
 SocketListener::SocketListener(int type, int opt , int proto): Socket(type, opt, proto), listening(false)
@@ -45,7 +48,7 @@ int SocketListener::accept(sockaddr_in &clientAddr)
     return sock;
 }
 
-void SocketListener::close() throw()
+void SocketListener::close()
 {
     listening = false;
 }
