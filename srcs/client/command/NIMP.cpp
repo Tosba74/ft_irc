@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   NIMP.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:05 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/05 17:48:27 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/07 15:09:40 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/command/NIMP.hpp"
+#include "irc/Server.hpp"
 
 NIMP::NIMP(Server *serv) : ACommand(serv)
 {

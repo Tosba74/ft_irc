@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/06 19:33:15 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/07 15:05:31 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 #include "socket/SocketServer.hpp"
 #include "irc/Channel.hpp"
 #include "client/Client.hpp"
-#include "client/command/NIMP.hpp"
-#include "client/command/NICK.hpp"
+#include "client/ACommand.hpp"
 
 class Client;
 class ACommand;

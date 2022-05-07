@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/06 19:31:41 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/07 15:04:40 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 class Server;
 class Client;
 
-
 class ACommand
 {
 
     protected:
-        typedef std::vector<std::string> args_t;
         Server *                _serv;
+        typedef std::vector<std::string> args_t;
 
     public:
+
         ACommand(Server *serv);
         ACommand(ACommand const& src);
         virtual ~ACommand();

@@ -6,11 +6,13 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/06 19:32:53 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/05/07 15:05:58 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
+#include "client/command/NIMP.hpp"
+#include "client/command/NICK.hpp"
 
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password)
 {
