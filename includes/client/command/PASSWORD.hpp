@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NICK.hpp                                           :+:      :+:    :+:   */
+/*   PASSWORD.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/07 14:57:20 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 17:59:52 by emenella         ###   ########.fr       */
+/*   Created: 2022/05/09 17:27:37 by emenella          #+#    #+#             */
+/*   Updated: 2022/05/09 17:54:06 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "client/ACommand.hpp"
 
-class NICK : public ACommand
+class PASSWORD: public ACommand
 {
-	public:
-		NICK(Server *serv);
-		NICK(NICK const& src);
-		~NICK();
-		int execute(Client &clicli, ACommand::args_t::iterator begin, ACommand::args_t::iterator end);
+    public:
+        PASSWORD(Server *serv);
+        PASSWORD(PASSWORD const& src);
+        ~PASSWORD();
+        int execute(Client &clicli, args_t::iterator begin, args_t::iterator end);
 };

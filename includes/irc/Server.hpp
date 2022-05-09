@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 16:12:47 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:57:28 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "irc/Channel.hpp"
 #include "client/Client.hpp"
 #include "client/command/NICK.hpp"
+#include "client/command/PASSWORD.hpp"
 
 class Server: public SocketServer
 {

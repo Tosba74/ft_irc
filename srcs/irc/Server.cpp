@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 16:24:41 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:57:08 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password)
 {
 	_commandes["NICK"] = new NICK(this);
+	_commandes["PASSWORD"] = new PASSWORD(this);
 }
 
 Server::~Server() throw()

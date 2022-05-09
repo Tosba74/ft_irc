@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NICK.hpp                                           :+:      :+:    :+:   */
+/*   USER.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/07 14:57:20 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 17:59:52 by emenella         ###   ########.fr       */
+/*   Created: 2022/05/09 17:54:12 by emenella          #+#    #+#             */
+/*   Updated: 2022/05/09 18:18:06 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
 #include "client/ACommand.hpp"
+#include "client/Client.hpp"
+#include "irc/Server.hpp"
 
-class NICK : public ACommand
+class USER : public ACommand
 {
-	public:
-		NICK(Server *serv);
-		NICK(NICK const& src);
-		~NICK();
-		int execute(Client &clicli, ACommand::args_t::iterator begin, ACommand::args_t::iterator end);
+    public:
+        USER(Server *serv);
+        USER(USER const& src);
+        ~USER();
+        int execute(Client &clicli, args_t::iterator begin, args_t::iterator end);
 };
