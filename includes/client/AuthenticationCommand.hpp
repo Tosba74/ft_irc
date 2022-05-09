@@ -1,6 +1,5 @@
 #pragma once
 #include "client/ACommand.hpp"
-#include "client/Client.hpp"
 #include "irc/Server.hpp"
 
 class AuthenticationCommand : public ACommand

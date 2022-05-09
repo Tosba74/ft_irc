@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   USER.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:54:12 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/09 18:18:06 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/09 23:05:51 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/ACommand.hpp"
-#include "client/Client.hpp"
 #include "irc/Server.hpp"
 
 class USER : public ACommand
