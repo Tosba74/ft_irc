@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/07 16:29:17 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:24:41 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password)
 {
-	_commandes["NIMP"] = new NIMP(this);
 	_commandes["NICK"] = new NICK(this);
 }
 
@@ -24,7 +23,10 @@ Server::~Server() throw()
 	{
 		delete it->second;
 	}
-
+	for (CommandMap::iterator it = _commandes.begin(); it != _commandes.end(); ++it)
+	{
+		delete it->second;
+	}
 }
 
 std::string 	Server::getPassword() const
@@ -41,20 +43,26 @@ void Server::onConnection(int connectionFd, sockaddr_in& address)
 {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
+	std::cout << "New connection IRC from " << *tmp << std::endl;
     fdConnectionMap.insert(std::pair<int, Client*>(connectionFd, tmp));
-	std::cout << "New connection IRC from " << inet_ntoa(address.sin_addr) << ":" << address.sin_port << std::endl;
 }
 void Server::onDisconnection(Connection& connection)
 {
-	std::cout << "Disconnection IRC of " << connection.getAddr() << ":" << connection.getPort() << std::endl;
+	Client &client = static_cast<Client&>(connection);
+	std::cout << "Disconnection IRC of " << client << std::endl;
 	SocketServer::onDisconnection(connection);
 	fdConnectionMap.erase(connection.getSock());
 }
 void Server::onMessage(Connection& connection, std::string const& message)
 {
 	SocketServer::onMessage(connection, message);
-	std::cout << "Message IRC from " << connection.getAddr() << ":" << connection.getPort() << " = " << message << std::endl;
-	parseCommand(message, dynamic_cast<Client&>(connection));
+	if (message == "EXIT")
+	{
+		stop();
+	}
+	Client &client = static_cast<Client&>(connection);
+	std::cout << "Message from " << client << ": " << message << std::endl;
+	parseCommand(message, client);
 }
 
 void 		Server::parseCommand(std::string const &message, Client& client)

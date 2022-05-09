@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/07 13:44:27 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:33:56 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ NICK::~NICK()
 
 int NICK::execute(Client &clicli, args_t::iterator begin, args_t::iterator end)
 {
-	for (args_t::iterator it = begin; it != end; it++)
+	std::size_t len = std::distance(begin, end);
+	if (len < 2)
 	{
-		if (*it != "NICK")
-		{
-			clicli.setNickname(*(begin + 1));
-			break;
-		}
+		clicli << "Usage: NICK <nickname>\n";
+		return 0;
 	}
-	std::cout << "NICK: " << clicli.getUsername() << std::endl;
+	std::string nick = begin[1];
+	clicli.setNickname(nick);
 	return 0;
 }

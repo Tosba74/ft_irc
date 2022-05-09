@@ -160,3 +160,10 @@ void SocketServer::poll()
     if (ret == -1)
         throw SocketException("poll");
 }
+
+void SocketServer::listen()
+{
+    SocketListener::listen();
+    std::cout << "Listening on " << hostname << ":" << service << std::endl;
+
+}

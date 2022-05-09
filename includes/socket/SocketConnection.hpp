@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:14:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/04/25 14:22:55 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/09 16:20:26 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class SocketConnection: public Socket
         SocketConnection(int sock, sockaddr_in &addr) throw();
         SocketConnection(SocketConnection const &src) throw();
         SocketConnection &operator=(SocketConnection const &rhs);
-        ~SocketConnection();
+        virtual ~SocketConnection();
 
         std::string getAddr();
         socklen_t getAddrsize();
