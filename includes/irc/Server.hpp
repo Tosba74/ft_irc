@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 17:57:28 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:57:35 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,18 @@
 #include "client/Client.hpp"
 #include "client/command/NICK.hpp"
 #include "client/command/PASSWORD.hpp"
+#include "client/command/USER.hpp"
+#include "client/command/JOIN.hpp"
 
 class Server: public SocketServer
 {
 	typedef std::map<std::string, ACommand*> CommandMap;
+	typedef std::map<std::string, Channel*> ChannelMap;
 	private:
 		std::string		_password;
 		CommandMap 		_commandes;
+		ChannelMap 		_channels;
+		
 	public:
 		Server(int port, std::string password);
 		// Server(SocketServer const &src);
@@ -41,4 +46,7 @@ class Server: public SocketServer
 		void			onMessage(Connection& connection, std::string const& message);
 
 		void 			parseCommand(std::string const &message, Client& client);
+		int 			createChannel(std::string const &name);
+		int 			joinChannel(std::string const &name, Client& client);
+		int 			leaveChannel(std::string const &name, Client& client);
 };

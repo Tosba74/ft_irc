@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 17:57:08 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/10 18:30:10 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port)
 {
 	_commandes["NICK"] = new NICK(this);
 	_commandes["PASSWORD"] = new PASSWORD(this);
+	_commandes["USER"] = new USER(this);
+	_commandes["JOIN"] = new JOIN(this);
 }
 
 Server::~Server() throw()
@@ -66,7 +68,7 @@ void Server::onMessage(Connection& connection, std::string const& message)
 	parseCommand(message, client);
 }
 
-void 		Server::parseCommand(std::string const &message, Client& client)
+void Server::parseCommand(std::string const &message, Client& client)
 {
 	size_t i = 0;
 	size_t pos;
@@ -85,4 +87,34 @@ void 		Server::parseCommand(std::string const &message, Client& client)
 		command->execute(client, str.begin(), str.end());
 	}
 	
+}
+
+int Server::createChannel(std::string const &name)
+{
+	if (_channels.find(name) == _channels.end())
+	{
+		_channels.insert(std::pair<std::string, Channel*>(name, new Channel(name)));
+		return 1;
+	}
+	return 0;
+}
+
+int Server::joinChannel(std::string const &name, Client& client)
+{
+	if (_channels.find(name) != _channels.end())
+	{
+		_channels.at(name)->addClient(client);
+		return 1;
+	}
+	return 0;
+}
+
+int Server::leaveChannel(std::string const &name, Client& client)
+{
+	if (_channels.find(name) != _channels.end())
+	{
+		_channels.at(name)->removeClient(client);
+		return 1;
+	}
+	return 0;
 }

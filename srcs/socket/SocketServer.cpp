@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   SocketServer.cpp                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
+/*   Updated: 2022/05/10 18:38:43 by emenella         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "socket/SocketServer.hpp"
 
 SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT)
@@ -156,6 +168,7 @@ void SocketServer::popFd(int fd)
 
 void SocketServer::poll()
 {
+    std::cout << "Waiting Resquest" << std::endl;
     int ret = ::poll((pollfd *)&pollFds[0], pollFds.size(), -1);
     if (ret == -1)
         throw SocketException("poll");

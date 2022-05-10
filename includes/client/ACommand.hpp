@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 18:00:10 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:27:02 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ class Server;
 
 class ACommand
 {
-
     protected:
         Server *                _serv;
         typedef std::vector<std::string> args_t;

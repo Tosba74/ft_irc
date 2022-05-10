@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   AuthenticationCommand.cpp                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/10 16:28:08 by emenella          #+#    #+#             */
+/*   Updated: 2022/05/10 18:44:12 by emenella         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "client/AuthenticationCommand.hpp"
+#include "irc/Server.hpp"
 
 AuthenticationCommand::AuthenticationCommand(Server *serv): ACommand(serv)
 {
@@ -34,6 +47,10 @@ int AuthenticationCommand::execute(Client &clicli, args_t::iterator begin, args_
         return 0;
     }
     if (clicli.getPassword() == _serv->getPassword())
+    {
+        clicli.setRegister(true);
         return 1;
+    }
+    clicli.setRegister(false);
     return -1;
 }
