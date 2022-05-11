@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/10 18:38:43 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:37:01 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,15 @@ void SocketServer::receiveAndSend(Connection &connection)
     {
         std::string message;
         connection >> message;
-        for (size_t i = 0; i < message.size(); i++)
+        while (!message.empty())
         {
-            if (message[i] == '\n')
+            size_t pos = message.find("\r\n");
+            if (pos != std::string::npos)
             {
-                onMessage(connection, message.substr(0, i));
-                message = message.substr(i + 1);
-                i = 0;
+                onMessage(connection, message.substr(0, pos));
+                message.erase(0, pos + 2);
             }
         }
-        message.clear();
     }
     catch (SocketException const& e)
     {
