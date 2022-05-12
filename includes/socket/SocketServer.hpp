@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketServer.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 16:08:51 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:01:39 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,12 @@
 
 class SocketServer: public SocketListener
 {
-     private:
-        int isRunning;
-        void pushFd(int fd, int events);
-        void popFd(int fd);
-    protected:
+    public:
         typedef SocketConnection                Connection;
         typedef	std::pair<int, Connection*>     ConnectionPair;
 	    typedef	std::map<int, Connection*>		ConnectionMap;
 	    typedef	std::queue<int>					ConnectionQueue;
-
-        std::string                             hostname;
-        int                                     service;
         
-        struct sockaddr_in                      addr;
-        socklen_t                               addrsize;
-        ConnectionMap		                    fdConnectionMap;
-	    ConnectionQueue		                    disconnectedFds;
-
-        std::vector<pollfd>                     pollFds;
-        int                                     timeout;
-
-
-
-    public:
         SocketServer(std::string const& hostname, int service);
         SocketServer(SocketServer const &src);
         SocketServer &operator=(SocketServer const &rhs);
@@ -59,4 +41,22 @@ class SocketServer: public SocketListener
         void receiveAndSend(Connection& connection);
         void poll();
         void listen();
+     private:
+        int isRunning;
+        void pushFd(int fd, int events);
+        void popFd(int fd);
+    protected:
+        std::string                             hostname;
+        int                                     service;
+        
+        struct sockaddr_in                      addr;
+        socklen_t                               addrsize;
+        ConnectionMap		                    fdConnectionMap;
+	    ConnectionQueue		                    disconnectedFds;
+
+        std::vector<pollfd>                     pollFds;
+        int                                     timeout;
+
+
+
 };

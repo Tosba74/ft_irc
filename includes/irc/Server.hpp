@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/10 16:57:35 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:14:56 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ class Server: public SocketServer
 		
 	public:
 		Server(int port, std::string password);
-		// Server(SocketServer const &src);
-		// Server &operator=(SocketServer const &rhs);
 		~Server() throw();
 
 		std::string 	getPassword() const;
@@ -49,4 +47,6 @@ class Server: public SocketServer
 		int 			createChannel(std::string const &name);
 		int 			joinChannel(std::string const &name, Client& client);
 		int 			leaveChannel(std::string const &name, Client& client);
+		ConnectionMap::const_iterator begin() const;
+		ConnectionMap::const_iterator end() const;
 };

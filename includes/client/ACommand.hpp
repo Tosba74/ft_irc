@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ACommand.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/10 17:27:02 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:24:04 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <vector>
 #include <iostream>
 #include "client/Client.hpp"
+#include "client/REPLY.hpp"
 
 class Server;
 

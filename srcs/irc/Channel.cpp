@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/10 16:50:33 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:54:30 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ Channel::Channel(std::string name) : _name(name)
 Channel::Channel(Channel const &src)
 {
 	*this = src;
-	for (std::map<int, Client&>::const_iterator it = src.getClients().begin(); it != src.getClients().end(); ++it)
-		_clients.insert(std::pair<int, Client&>(it->first, it->second));
+	for (clients_t::const_iterator it = src.begin(); it != src.end(); it++)
+		_clients.insert(std::pair<int, Client>(it->first, it->second));
 }
 Channel & Channel::operator=(Channel const &rhs)
 {
 	if (this != &rhs)
 	{
 		_name = rhs._name;
-		for (std::map<int, Client&>::const_iterator it = rhs.getClients().begin(); it != rhs.getClients().end(); ++it)
-			_clients.insert(std::pair<int, Client&>(it->first, it->second));
+		for (clients_t::const_iterator it = rhs.begin(); it != rhs.end(); ++it)
+			_clients.insert(std::pair<int, Client>(it->first, it->second));
 	}
 	return *this;
 }
@@ -36,13 +36,19 @@ Channel::~Channel()
 {
 }
 
-std::string	const&				Channel::getName() const
+std::string	const				Channel::getName() const
 {
 	return _name;
 }
-std::map<int, Client&> const&	Channel::getClients() const
+
+std::map<int, Client>::const_iterator Channel::begin() const
 {
-	return _clients;
+	return _clients.begin();
+}
+
+std::map<int, Client>::const_iterator Channel::end() const
+{
+	return _clients.end();
 }
 
 void							Channel::setName(std::string name)
@@ -51,10 +57,10 @@ void							Channel::setName(std::string name)
 }
 void							Channel::addClient(Client& client)
 {
-	for (std::map<int, Client&>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+	for (clients_t::iterator it = _clients.begin(); it != _clients.end(); ++it)
 		if (it->second == client)
 			return ;
-	_clients.insert(std::pair<int, Client&>(client.getSock(), client));
+	_clients.insert(std::pair<int, Client>(client.getSock(), client));
 }
 void							Channel::removeClient(Client& client)
 {
@@ -64,7 +70,7 @@ void							Channel::removeClient(Client& client)
 std::ostream&                       operator<<(std::ostream& o, Channel const& rhs)
 {
 	o << "Channel [" << rhs.getName() << "]:" << std::endl;
-	for (std::map<int, Client&>::const_iterator it = rhs.getClients().begin(); it != rhs.getClients().end(); ++it)
+	for (std::map<int, Client>::const_iterator it = rhs.begin(); it != rhs.end(); ++it)
 		o << "\t" << it->second.getNickname() << "(" << it->first << ")"<< std::endl;
 	return o;
 }

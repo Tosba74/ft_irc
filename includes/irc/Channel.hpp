@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/10 16:41:43 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:54:37 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ class Client;
 
 class Channel
 {
+	typedef std::map<int, Client> clients_t;
 	private:
 		std::string					_name;
-		std::map<int, Client&>		_clients;
+		clients_t					_clients;
 		
 	public:
 		Channel(std::string name);
@@ -29,8 +30,9 @@ class Channel
 		Channel &operator=(Channel const &rhs);
 		~Channel();
 		
-		std::string	const&				getName() const;
-		std::map<int, Client&> const&	getClients() const;
+		std::string	const				getName() const;
+		clients_t::const_iterator		begin() const;
+		clients_t::const_iterator		end() const;
 		
 		void							setName(std::string name);
 		void							addClient(Client& client);
