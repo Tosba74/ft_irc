@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NICK.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/12 15:24:19 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:08:44 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,21 @@ int NICK::unique_nick(std::string nick)
 
 int NICK::execute(Client &clicli, args_t::iterator begin, args_t::iterator end)
 {
-	std::size_t len = std::distance(begin, end);
-	if (len < 2)
+	if (clicli.getRegister())
 	{
-		clicli << "Usage: NICK <nickname>\n";
+		clicli << ERR_ALREADYREGISTRED;
 		return 0;
 	}
+	std::size_t len = std::distance(begin, end);
+	if (len < 2)
+		return 0;
 	std::string nick = begin[1];
 	if (unique_nick(nick))
+	{
 		clicli.setNickname(nick);
+		clicli.updateRegister();
+		return 1;
+	}
 	else
 		clicli << ERR_NICKNAMEINUSE;
 	return 0;

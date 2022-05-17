@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:18 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/10 16:28:19 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:30:08 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,20 @@ socklen_t SocketConnection::getAddrsize()
 
 void SocketConnection::flush()
 {
-    if (this->writeBuffer.size() > 0)
+    while (writeBuffer.find("\r\n") != std::string::npos)
     {
-        ::write(this->sock, this->writeBuffer.c_str(), this->writeBuffer.size());
-        this->writeBuffer.clear();
+        size_t pos = writeBuffer.find("\r\n");
+        if (pos != std::string::npos)
+        {
+            ::write(this->sock, writeBuffer.c_str(), pos);
+            writeBuffer.erase(0, pos + 2);
+        }
     }
 }
 
 int  SocketConnection::receive()
 {
-    char buffer[4096];
+    char buffer[4096 + 1];
     int  n;
 
     n = ::read(this->sock, buffer, 4096);
@@ -75,6 +79,7 @@ int  SocketConnection::receive()
 SocketConnection &SocketConnection::operator<<(std::string const &msg)
 {
     this->writeBuffer += msg;
+    this->writeBuffer += "\r\n";
     return *this;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/12 15:14:56 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:38:04 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "irc/Channel.hpp"
 #include "client/Client.hpp"
 #include "client/command/NICK.hpp"
-#include "client/command/PASSWORD.hpp"
+#include "client/command/PASS.hpp"
 #include "client/command/USER.hpp"
 #include "client/command/JOIN.hpp"
 

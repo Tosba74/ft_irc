@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/11 17:37:01 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:29:23 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void SocketServer::start()
                         if (connectionFd != -1)
                         {
                             onConnection(connectionFd, addr);
-
                         }
                     }
                     else
@@ -121,7 +120,7 @@ void SocketServer::receiveAndSend(Connection &connection)
     {
         std::string message;
         connection >> message;
-        while (!message.empty())
+        while (message.find("\r\n") != std::string::npos)
         {
             size_t pos = message.find("\r\n");
             if (pos != std::string::npos)

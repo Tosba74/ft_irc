@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/10 18:28:48 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:21:56 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,16 @@ std::ostream &                     operator<<(std::ostream & o, Client const &rh
 void							Client::setRegister(bool bool_)
 {
 	_register = bool_;
+}
+
+void Client::updateRegister()
+{
+	if (_register)
+		return ;
+    if (this->getNickname().empty() || this->getPassword().empty() || this->getUsername().empty() || this->getRealName().empty() || this->getHostname().empty())
+    {
+		return ;
+    }
+    this->setRegister(true);
+	*(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
 }

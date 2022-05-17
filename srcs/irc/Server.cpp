@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/12 15:14:52 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:38:14 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password)
 {
 	_commandes.insert(std::pair<std::string, ACommand*>("NICK", new NICK(this)));
-	_commandes.insert(std::pair<std::string, ACommand*>("PASSWORD", new PASSWORD(this)));
+	_commandes.insert(std::pair<std::string, ACommand*>("PASS", new PASS(this)));
 	_commandes.insert(std::pair<std::string, ACommand*>("USER", new USER(this)));
 	_commandes.insert(std::pair<std::string, ACommand*>("JOIN", new JOIN(this)));
 }

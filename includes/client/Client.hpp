@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/10 18:22:05 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:21:30 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 #include "irc/Channel.hpp"
 #include "socket/SocketConnection.hpp"
+#include "client/REPLY.hpp"
 
 class Channel;
 
@@ -60,6 +61,7 @@ class Client: public SocketConnection
         void                                readChannels() const;
         
         bool                                isInChannel(std::string name) const;
+        void                                updateRegister();
 };
 
 std::ostream&                       operator<<(std::ostream& o, Client const& rhs);

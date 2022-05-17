@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PASSWORD.cpp                                       :+:      :+:    :+:   */
+/*   PASS.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:56 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/10 16:27:57 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:37:39 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client/command/PASSWORD.hpp"
+#include "client/command/PASS.hpp"
 
-PASSWORD::PASSWORD(Server *serv) : ACommand(serv)
+PASS::PASS(Server *serv) : ACommand(serv)
 {
 
 }
 
-PASSWORD::PASSWORD(PASSWORD const& src) : ACommand(src)
+PASS::PASS(PASS const& src) : ACommand(src)
 {
     if (this != &src)
     {
@@ -25,19 +25,25 @@ PASSWORD::PASSWORD(PASSWORD const& src) : ACommand(src)
     }
 }
 
-PASSWORD::~PASSWORD()
+PASS::~PASS()
 {
 }
 
-int PASSWORD::execute(Client &clicli, args_t::iterator begin, args_t::iterator end)
+int PASS::execute(Client &clicli, args_t::iterator begin, args_t::iterator end)
 {
+    if (clicli.getRegister())
+	{
+		clicli << ERR_ALREADYREGISTRED;
+		return 0;
+	}
     std::size_t len = std::distance(begin, end);
     if (len < 2)
     {
-        clicli << "Usage: PASSWORD <password>\n";
+        clicli << ERR_NEEDMOREPARAMS("PASSWORD");
         return 0;
     }
     std::string pass = begin[1];
     clicli.setPassword(pass);
+    clicli.updateRegister();
     return 0;
 }

@@ -6,7 +6,7 @@
 #    By: emenella <emenella@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/05/10 16:57:46 by emenella         ###   ########.fr        #
+#    Updated: 2022/05/17 18:11:49 by emenella         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ NAME := ircserv
 FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
 FILES_USER			:= Client ACommand AuthenticationCommand
-FILES_COMMAND		:= NICK PASSWORD JOIN USER
+FILES_COMMAND		:= NICK PASS JOIN USER
 
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
 					${addprefix ${PATH_SOCK}/, ${FILES_SOCK}} \
@@ -42,7 +42,7 @@ OBJS				:= ${addprefix ${PATH_B}/, ${notdir ${SRCS:.cpp=.o}}}
 
 INC		:= -I${PATH_I}
 CC		:= g++
-FLAG	:= -Wall -Werror -Wextra
+FLAG	:= -Wall -Werror -Wextra -g3
 CPP_V	:= -std=c++98
 DEB		:= -D DEBUG=1
 FS		:= -g3 -fsanitize=address 

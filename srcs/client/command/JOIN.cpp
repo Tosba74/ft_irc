@@ -6,7 +6,7 @@
 /*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/10 18:19:21 by emenella         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:48:00 by emenella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ int JOIN::execute(Client &clicli, args_t::iterator begin, args_t::iterator end)
     {
         _serv->createChannel(begin[1]);
         _serv->joinChannel(begin[1], clicli);
-    
         
     }
     else
     {
-        clicli << "You must be authenticated to join a channel\n";
+        clicli << ERR_NOTREGISTERED;
     }
     return 0;
 }
