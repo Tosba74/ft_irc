@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketServer.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/11 17:37:01 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:08:09 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,23 @@ void SocketServer::start()
     isRunning = true;
     while (isRunning)
     {
-        
         poll();
         try
         {
             std::vector<pollfd>::iterator ite = pollFds.end();
             for (std::vector<pollfd>::iterator it = pollFds.begin(); it != ite; ++it)
             {
-                if (it->revents & POLLHUP)
-                {
+                if (it->revents & POLLHUP) {
                     Connection *connection = fdConnectionMap.at(it->fd);
                     if (connection)
                         onDisconnection(*connection);
-                }
-                else if (it->revents & POLLIN)
-                {
-                    if (it->fd == sock)
-                    {
+                } else if (it->revents & POLLIN) {
+                    if (it->fd == sock) {
                         int connectionFd = accept(addr);
-                        if (connectionFd != -1)
-                        {
+                        if (connectionFd != -1) {
                             onConnection(connectionFd, addr);
-
                         }
-                    }
-                    else
-                    {
+                    } else {
                         Connection* connection = fdConnectionMap[it->fd];
                         receiveAndSend(*connection);
                     }
@@ -110,8 +101,7 @@ void SocketServer::start()
     }
 }
 
-void SocketServer::stop()
-{
+void SocketServer::stop() {
     isRunning = false;
 }
 
@@ -126,6 +116,7 @@ void SocketServer::receiveAndSend(Connection &connection)
             size_t pos = message.find("\r\n");
             if (pos != std::string::npos)
             {
+                std::cout << "\e[32m" << message << "\e[0m" << std::endl;
                 onMessage(connection, message.substr(0, pos));
                 message.erase(0, pos + 2);
             }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PASSWORD.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:37 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/09 17:54:06 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:48:39 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ class PASSWORD: public ACommand
         PASSWORD(Server *serv);
         PASSWORD(PASSWORD const& src);
         ~PASSWORD();
-        int execute(Client &clicli, args_t::iterator begin, args_t::iterator end);
+        int     execute(Client &clicli, args_t::iterator begin, args_t::iterator end);
 };

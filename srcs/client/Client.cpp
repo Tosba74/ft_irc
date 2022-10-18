@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/18 14:01:10 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/18 18:41:09 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void Client::updateRegister()
     this->setRegister(true);
 	std::string tmp = RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
 	std::cout << "\e[32m" << tmp << "\e[0m" << std::endl;
-	send(getSock(), tmp.c_str(), tmp.length(), 0);
+	// std::string tmp = "\e[32m" + "001 " + _nickname + " :Welcome to the Internet Relay Network " + _nickname + "!" + _username + "@" + _hostname << "\e[0m" << std::endl;
+	// send(getSock(), tmp.c_str(), tmp.length(), 0);
 	// *(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
 }
 
