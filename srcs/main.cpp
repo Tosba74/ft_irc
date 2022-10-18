@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:38 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/11 17:26:02 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:32:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int main(int ac, char **av)
 {
     (void)ac;
     (void)av;
+    if (ac != 3) {
+        std::cout << "Usage: ./ircserv [PORT] password" << std::endl << "ex: ./ircserv 6667 ****" << std::endl;
+        return 1;
+    }
     try
     {
         Server server(std::atoi(av[1]), av[2]);

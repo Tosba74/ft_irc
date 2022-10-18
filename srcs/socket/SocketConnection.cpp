@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketConnection.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:18 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/10 16:28:19 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/17 20:26:06 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ socklen_t SocketConnection::getAddrsize()
 
 void SocketConnection::flush()
 {
-    if (this->writeBuffer.size() > 0)
-    {
+    if (this->writeBuffer.size() > 0) {
         ::write(this->sock, this->writeBuffer.c_str(), this->writeBuffer.size());
         this->writeBuffer.clear();
     }
@@ -66,8 +65,7 @@ int  SocketConnection::receive()
 
     n = ::read(this->sock, buffer, 4096);
     buffer[n] = '\0';
-    if (n > 0)
-    {
+    if (n > 0) {
         this->readBuffer += buffer;
     }
     return n;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ACommand.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/10 17:27:02 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/15 23:45:40 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 
 class Server;
 
-class ACommand
-{
+class ACommand {
     protected:
         Server *                _serv;
         typedef std::vector<std::string> args_t;
@@ -33,6 +32,6 @@ class ACommand
         ACommand& operator=(ACommand const& rhs);
         
         const Server *          getServ() const;
-        virtual int execute(Client &clicli, args_t::iterator begin, args_t::iterator end) = 0;
+        virtual int             execute(Client &clicli, args_t::iterator begin, args_t::iterator end) = 0;
 };
 

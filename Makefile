@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emenella <emenella@student.42.fr>          +#+  +:+       +#+         #
+#    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/05/10 16:57:46 by emenella         ###   ########.fr        #
+#    Updated: 2022/10/17 19:06:25 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,8 @@ FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
 					${addprefix ${PATH_U}/, ${FILES_USER}} \
 					${addprefix ${PATH_C}/, ${FILES_COMMAND}}
 
-SRCS				= ${addprefix ${PATH_S}/, ${addsuffix .cpp, ${FILES}}} main.cpp
-HEADER				:= ${addprefix ${PATH_I}/, ${addsuffix .hpp, ${FILES}}}
+SRCS				= ${addprefix ${PATH_S}/, ${addsuffix .cpp, ${FILES} main}}
+HEADER				:= ${addprefix ${PATH_I}/, ${addsuffix .hpp, ${FILES} client/REPLY}}
 OBJS				:= ${addprefix ${PATH_B}/, ${notdir ${SRCS:.cpp=.o}}}
 
 INC		:= -I${PATH_I}

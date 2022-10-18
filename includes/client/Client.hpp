@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/10 18:22:05 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/17 20:18:58 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
 #include <iostream>
+
 #include "irc/Channel.hpp"
+#include "client/REPLY.hpp"
 #include "socket/SocketConnection.hpp"
 
 class Channel;
@@ -60,6 +63,8 @@ class Client: public SocketConnection
         void                                readChannels() const;
         
         bool                                isInChannel(std::string name) const;
+        void                                updateRegister();
+        Client                              &operator<<(std::string const &reply);
 };
 
 std::ostream&                       operator<<(std::ostream& o, Client const& rhs);
