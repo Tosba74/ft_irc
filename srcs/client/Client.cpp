@@ -6,11 +6,12 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/18 18:41:09 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 15:58:21 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/Client.hpp"
+#include <string>
 
 Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr),
 											_nickname(""), _username(""),
@@ -74,18 +75,18 @@ void Client::updateRegister()
     if (this->getNickname().empty() || this->getPassword().empty() || this->getUsername().empty() || this->getRealName().empty() || this->getHostname().empty())
 		return ;
     this->setRegister(true);
-	std::string tmp = RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
-	std::cout << "\e[32m" << tmp << "\e[0m" << std::endl;
-	// std::string tmp = "\e[32m" + "001 " + _nickname + " :Welcome to the Internet Relay Network " + _nickname + "!" + _username + "@" + _hostname << "\e[0m" << std::endl;
-	// send(getSock(), tmp.c_str(), tmp.length(), 0);
-	// *(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
+	*(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
 }
 
 Client &Client::operator<<(std::string const &reply)
 {
-	std::string		msg = reply + "\n";
-	std::cout << "Message to " << *(this) << ": " << msg;
+	std::string		msg = _servername + " " + reply;
+	std::cout << "Reply : " << msg << std::endl;
 	SocketConnection::operator<<(msg);
 	flush();
+	// std::string		msg = reply + "\n";
+	// std::cout << "Message to " << *(this) << ": " << msg;
+	// SocketConnection::operator<<(msg);
+	// flush();
 	return *this;
 }

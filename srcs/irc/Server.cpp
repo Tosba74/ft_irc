@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/18 14:25:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 15:59:30 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,18 @@ void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 }
 
 void			Server::onDisconnection(Connection& connection) {
+	SocketServer::onDisconnection(connection);
 	Client &client = static_cast<Client&>(connection);
 	std::cout << "Disconnection IRC of " << client << std::endl;
-	SocketServer::onDisconnection(connection);
 	fdConnectionMap.erase(connection.getSock());
+	delete &client;
 }
 
 void			Server::onMessage(Connection& connection, std::string const& message) {
 	SocketServer::onMessage(connection, message);
 	if (message == "EXIT")
 		stop();
+	std::cout << "\e[31m" << message << std::endl;
 	Client &client = static_cast<Client&>(connection);
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	parseCommand(message, client);

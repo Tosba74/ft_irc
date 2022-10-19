@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketConnection.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:14:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 16:20:26 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/19 09:23:37 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ class SocketConnection: public Socket
 
         std::string getAddr();
         socklen_t getAddrsize();
-        int getPort();
+        int     getPort();
 
-        void flush();
-        int  receive();
-        int isConnected(){return this->getSock() != -1;}
+        void    flush();
+        int     receive();
+        int     isConnected(){return this->getSock() != -1;}
 
         SocketConnection &operator<<(std::string const &msg);
         SocketConnection &operator>>(std::string &msg);

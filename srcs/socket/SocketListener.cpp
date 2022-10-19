@@ -3,30 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   SocketListener.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:22 by emenella          #+#    #+#             */
-/*   Updated: 2022/05/10 16:28:23 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:29:06 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "socket/SocketListener.hpp"
 
-SocketListener::~SocketListener()
-{
+SocketListener::~SocketListener() {
     close();
     #ifdef DEBUG
         std::cout << "SocketListener::~SocketListener()" << std::endl;
     #endif
 }
 
-SocketListener::SocketListener(int type, int opt , int proto): Socket(type, opt, proto), listening(false)
-{
+SocketListener::SocketListener(int type, int opt , int proto): Socket(type, opt, proto), listening(false) {
     fcntl(sock, F_SETFL, opt | O_NONBLOCK);
 }
 
-void SocketListener::bind(std::string const& hostname, int service, int type)
-{
+void SocketListener::bind(std::string const& hostname, int service, int type) {
     if (listening)
         throw SocketException("Socket already listening");
     if (hostname.empty())
@@ -43,16 +40,14 @@ void SocketListener::bind(std::string const& hostname, int service, int type)
     listening = true;
 }
 
-void SocketListener::listen()
-{
+void SocketListener::listen() {
     if (!listening)
         throw SocketException("Socket not listening");
     if (::listen(this->sock, 5) == -1)
         throw SocketException("Socket listen failed");
 }
 
-int SocketListener::accept(sockaddr_in &clientAddr)
-{
+int SocketListener::accept(sockaddr_in &clientAddr) {
     socklen_t addrsize;
     int sock = ::accept(this->sock, (struct sockaddr *)&clientAddr, &addrsize);
     if (sock == -1)
@@ -60,7 +55,6 @@ int SocketListener::accept(sockaddr_in &clientAddr)
     return sock;
 }
 
-void SocketListener::close()
-{
+void SocketListener::close() {
     listening = false;
 }

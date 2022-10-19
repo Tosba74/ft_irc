@@ -12,8 +12,7 @@
 
 #include "client/ACommand.hpp"
 
-ACommand::ACommand(Server *serv) : _serv(serv)
-{
+ACommand::ACommand(Server *serv) : _serv(serv) {
 	// this->execute();
 }
 	// try
@@ -29,29 +28,24 @@ ACommand::ACommand(Server *serv) : _serv(serv)
         // std::cout << "Default Constructeur Called" << std::endl;
     // #endif
 // }
-ACommand::ACommand(ACommand const& src)  : _serv(src._serv)
-{
+ACommand::ACommand(ACommand const& src)  : _serv(src._serv) {
     #ifdef DEBUG
         std::cout << "Copy Constructeur Called" << std::endl;
     #endif
 }
-ACommand::~ACommand()
-{
+ACommand::~ACommand() {
     #ifdef DEBUG
         std::cout << "Destructeur Called" << std::endl;
     #endif
 }
 
-ACommand&   ACommand::operator=(ACommand const& rhs)
-{
-	if (this != &rhs)
-	{
+ACommand&   ACommand::operator=(ACommand const& rhs) {
+	if (this != &rhs) {
 		this->_serv = rhs._serv;
 	}
 	return *this;
 }
 
-const Server *				ACommand::getServ() const
-{
+const Server *				ACommand::getServ() const {
 	return this->_serv;
 }

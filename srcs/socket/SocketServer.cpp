@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/18 16:08:09 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 16:03:33 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	SocketServer::onDisconnection(Connection& connection)
         std::cout << "Disconnection from " << connection.getAddr()<< ":" << connection.getPort() << std::endl;
     #endif
     popFd(connection.getSock());
-    delete &connection;
 }
 
 void	SocketServer::onMessage(Connection& connection, std::string const& message)
@@ -105,67 +104,54 @@ void SocketServer::stop() {
     isRunning = false;
 }
 
-void SocketServer::receiveAndSend(Connection &connection)
-{
-    try
-    {
+void SocketServer::receiveAndSend(Connection &connection) {
+    try {
         std::string message;
         connection >> message;
-        while (!message.empty())
-        {
+        while (!message.empty()) {
             size_t pos = message.find("\r\n");
-            if (pos != std::string::npos)
-            {
-                std::cout << "\e[32m" << message << "\e[0m" << std::endl;
+            
+            if (pos != std::string::npos) {
                 onMessage(connection, message.substr(0, pos));
                 message.erase(0, pos + 2);
             }
         }
-    }
-    catch (SocketException const& e)
-    {
+    } catch (SocketException const& e) {
         std::cerr << e.what() << std::endl;
-    }
-    try
-    {
+    } try {
         connection.flush();
-    }
-    catch (SocketException const& e)
-    {
+    } catch (SocketException const& e) {
         std::cerr << e.what() << std::endl;
     }
 }
 
-void SocketServer::pushFd(int fd, int events)
-{
+void SocketServer::pushFd(int fd, int events) {
     pollfd pollfd;
     pollfd.fd = fd;
     pollfd.events = events;
     pollFds.push_back(pollfd);
 }
 
-void SocketServer::popFd(int fd)
-{
-    for (std::vector<pollfd>::iterator it = pollFds.begin(); it != pollFds.end(); ++it)
-    {
-        if (it->fd == fd)
-        {
+void SocketServer::popFd(int fd) {
+    for (std::vector<pollfd>::iterator it = pollFds.begin(); it != pollFds.end(); ++it) {
+        if (it->fd == fd) {
             pollFds.erase(it);
             break;
         }
     }
 }
 
-void SocketServer::poll()
-{
+void SocketServer::poll() {
     std::cout << "Waiting Resquest" << std::endl;
+    std::vector<pollfd>::iterator end = pollFds.end();
+    for (std::vector<pollfd>::iterator it = pollFds.begin(); it != end; ++it)
+        std::cout << "fd: " << it->fd << " events: " << it->events << " revents " << it->revents << std::endl;
     int ret = ::poll((pollfd *)&pollFds[0], pollFds.size(), -1);
     if (ret == -1)
         throw SocketException("poll");
 }
 
-void SocketServer::listen()
-{
+void SocketServer::listen() {
     SocketListener::listen();
     std::cout << "Listening on " << hostname << ":" << service << std::endl;
 
