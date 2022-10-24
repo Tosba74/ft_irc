@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.0.0"><zoom_level>9</zoom_level><help_text>                </help_text><element><id>UMLClass</id><coordinates><x>297</x><y>30</y><w>270</w><h>225</h></coordinates><panel_attributes>&lt;&lt;Socket&gt;&gt;
+<diagram program="umletino" version="15.0.0"><zoom_level>8</zoom_level><help_text>                </help_text><element><id>UMLClass</id><coordinates><x>440</x><y>8</y><w>240</w><h>200</h></coordinates><panel_attributes>&lt;&lt;Socket&gt;&gt;
 --
 private:
         virtual void close();
@@ -16,7 +16,7 @@ public:
         int getSock() const;
         void setSock(int sock);
 --
-	class SocketException: public std::exception;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>147</y><w>270</w><h>126</h></coordinates><panel_attributes>class SocketException
+	class SocketException: public std::exception;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>176</x><y>48</y><w>240</w><h>120</h></coordinates><panel_attributes>class SocketException
 public std::exception
 --
 private:
@@ -24,7 +24,7 @@ private:
 public:
 	SocketException(std::string const &amp;message) throw() :msg(message) {};
 	virtual ~SocketException() throw() {};
-	virtual const char *what() const throw();</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>261</x><y>210</y><w>54</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>40;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>297</x><y>291</y><w>270</w><h>234</h></coordinates><panel_attributes>&lt;&lt;SocketListener&gt;&gt;
+	virtual const char *what() const throw();</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>408</x><y>104</y><w>48</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>40;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>728</x><y>8</y><w>296</w><h>208</h></coordinates><panel_attributes>&lt;&lt;SocketListener&gt;&gt;
 public Socket
 --
 private:
@@ -42,7 +42,7 @@ int opt = SOCK_STREAM, int proto = IPPROTO_IP);
 int type = AF_INET);
         virtual void listen();
         virtual int accept(sockaddr_in &amp;clientAddr);
-        bool		isListening() const;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>30</y><w>333</w><h>315</h></coordinates><panel_attributes>&lt;&lt;SocketConnection&gt;&gt;
+        bool		isListening() const;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>256</y><w>304</w><h>280</h></coordinates><panel_attributes>&lt;&lt;SocketConnection&gt;&gt;
 public Socket
 --
 protected:
@@ -66,7 +66,7 @@ public:
     SocketConnection	&amp;operator&lt;&lt;(std::string const &amp;msg);
     SocketConnection	&amp;operator&gt;&gt;(std::string &amp;msg);
     bool				operator==(SocketConnection const &amp;rhs);
-    SocketConnection	&amp;operator=(SocketConnection const &amp;rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1026</x><y>30</y><w>333</w><h>468</h></coordinates><panel_attributes>&lt;&lt;SocketServer&gt;&gt;
+    SocketConnection	&amp;operator=(SocketConnection const &amp;rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1088</x><y>8</y><w>296</w><h>416</h></coordinates><panel_attributes>&lt;&lt;SocketServer&gt;&gt;
 public SocketListener
 --
 private:
@@ -101,7 +101,7 @@ public:
      void                stop();
      void                receiveAndSend(Connection&amp; connection);
      void                poll();
-     void                listen();</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>954</x><y>147</y><w>90</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>558</x><y>147</y><w>90</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1026</x><y>543</y><w>333</w><h>414</h></coordinates><panel_attributes>&lt;&lt;Server&gt;&gt;
+     void                listen();</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1016</x><y>112</y><w>88</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>200</y><w>24</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1088</x><y>520</y><w>296</w><h>368</h></coordinates><panel_attributes>&lt;&lt;Server&gt;&gt;
 public SocketServer
 --
 public:
@@ -132,7 +132,7 @@ Client&amp; client);
     int                 joinChannel(std::string const &amp;name,
 Client&amp; client);
     int                 leaveChannel(std::string const &amp;name,
-Client&amp; client);</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1179</x><y>489</y><w>27</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>417</y><w>333</w><h>252</h></coordinates><panel_attributes>&lt;&lt;Channel&gt;&gt;
+Client&amp; client);</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1224</x><y>416</y><w>24</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;130;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>736</x><y>408</y><w>296</w><h>224</h></coordinates><panel_attributes>&lt;&lt;Channel&gt;&gt;
 --
 private:
     std::string                            _name;
@@ -151,7 +151,7 @@ public:
      void                                             removeClient(Client&amp; client);
 --
      std::ostream&amp;                       operator&lt;&lt;(std::ostream&amp; o,
-Channel const&amp; rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>252</x><y>561</y><w>342</w><h>576</h></coordinates><panel_attributes>&lt;&lt; Client&gt;&gt;
+Channel const&amp; rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>608</y><w>304</w><h>512</h></coordinates><panel_attributes>&lt;&lt; Client&gt;&gt;
 public SocketConnection
 --
 private:
@@ -195,11 +195,10 @@ public:
     Client                              &amp;operator&lt;&lt;(std::string const &amp;reply);
 --
     std::ostream&amp;                       operator&lt;&lt;(std::ostream&amp; o,
-Client const&amp; rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>732</y><w>333</w><h>180</h></coordinates><panel_attributes>&lt;&lt; ACommand&gt;&gt;
+Client const&amp; rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>736</x><y>688</y><w>296</w><h>160</h></coordinates><panel_attributes>&lt;&lt; ACommand&gt;&gt;
 --
 protected:
 	Server *                _serv;
-	typedef std::vector&lt;std::string&gt; args_t;
 --
 public:
     ACommand(Server *serv);
@@ -208,4 +207,5 @@ public:
 --
     ACommand&amp;.     operator=(ACommand const&amp; rhs);
     Server const*      getServ() const;
-    virtual int              execute(Client &amp;clicli, std::vector) = 0;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>954</x><y>633</y><w>99</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>954</x><y>651</y><w>99</w><h>108</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;40;20;40;110;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>954</x><y>840</y><w>99</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>414</x><y>507</y><w>27</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>585</x><y>453</y><w>72</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>56;19;10;20;10;120</additional_attributes></element></diagram>
+    virtual int              execute(Client &amp;clicli, std::vector) = 0;
+    virtual void           descr() = 0;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1024</x><y>600</y><w>88</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1024</x><y>616</y><w>88</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;40;20;40;110;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>1024</x><y>784</y><w>88</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>528</y><w>24</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>696</x><y>440</y><w>64</w><h>192</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>56;19;30;20;30;230;10;230</additional_attributes></element><element><id>Relation</id><coordinates><x>776</x><y>936</y><w>208</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>236;19;10;20</additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>824</x><y>920</y><w>96</w><h>32</h></coordinates><panel_attributes>*Utilise ici*</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>776</x><y>1000</y><w>200</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>230;10;10;10</additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>824</x><y>976</y><w>96</w><h>32</h></coordinates><panel_attributes>*Inheritage*</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>104</y><w>72</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>70;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>696</x><y>120</y><w>416</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>496;19;450;20;450;190;10;190</additional_attributes></element></diagram>
