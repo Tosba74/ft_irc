@@ -6,7 +6,7 @@
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/10/24 15:45:15 by ahuber           ###   ########.fr        #
+#    Updated: 2022/10/24 16:12:36 by ahuber           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NAME := ircserv
 
 FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
-FILES_USER			:= Client ACommand AuthenticationCommand
+FILES_USER			:= Client ACommand
 FILES_COMMAND		:= NICK PASSWORD JOIN
 
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
