@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketServer.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
-/*   Updated: 2022/05/09 16:08:51 by emenella         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:12:07 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/poll.h>
 #include "socket/SocketConnection.hpp"
 #include "socket/SocketListener.hpp"
+#include "client/REPLY.hpp"
 
 #define TIMEOUT 3*60*1000
 
@@ -22,9 +23,10 @@
 class SocketServer: public SocketListener
 {
      private:
-        int isRunning;
-        void pushFd(int fd, int events);
-        void popFd(int fd);
+        int     isRunning;
+        void    pushFd(int fd, int events);
+        void    popFd(int fd);
+        
     protected:
         typedef SocketConnection                Connection;
         typedef	std::pair<int, Connection*>     ConnectionPair;
@@ -54,9 +56,9 @@ class SocketServer: public SocketListener
 	    virtual void		onDisconnection(Connection& connection);
 	    virtual void		onMessage(Connection& connection, std::string const& message);
 
-        void start();
-        void stop();
-        void receiveAndSend(Connection& connection);
-        void poll();
-        void listen();
+        void                start();
+        void                stop();
+        void                receiveAndSend(Connection& connection);
+        void                poll();
+        void                listen();
 };

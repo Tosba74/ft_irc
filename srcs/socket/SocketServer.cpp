@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/19 16:03:33 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 00:21:23 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	SocketServer::onMessage(Connection& connection, std::string const& message)
     (void)connection;
     if (message.empty())
         return;
+    connection << message;
     #ifdef DEBUG
         std::cout << "Message from " << connection.getAddr() << ":" << connection.getPort() << ": " << message << std::endl;
     #endif
@@ -77,16 +78,19 @@ void SocketServer::start()
             for (std::vector<pollfd>::iterator it = pollFds.begin(); it != ite; ++it)
             {
                 if (it->revents & POLLHUP) {
-                    Connection *connection = fdConnectionMap.at(it->fd);
+                    std::cout << "\e[31m" << 1 << "\e[0m" << std::endl;
+                    Connection* connection = fdConnectionMap[it->fd];
                     if (connection)
                         onDisconnection(*connection);
                 } else if (it->revents & POLLIN) {
+                    std::cout << "\e[31m" << 2 << "\e[0m" << std::endl;
                     if (it->fd == sock) {
+                        std::cout << "\e[31m" << 3 << "\e[0m" << std::endl;
                         int connectionFd = accept(addr);
-                        if (connectionFd != -1) {
+                        if (connectionFd != -1)
                             onConnection(connectionFd, addr);
-                        }
                     } else {
+                        std::cout << "\e[31m" << 4 << "\e[0m" << std::endl;
                         Connection* connection = fdConnectionMap[it->fd];
                         receiveAndSend(*connection);
                     }
@@ -101,6 +105,7 @@ void SocketServer::start()
 }
 
 void SocketServer::stop() {
+    std::cout << "Stopping ..." << std::endl;
     isRunning = false;
 }
 
@@ -108,7 +113,8 @@ void SocketServer::receiveAndSend(Connection &connection) {
     try {
         std::string message;
         connection >> message;
-        while (!message.empty()) {
+        std::cout << "\e[31m" << message << "\e[0m" << std::endl;
+        while (message.find("\r\n") != std::string::npos) {
             size_t pos = message.find("\r\n");
             
             if (pos != std::string::npos) {

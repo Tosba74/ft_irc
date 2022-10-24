@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/18 18:33:27 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/23 22:27:38 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ class Channel;
 class Server: public SocketServer
 {
 	public:
-		typedef std::map<std::string, ACommand*> CommandMap;
-		typedef std::map<std::string, Channel*> ChannelMap;
+		typedef std::map<std::string, ACommand*>	CommandMap;
+		typedef std::map<std::string, Channel*>		ChannelMap;
 	private:
 		std::string		_password;
 		CommandMap 		_commandes;

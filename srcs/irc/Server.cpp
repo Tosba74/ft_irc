@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/19 15:59:30 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 00:15:11 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,11 @@ void			Server::onDisconnection(Connection& connection) {
 }
 
 void			Server::onMessage(Connection& connection, std::string const& message) {
-	SocketServer::onMessage(connection, message);
 	if (message == "EXIT")
 		stop();
-	std::cout << "\e[31m" << message << std::endl;
 	Client &client = static_cast<Client&>(connection);
 	std::cout << "Message from " << client << ": " << message << std::endl;
+	SocketServer::onMessage(connection, message);
 	parseCommand(message, client);
 }
 

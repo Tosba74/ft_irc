@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:38 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/19 13:40:57 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/19 20:46:41 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int main(int ac, char **av) {
     }
     try {
         Server server(std::atoi(av[1]), av[2]);
-        std::cout << "go start" << std::endl;
         server.start();
-        std::cout << "pas la !" << std::endl;
     } catch(std::exception &e) {
         std::cerr << e.what() << std::endl;
     }

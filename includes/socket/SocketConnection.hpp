@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:14:43 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/19 09:23:37 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/21 14:45:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 class SocketConnection: public Socket
 {
     protected:
-        struct sockaddr_in addr;
-        socklen_t       addrsize;
-        std::string     writeBuffer;
+        struct sockaddr_in  addr;
+        socklen_t           addrsize;
+        std::string         writeBuffer;
+
     public:
         std::string     readBuffer;
+
         SocketConnection(int sock, sockaddr_in &addr) throw();
         SocketConnection(SocketConnection const &src) throw();
         SocketConnection &operator=(SocketConnection const &rhs);
