@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 12:12:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 15:46:31 by ahuber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
 	_commandes["PASSWORD"] = new PASSWORD(this);
-	_commandes["USER"] = new USER(this);
+//	_commandes["USER"] = new USER(this);
 	_commandes["JOIN"] = new JOIN(this);
 }
 
@@ -52,9 +52,9 @@ void			Server::onDisconnection(Connection& connection) {
 void			Server::onMessage(Connection& connection, std::string const& message) {
 	if (message == "EXIT")
 		stop();
-	if ()
-	tmp->updateRegister();
-	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
+//	if ()
+//	tmp->updateRegister();
+//	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
 	Client &client = static_cast<Client&>(connection);
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	SocketServer::onMessage(connection, message);
