@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// je sert a rien
 #include "irc/Server.hpp"
 #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
 #include <unistd.h>
@@ -18,8 +17,15 @@
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
 	_commandes["PASSWORD"] = new PASSWORD(this);
-//	_commandes["USER"] = new USER(this);
 	_commandes["JOIN"] = new JOIN(this);
+//	_commandes["USER"] = new USER(this);
+//	_commandes["LIST"] = new LIST(this);
+//	_commandes["HELP"] = new HELP(this);
+//	_commandes["KICK"] = new KICK(this);
+//	_commandes["QUIT"] = new QUIT(this);
+//	_commandes["BAN"] = new BAN(this);
+//	_commandes["OP"] = new OP(this);
+//	_commandes[""] = new (this);
 }
 
 Server::~Server() throw() {

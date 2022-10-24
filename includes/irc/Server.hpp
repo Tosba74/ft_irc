@@ -29,6 +29,7 @@ class Server: public SocketServer
 	public:
 		typedef std::map<std::string, ACommand*>	CommandMap;
 		typedef std::map<std::string, Channel*>		ChannelMap;
+
 	private:
 		std::string		_password;
 		CommandMap 		_commandes;
