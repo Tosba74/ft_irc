@@ -25,7 +25,6 @@ Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port)
 //	_commandes["QUIT"] = new QUIT(this);
 //	_commandes["BAN"] = new BAN(this);
 //	_commandes["OP"] = new OP(this);
-//	_commandes[""] = new (this);
 }
 
 Server::~Server() throw() {
