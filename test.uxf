@@ -1,0 +1,211 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>9</zoom_level><help_text>                </help_text><element><id>UMLClass</id><coordinates><x>297</x><y>30</y><w>270</w><h>225</h></coordinates><panel_attributes>&lt;&lt;Socket&gt;&gt;
+--
+private:
+        virtual void close();
+--
+protected:
+        int sock;
+--
+public:
+        Socket(int sock);
+        Socket(int type, int opt, int proto);
+        Socket(Socket const &amp;src);
+        virtual ~Socket();
+        virtual Socket &amp;operator=(Socket const &amp;rhs);
+--
+        int getSock() const;
+        void setSock(int sock);
+--
+	class SocketException: public std::exception;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>147</y><w>270</w><h>126</h></coordinates><panel_attributes>class SocketException
+public std::exception
+--
+private:
+	std::string msg;
+public:
+	SocketException(std::string const &amp;message) throw() :msg(message) {};
+	virtual ~SocketException() throw() {};
+	virtual const char *what() const throw();</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>261</x><y>210</y><w>54</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>40;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>297</x><y>291</y><w>270</w><h>234</h></coordinates><panel_attributes>&lt;&lt;SocketListener&gt;&gt;
+public Socket
+--
+private:
+        virtual void close();
+--
+protected:
+        bool		listening;
+--
+public:
+        SocketListener(int type = AF_INET,
+int opt = SOCK_STREAM, int proto = IPPROTO_IP);
+        virtual ~SocketListener();
+--
+        void bind(std::string const&amp; hostname, int service,
+int type = AF_INET);
+        virtual void listen();
+        virtual int accept(sockaddr_in &amp;clientAddr);
+        bool		isListening() const;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>30</y><w>333</w><h>315</h></coordinates><panel_attributes>&lt;&lt;SocketConnection&gt;&gt;
+public Socket
+--
+protected:
+    struct sockaddr_in	addr;
+    socklen_t			addrsize;
+    std::string		writeBuffer;
+--
+public:
+    std::string		readBuffer;
+--
+    SocketConnection(int sock, sockaddr_in &amp;addr) throw();
+    SocketConnection(SocketConnection const &amp;src) throw();
+    virtual ~SocketConnection();
+--
+    std::string			getAddr();
+    socklen_t			getAddrsize();
+    int				getPort();
+    void				flush();
+    int				receive();
+    int				isConnected();
+    SocketConnection	&amp;operator&lt;&lt;(std::string const &amp;msg);
+    SocketConnection	&amp;operator&gt;&gt;(std::string &amp;msg);
+    bool				operator==(SocketConnection const &amp;rhs);
+    SocketConnection	&amp;operator=(SocketConnection const &amp;rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1026</x><y>30</y><w>333</w><h>468</h></coordinates><panel_attributes>&lt;&lt;SocketServer&gt;&gt;
+public SocketListener
+--
+private:
+    int     isRunning;
+    void    pushFd(int fd, int events);
+    void    popFd(int fd);
+--
+protected:
+    typedef SocketConnection                         Connection;
+    typedef    std::pair&lt;int, Connection*&gt;       ConnectionPair;
+    typedef    std::map&lt;int, Connection*&gt;      ConnectionMap;
+    typedef    std::queue&lt;int&gt;                          ConnectionQueue;
+    std::hostname;
+    int                                                                    service;
+    struct sockaddr_in                                        addr;
+    socklen_t                                                        addrsize;
+    ConnectionMap		                                          fdConnectionMap;
+    ConnectionQueue		                                      disconnectedFds; 
+    std::vector&lt;pollfd&gt;                                       pollFds;
+    int                                                                    timeout;
+--
+public:
+    SocketServer(std::string const&amp; hostname, int service);
+    SocketServer(SocketServer const &amp;src);
+    SocketServer &amp;operator=(SocketServer const &amp;rhs);
+    ~SocketServer();
+--
+     virtual void.	onConnection(int connectionFd, sockaddr_in&amp; address);
+     virtual void	onDisconnection(Connection&amp; connection);
+     virtual void	onMessage(Connection&amp; connection, std::string const&amp; message);
+     void                start();
+     void                stop();
+     void                receiveAndSend(Connection&amp; connection);
+     void                poll();
+     void                listen();</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>954</x><y>147</y><w>90</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>558</x><y>147</y><w>90</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1026</x><y>543</y><w>333</w><h>414</h></coordinates><panel_attributes>&lt;&lt;Server&gt;&gt;
+public SocketServer
+--
+public:
+     typedef std::map&lt;std::string, ACommand*&gt;	CommandMap;
+     typedef std::map&lt;std::string, Channel*&gt;		ChannelMap;
+--
+private:
+     std::string           _password;
+     ChannelMap      _channels;
+     CommandMap   _commandes;
+--
+public:
+    Server(int port, std::string password);
+    // Server(SocketServer const &amp;src);
+    // Server &amp;operator=(SocketServer const &amp;rhs);
+    ~Server() throw();
+--
+    std::string     getPassword() const;
+    void              setPassword(std::string password);
+    void              onConnection(int connectionFd,
+sockaddr_in&amp; address);
+    void              onDisconnection(Connection&amp; connection);
+    void              onMessage(Connection&amp; connection,
+std::string const&amp; message);
+    void              parseCommand(std::string const &amp;message,
+Client&amp; client);
+    int                 createChannel(std::string const &amp;name);
+    int                 joinChannel(std::string const &amp;name,
+Client&amp; client);
+    int                 leaveChannel(std::string const &amp;name,
+Client&amp; client);</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1179</x><y>489</y><w>27</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>417</y><w>333</w><h>252</h></coordinates><panel_attributes>&lt;&lt;Channel&gt;&gt;
+--
+private:
+    std::string                            _name;
+    std::map&lt;int, Client&amp;&gt;	       _clients;
+--
+public:
+    Channel(std::string name);
+    Channel(Channel const &amp;src);
+    Channel &amp;operator=(Channel const &amp;rhs);
+    ~Channel();
+--
+     std::string const&amp;                        getName() const;
+     std::map&lt;int, Client&amp;&gt; const&amp;    getClients() const;
+     void                                             setName(std::string name);
+     void                                             addClient(Client&amp; client);
+     void                                             removeClient(Client&amp; client);
+--
+     std::ostream&amp;                       operator&lt;&lt;(std::ostream&amp; o,
+Channel const&amp; rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>252</x><y>561</y><w>342</w><h>576</h></coordinates><panel_attributes>&lt;&lt; Client&gt;&gt;
+public SocketConnection
+--
+private:
+    std::string                         _nickname;
+    std::string                         _username;
+    std::string                         _hostname;
+    std::string                         _servername;
+    std::string                         _realname;
+    std::string                         _password;
+    std::string                         _mode;
+    std::map&lt;std::string ,Channel*&gt;     _channels;
+    bool                                _register;
+    bool                                _op;
+--
+public:
+    Client(int sock, sockaddr_in &amp;addr);
+    Client(Client const &amp;src);
+    ~Client() throw();
+--
+    Client  &amp;operator=(Client const &amp;rhs);
+    void                                setNickname(std::string nickname);
+    void                                setUsername(std::string username);
+    void                                setHostname(std::string hostname);
+    void                                setServerName(std::string nameserver);
+    void                                setRealName(std::string realname);
+    void                                setPassword(std::string password);
+    void                                setRegister(bool register);
+    std::string                       getUsername() const;
+    std::string                       getNickname() const;
+    std::string                       getHostname() const;
+    std::string                       getNameServer() const;
+    std::string                       getRealName() const;
+    std::string                       getPassword() const;
+    std::string                       getMode() const;
+    std::map&lt;std::string ,Channel*&gt; getChannels() const;
+    bool                                getRegister() const;
+    bool                                getOp() const;    
+    void                                readChannels() const;    
+    bool                                isInChannel(std::string name) const;
+    void                                updateRegister();
+    Client                              &amp;operator&lt;&lt;(std::string const &amp;reply);
+--
+    std::ostream&amp;                       operator&lt;&lt;(std::ostream&amp; o,
+Client const&amp; rhs);</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>732</y><w>333</w><h>180</h></coordinates><panel_attributes>&lt;&lt; ACommand&gt;&gt;
+--
+protected:
+	Server *                _serv;
+	typedef std::vector&lt;std::string&gt; args_t;
+--
+public:
+    ACommand(Server *serv);
+    ACommand(ACommand const&amp; src);
+    virtual ~ACommand();
+--
+    ACommand&amp;.     operator=(ACommand const&amp; rhs);
+    Server const*      getServ() const;
+    virtual int              execute(Client &amp;clicli, std::vector) = 0;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>954</x><y>633</y><w>99</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>954</x><y>651</y><w>99</w><h>108</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;40;20;40;110;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>954</x><y>840</y><w>99</w><h>27</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>86;19;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>414</x><y>507</y><w>27</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>585</x><y>453</y><w>72</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>56;19;10;20;10;120</additional_attributes></element></diagram>
