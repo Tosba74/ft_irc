@@ -6,11 +6,13 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 00:15:11 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/24 13:13:53 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
+#include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
+#include <unistd.h>
 
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
@@ -34,6 +36,8 @@ void			Server::setPassword(std::string password) { _password = password; }
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
+	tmp->updateRegister();
+	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
 	std::cout << "New connection IRC from " << *tmp << std::endl;
     fdConnectionMap.insert(std::pair<int, Client*>(connectionFd, tmp));
 }
@@ -50,6 +54,10 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 	if (message == "EXIT")
 		stop();
 	Client &client = static_cast<Client&>(connection);
+	// if (client.updateRegister()) {
+		// client->updateRegister();
+		// client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
+	// }
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	SocketServer::onMessage(connection, message);
 	parseCommand(message, client);
