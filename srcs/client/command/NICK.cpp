@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 15:38:46 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/24 23:45:11 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ NICK::NICK(Server *serv) : ACommand(serv) {}
 
 NICK::~NICK() {}
 
-int NICK::execute(Client &clicli, args_t::iterator begin, args_t::iterator end) {
-	std::size_t len = std::distance(begin, end);
+int NICK::execute(Client &clicli, std::vector<std::string> args) {
+	std::size_t len = std::distance(args.begin(), args.end());
 	if (len < 2)
 	{
 		clicli << "Usage: NICK <nickname>\n";
 		return 0;
 	}
-	std::string nick = begin[1];
+	std::string nick = args[1];
 	clicli.setNickname(nick);
 	return 0;
 }

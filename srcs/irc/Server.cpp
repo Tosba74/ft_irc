@@ -6,11 +6,21 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 15:55:07 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/24 23:49:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
+#include "client/command/NICK.hpp"
+#include "client/command/JOIN.hpp"
+#include "client/command/PASSWORD.hpp"
+// #include "client/command/USER.hpp"
+// #include "client/command/LIST.hpp"
+// #include "client/command/HELP.hpp"
+// #include "client/command/KICK.hpp"
+// #include "client/command/QUIT.hpp"
+// #include "client/command/BAN.hpp"
+// #include "client/command/OP.hpp"
 #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
 #include <unistd.h>
 
@@ -85,7 +95,7 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 	CommandMap::iterator it = _commandes.find(str[0]);
 	if (it != _commandes.end()) {
 		ACommand *command = it->second;
-		command->execute(client, str.begin(), str.end());
+		command->execute(client, str);
 	}
 }
 

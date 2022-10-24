@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   JOIN.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emenella <emenella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:24 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 15:41:08 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/24 23:42:20 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@
 
 class JOIN : public ACommand
 {
-    typedef std::vector<std::string> args_t;
     public:
         JOIN(Server *serv);
         JOIN(JOIN const& src);
         ~JOIN();
-        int execute(Client &clicli, args_t::iterator begin, args_t::iterator end);
+        int execute(Client &clicli, std::vector<std::string> args);
 };

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:37 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 15:37:56 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/24 23:41:31 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ class PASSWORD: public ACommand
         PASSWORD(Server *serv);
         PASSWORD(PASSWORD const& src);
         ~PASSWORD();
-        int     execute(Client &clicli, args_t::iterator begin, args_t::iterator end);
+        int     execute(Client &clicli, std::vector<std::string> args);
 };
