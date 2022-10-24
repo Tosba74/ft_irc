@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// je sert a rien
 #include "irc/Server.hpp"
 #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
 #include <unistd.h>
