@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/25 16:31:39 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 16:36:17 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ Server::~Server() throw() {
 std::string 	Server::getPassword() const { return _password; }
 void			Server::setPassword(std::string password) { _password = password; }
 
+// Le nouveau clents aparait-t-il dans un channel("global") ?
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
@@ -70,13 +71,10 @@ void			Server::onDisconnection(Connection& connection) {
 void			Server::onMessage(Connection& connection, std::string const& message) {
 	if (message == "EXIT")
 		stop();
-//	if ()
-//	tmp->updateRegister();
-//	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
 	Client &client = static_cast<Client&>(connection);
-	// if (client.updateRegister()) {
-		// client->updateRegister();
-		// client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
+	client.updateRegister();
+	if (client.getRegister() == true)
+		client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
 	// }
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	SocketServer::onMessage(connection, message);
