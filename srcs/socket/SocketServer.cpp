@@ -6,38 +6,33 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/25 17:26:49 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:37:03 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "socket/SocketServer.hpp"
 
-SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT)
-{
+SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT) {
    pushFd(sock, POLLIN);
 }
 
-SocketServer::SocketServer(SocketServer const &src): SocketListener(src)
-{
+SocketServer::SocketServer(SocketServer const &src): SocketListener(src) {
     pushFd(src.sock, POLLIN);
 }
 
-SocketServer &SocketServer::operator=(SocketServer const &rhs)
-{
+SocketServer &SocketServer::operator=(SocketServer const &rhs) {
     SocketListener::operator=(rhs);
     return *this;
 }
 
-SocketServer::~SocketServer()
-{
+SocketServer::~SocketServer() {
     popFd(sock);
     #ifdef DEBUG
         std::cout << "SocketServer::~SocketServer()" << std::endl;
     #endif
 }
 
-void	SocketServer::onConnection(int connectionFd, sockaddr_in& address)
-{
+void	SocketServer::onConnection(int connectionFd, sockaddr_in& address) {
     (void)address;
     #ifdef DEBUG
         std::cout << "New connection from " << inet_ntoa(address.sin_addr) << ":" << ntohs(address.sin_port) << std::endl;
@@ -45,17 +40,14 @@ void	SocketServer::onConnection(int connectionFd, sockaddr_in& address)
     pushFd(connectionFd, POLLIN | POLLHUP);
 }
 
-void	SocketServer::onDisconnection(Connection& connection)
-{
+void	SocketServer::onDisconnection(Connection& connection) {
     #ifdef DEBUG
         std::cout << "Disconnection from " << connection.getAddr()<< ":" << connection.getPort() << std::endl;
     #endif
     popFd(connection.getSock());
 }
 
-void	SocketServer::onMessage(Connection& connection, std::string const& message)
-{
-    std::cout << "bah voila !?" << std::endl;
+void	SocketServer::onMessage(Connection& connection, std::string const& message) {
     (void)connection;
     if (message.empty())
         return;
@@ -65,8 +57,7 @@ void	SocketServer::onMessage(Connection& connection, std::string const& message)
     #endif
 }
 
-void SocketServer::start()
-{
+void SocketServer::start() {
     bind(this->hostname, this->service);
     listen();
     isRunning = true;

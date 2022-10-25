@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/25 16:53:48 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:31:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ NICK::NICK(Server *serv) : ACommand(serv) {}
 NICK::~NICK() {}
 
 int NICK::execute(Client &clicli, std::vector<std::string> args) {
-    std::cout << "jss la !" << std::endl;
+    std::cout << "jss dans NICK!" << std::endl;
 	std::size_t len = std::distance(args.begin(), args.end());
 	if (len < 2)
 	{
