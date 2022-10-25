@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/25 20:22:38 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 21:55:27 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,10 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 	if (it != _commandes.end()) {
 		std::cout << "sa passe" << std::endl;
 		ACommand *command = it->second;
-		if (str[1].compare("-help") == true) {
-			command->descr();
-		} else {
+		if (str[1].compare("-help") == true)
+			command->descr(client);
+		else
 			command->execute(client, str);
-		}
 	}
 }
 

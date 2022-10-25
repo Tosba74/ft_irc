@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:56 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/25 18:59:27 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 21:58:21 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,6 @@ int PASSWORD::execute(Client &clicli, std::vector<std::string> args) {
     return 0;
 }
 
-void    PASSWORD::descr(void) {}
+void    PASSWORD::descr(Client& clicli) {
+    (void)clicli;
+}

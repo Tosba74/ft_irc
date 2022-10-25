@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:24 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/25 18:58:51 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 21:56:45 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ class JOIN : public ACommand {
         JOIN(JOIN const& src);
         ~JOIN();
         int     execute(Client &clicli, std::vector<std::string> args);
-        void    descr(void);
+        void    descr(Client& clicli);
 };

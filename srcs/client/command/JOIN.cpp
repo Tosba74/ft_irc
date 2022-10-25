@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/25 18:57:50 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 21:59:27 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     return 0;
 }
 
-void    JOIN::descr(void) {
-    std::cout << "\e[31mExemple\e[0m" << std::endl;
+void    JOIN::descr(Client& clicli) {
+    clicli << "\e[31mExemple\e[0m\n";
 }

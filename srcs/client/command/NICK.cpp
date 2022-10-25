@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/25 18:59:34 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 21:57:48 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,6 @@ int NICK::execute(Client &clicli, std::vector<std::string> args) {
 	return 0;
 }
 
-void    NICK::descr(void) {}
+void    NICK::descr(Client& clicli) {
+	(void)clicli;
+};
