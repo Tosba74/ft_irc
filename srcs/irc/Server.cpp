@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 23:49:16 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 15:19:45 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
 	tmp->updateRegister();
-	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
+	if (tmp->getRegister() == true)
+		*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
 	std::cout << "New connection IRC from " << *tmp << std::endl;
     fdConnectionMap.insert(std::pair<int, Client*>(connectionFd, tmp));
 }
@@ -108,10 +109,9 @@ int				Server::createChannel(std::string const &name) {
 }
 
 int				Server::joinChannel(std::string const &name, Client& client) {
-	if (_channels.find(name) != _channels.end()) {
-		_channels.at(name)->addClient(client);
-		return 1;
-	}
+	if (_channels.find(name) == _channels.end())
+		createChannel(name);	
+	_channels.at(name)->addClient(client);
 	return 0;
 }
 

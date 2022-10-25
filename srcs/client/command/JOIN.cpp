@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/25 15:10:21 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 15:22:24 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@ JOIN::~JOIN() {}
 
 int JOIN::execute(Client &clicli, std::vector<std::string> args)
 {
-	//int ret = AuthenticationCommand::execute(clicli, begin, end);
-    if (clicli->getRegister() == true) {
-        _serv->createChannel(args[1]);
+    if (clicli.getRegister() == true)
         _serv->joinChannel(args[1], clicli);
-    } else {
+    else
         clicli << "You must be authenticated to join a channel\n";
-    }
     return 0;
 }
