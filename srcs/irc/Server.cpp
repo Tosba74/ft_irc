@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/25 17:43:29 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 20:22:38 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 }
 
 void			Server::parseCommand(std::string const &message, Client& client) {
-    std::cout << "\e[34m" << "youpi sa parse !" << std::endl;
 	size_t i = 0;
 	size_t pos;
 	std::vector<std::string> str;
@@ -90,17 +89,25 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 		str.push_back(message.substr(i, pos - i));
 		i = pos + 1;
 	}
-	str.push_back(message.substr(i));
+	str.push_back(message.substr(i, pos - i));
+	
 	//print split
-	std::cout << "split :" << std::endl;
+	std::cout << "\e[34msplit :" << std::endl;
 	for (std::vector<std::string>::iterator it = str.begin(); it != str.end(); ++it)
 		std::cout << *it << std::endl;	
+	std::cout << "**********" << std::endl;	
 	std::cout << "\e[0m";
 	
 	CommandMap::iterator it = _commandes.find(str[0]);
+	std::cout << str[0] << std::endl;
 	if (it != _commandes.end()) {
+		std::cout << "sa passe" << std::endl;
 		ACommand *command = it->second;
-		command->execute(client, str);
+		if (str[1].compare("-help") == true) {
+			command->descr();
+		} else {
+			command->execute(client, str);
+		}
 	}
 }
 

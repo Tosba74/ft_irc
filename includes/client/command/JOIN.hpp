@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:24 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 23:42:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 18:58:51 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "client/ACommand.hpp"
 #include "irc/Channel.hpp"
 
-class JOIN : public ACommand
-{
+class JOIN : public ACommand {
     public:
         JOIN(Server *serv);
         JOIN(JOIN const& src);
         ~JOIN();
-        int execute(Client &clicli, std::vector<std::string> args);
+        int     execute(Client &clicli, std::vector<std::string> args);
+        void    descr(void);
 };

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/25 16:49:17 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 18:31:39 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,5 @@ Client &Client::operator<<(std::string const &reply)
 	std::cout << "\e[33m" << "Reply : " << "\e[0m" << msg;
 	SocketConnection::operator<<(msg);
 	flush();
-	// std::string		msg = reply + "\n";
-	// std::cout << "Message to " << *(this) << ": " << msg;
-	// SocketConnection::operator<<(msg);
-	// flush();
 	return *this;
 }
