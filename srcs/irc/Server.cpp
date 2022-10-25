@@ -53,6 +53,7 @@ Server::~Server() throw() {
 std::string 	Server::getPassword() const { return _password; }
 void			Server::setPassword(std::string password) { _password = password; }
 
+// Le nouveau clents aparait-t-il dans un channel("global") ?
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
@@ -73,9 +74,6 @@ void			Server::onDisconnection(Connection& connection) {
 void			Server::onMessage(Connection& connection, std::string const& message) {
 	if (message == "EXIT")
 		stop();
-//	if ()
-//	tmp->updateRegister();
-//	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
 	Client &client = static_cast<Client&>(connection);
 	client.updateRegister();
 	if (client.getRegister() == true)
