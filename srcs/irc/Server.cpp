@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/25 16:45:34 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:07:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,25 @@ void			Server::onDisconnection(Connection& connection) {
 }
 
 void			Server::onMessage(Connection& connection, std::string const& message) {
+    std::cout << "oui!?" << std::endl;
 	if (message == "EXIT")
 		stop();
+    std::cout << "oui!?" << std::endl;
 	Client &client = static_cast<Client&>(connection);
+    std::cout << "oui!?" << std::endl;
 	client.updateRegister();
 	if (client.getRegister() == true)
 		client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
+    std::cout << "oui!?" << std::endl;
 	// }
+    std::cout << "oui!?" << std::endl;
 	std::cout << "Message from " << client << ": " << message << std::endl;
-	SocketServer::onMessage(connection, message);
 	parseCommand(message, client);
+	SocketServer::onMessage(connection, message);
 }
 
 void			Server::parseCommand(std::string const &message, Client& client) {
+    std::cout << "\e[34m" << "youpi sa parse !" << std::endl;
 	size_t i = 0;
 	size_t pos;
 	std::vector<std::string> str;
@@ -91,6 +97,10 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 		i = pos + 1;
 	}
 	str.push_back(message.substr(i));
+	std::cout << "split :" << std::endl;
+	for (std::vector<std::string>::iterator it = str.begin(); it != str.end(); ++it)
+		std::cout << *it << std::endl;	
+	std::cout << "\e[0m";
 	CommandMap::iterator it = _commandes.find(str[0]);
 	if (it != _commandes.end()) {
 		ACommand *command = it->second;

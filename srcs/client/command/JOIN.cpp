@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/25 15:22:24 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 16:53:54 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ JOIN::~JOIN() {}
 
 int JOIN::execute(Client &clicli, std::vector<std::string> args)
 {
+    std::cout << "jss la !" << std::endl;
     if (clicli.getRegister() == true)
         _serv->joinChannel(args[1], clicli);
     else

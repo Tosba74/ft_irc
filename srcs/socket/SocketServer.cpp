@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 00:21:23 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 17:26:49 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	SocketServer::onDisconnection(Connection& connection)
 
 void	SocketServer::onMessage(Connection& connection, std::string const& message)
 {
+    std::cout << "bah voila !?" << std::endl;
     (void)connection;
     if (message.empty())
         return;
@@ -111,17 +112,19 @@ void SocketServer::stop() {
 
 void SocketServer::receiveAndSend(Connection &connection) {
     try {
+	    size_t i = 0;
+	    size_t pos;
         std::string message;
+        
         connection >> message;
         std::cout << "\e[31m" << message << "\e[0m" << std::endl;
-        while (message.find("\r\n") != std::string::npos) {
-            size_t pos = message.find("\r\n");
-            
-            if (pos != std::string::npos) {
-                onMessage(connection, message.substr(0, pos));
-                message.erase(0, pos + 2);
-            }
-        }
+	    while (pos = message.find("\r\n", i), pos != std::string::npos) {
+            onMessage(connection, message.substr(i, pos - i));
+            message.erase(i, pos - i + 2);
+	    	i = pos + 1;
+	    }
+        onMessage(connection, message.substr(i, pos - i));
+        message.erase(i, pos - i + 2);
     } catch (SocketException const& e) {
         std::cerr << e.what() << std::endl;
     } try {

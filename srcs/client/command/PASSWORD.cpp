@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:56 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 23:46:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/25 16:53:27 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ PASSWORD::PASSWORD(PASSWORD const& src) : ACommand(src) {
 PASSWORD::~PASSWORD() {}
 
 int PASSWORD::execute(Client &clicli, std::vector<std::string> args) {
+    std::cout << "jss la !" << std::endl;
     std::size_t len = std::distance(args.begin(), args.end());
     if (len < 2) {
         clicli << "Usage: PASSWORD <password>\n";

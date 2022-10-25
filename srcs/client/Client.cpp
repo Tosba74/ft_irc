@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 15:49:50 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/25 16:49:17 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ std::ostream &						operator<<(std::ostream & o, Client const &rhs) {
 		o << " \033[31m/!\\\033[0m ";
 	return o;
 }
+
 void Client::updateRegister()
 {
 	if (_register)
