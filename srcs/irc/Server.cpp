@@ -6,7 +6,11 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2022/10/24 23:49:16 by bmangin          ###   ########lyon.fr   */
+=======
+/*   Updated: 2022/10/25 15:47:11 by bmangin          ###   ########lyon.fr   */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +77,9 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 //	tmp->updateRegister();
 //	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
 	Client &client = static_cast<Client&>(connection);
-	// if (client.updateRegister()) {
-		// client->updateRegister();
-		// client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
+	client.updateRegister();
+	if (client.getRegister() == true)
+		client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
 	// }
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	SocketServer::onMessage(connection, message);
