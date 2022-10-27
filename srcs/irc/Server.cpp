@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/26 13:32:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 16:57:01 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,13 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 	client.updateRegister();
 	if (client.getRegister() == true)
 		client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
+	else
+		std::cout << "Client nest pas register !" << std::endl;
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	parseCommand(message, client);
+	std::cout << "ici ?" << std::endl;
 	SocketServer::onMessage(connection, message);
+	std::cout << "-----" << std::endl;
 }
 
 void			Server::parseCommand(std::string const &message, Client& client) {
@@ -98,7 +102,8 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 		std::cout << *it << std::endl;	
 	std::cout << "**********" << std::endl;	
 	std::cout << "\e[0m";
-	
+	// a delete apres
+
 	CommandMap::iterator it = _commandes.find(str[0]);
 	if (it != _commandes.end()) {
 		std::cout << "sa passe" << std::endl;

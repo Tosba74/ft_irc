@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/26 10:40:41 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 18:28:19 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,19 @@ void SocketServer::receiveAndSend(Connection &connection) {
         std::string message;
         
         connection >> message;
-        std::cout << "\e[31m" << message << "\e[0m" << std::endl;
+        std::cout << "\e[31mMSG: " << message << "\e[0m" << std::endl;
 	    while (pos = message.find("\r\n", i), pos != std::string::npos) {
             onMessage(connection, message.substr(i, pos - i));
             message.erase(i, pos - i + 2);
 	    	i = pos + 1;
 	    }
-        onMessage(connection, message.substr(i, pos - i));
+        onMessage(connection, message.substr(i, pos - i + 2));
         message.erase(i, pos - i + 2);
     } catch (SocketException const& e) {
         std::cerr << e.what() << std::endl;
     } try {
         connection.flush();
+        ;
     } catch (SocketException const& e) {
         std::cerr << e.what() << std::endl;
     }

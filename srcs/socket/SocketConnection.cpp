@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:18 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 00:16:13 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/26 18:17:52 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ socklen_t SocketConnection::getAddrsize() {
 }
 
 void SocketConnection::flush() {
+    std::cout << "cest la ?" << std::endl;
     while (writeBuffer.find("\r\n") != std::string::npos)
     {
         size_t pos = writeBuffer.find("\r\n");
