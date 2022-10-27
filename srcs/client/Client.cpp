@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 15:49:50 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/27 17:31:38 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void Client::updateRegister()
     if (this->getNickname().empty() || this->getPassword().empty() || this->getUsername().empty() || this->getRealName().empty() || this->getHostname().empty())
 		return ;
     this->setRegister(true);
-	*(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
+	*(this) << RPL_WELCOME(this->getNickname(), this->getHostname());
 }
 
 Client &Client::operator<<(std::string const &reply)

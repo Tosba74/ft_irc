@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/25 15:19:45 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/27 17:38:08 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void			Server::onConnection(int connectionFd, sockaddr_in& address) {
     Client *tmp = new Client(connectionFd, address);
 	tmp->updateRegister();
 	if (tmp->getRegister() == true)
-		*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
+		*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getHostname());
 	std::cout << "New connection IRC from " << *tmp << std::endl;
     fdConnectionMap.insert(std::pair<int, Client*>(connectionFd, tmp));
 }
@@ -74,10 +74,10 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 //	tmp->updateRegister();
 //	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
 	Client &client = static_cast<Client&>(connection);
-	// if (client.updateRegister()) {
-		// client->updateRegister();
-		// client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
-	// }
+	client.updateRegister();
+	if (client.getRegister()) {
+		client << RPL_WELCOME(client.getNickname(), client.getHostname());
+	}
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	SocketServer::onMessage(connection, message);
 	parseCommand(message, client);
