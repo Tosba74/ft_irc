@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 15:45:54 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/28 13:53:09 by ahuber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ class Server: public SocketServer
 	public:
 		typedef std::map<std::string, ACommand*>	CommandMap;
 		typedef std::map<std::string, Channel*>		ChannelMap;
+		typedef std::map<std::string, Client*>		ClientAllMap;
 	private:
 		std::string		_password;
 		CommandMap 		_commandes;
 		ChannelMap 		_channels;
+		ClientAllMap		_clientAll;
 		
 	public:
 		Server(int port, std::string password);
