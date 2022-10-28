@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/27 17:38:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/28 12:25:24 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ void			Server::setPassword(std::string password) { _password = password; }
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
-	tmp->updateRegister();
-	if (tmp->getRegister() == true)
-		*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getHostname());
+	isAuthenticate(*tmp);
+	// tmp->updateRegister();
+	// if (tmp->getRegister() == true)
+		// *tmp << RPL_WELCOME(tmp->getNickname(), tmp->getHostname());
 	std::cout << "New connection IRC from " << *tmp << std::endl;
     fdConnectionMap.insert(std::pair<int, Client*>(connectionFd, tmp));
 }
@@ -70,14 +71,13 @@ void			Server::onDisconnection(Connection& connection) {
 void			Server::onMessage(Connection& connection, std::string const& message) {
 	if (message == "EXIT")
 		stop();
-//	if ()
-//	tmp->updateRegister();
-//	*tmp << RPL_WELCOME(tmp->getNickname(), tmp->getUsername(), tmp->getHostname());
 	Client &client = static_cast<Client&>(connection);
-	client.updateRegister();
-	if (client.getRegister()) {
-		client << RPL_WELCOME(client.getNickname(), client.getHostname());
-	}
+	isAuthenticate(client);
+	// client.updateRegister();
+	// if (client.getRegister() == true) {
+		// // std::cout << "Le client est register" << std::endl;
+		// // client << RPL_WELCOME(client.getNickname(), client.getHostname());
+	// }
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	SocketServer::onMessage(connection, message);
 	parseCommand(message, client);
@@ -121,4 +121,18 @@ int				Server::leaveChannel(std::string const &name, Client& client) {
 		return 1;
 	}
 	return 0;
+}
+
+bool			Server::isAuthenticate(Client& client) {
+	client.updateRegister();
+	if (client.getRegister() == true) {
+		std::cout << "\e[34mLe client est register" << std::endl;
+		client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
+		return true;
+	} else {
+		std::cout << "Le client est pas du tout register" << std::endl;
+		client << "\e[31mYou must to be register!\n";
+		return false;
+	}
+	std::cout << "\e[0m";
 }

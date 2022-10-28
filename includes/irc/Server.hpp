@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 15:45:54 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/27 18:23:00 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,6 @@ class Server: public SocketServer
 		int 			createChannel(std::string const &name);
 		int 			joinChannel(std::string const &name, Client& client);
 		int 			leaveChannel(std::string const &name, Client& client);
+		
+		bool			isAuthenticate(Client& client);
 };
