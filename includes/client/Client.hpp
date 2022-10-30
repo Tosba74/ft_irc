@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/19 15:56:14 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 16:34:57 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class Client: public SocketConnection
         std::string                         _username;
         std::string                         _hostname;
         std::string                         _servername;
+        std::string                         _version;
         std::string                         _realname;
         std::string                         _password;
         std::string                         _mode;
@@ -44,6 +45,7 @@ class Client: public SocketConnection
         void                                setUsername(std::string username);
         void                                setHostname(std::string hostname);
         void                                setServerName(std::string nameserver);
+        void                                setVersion(std::string version);
         void                                setRealName(std::string realname);
         void                                setPassword(std::string password);
         void                                setRegister(bool register);
@@ -53,6 +55,7 @@ class Client: public SocketConnection
         std::string                         getNickname() const;
         std::string                         getHostname() const;
         std::string                         getNameServer() const;
+        std::string                         getVersion() const;
         std::string                         getRealName() const;
         std::string                         getPassword() const;
         std::string                         getMode() const;
