@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/21 15:12:07 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/29 13:50:20 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ class SocketServer: public SocketListener
 	    typedef	std::queue<int>					ConnectionQueue;
 
         std::string                             hostname;
-        int                                     service;
+        int                                     port;
         
         struct sockaddr_in                      addr;
         socklen_t                               addrsize;
@@ -47,7 +47,7 @@ class SocketServer: public SocketListener
 
 
     public:
-        SocketServer(std::string const& hostname, int service);
+        SocketServer(std::string const& hostname, int port);
         SocketServer(SocketServer const &src);
         SocketServer &operator=(SocketServer const &rhs);
         ~SocketServer();

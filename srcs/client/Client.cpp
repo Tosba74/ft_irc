@@ -6,19 +6,16 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/28 13:04:35 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/29 14:01:11 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/Client.hpp"
 #include <string>
 
-Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr),
-											_nickname(""), _username(""),
-											_hostname(""), _servername(""),
-											_realname(""), _password(""),
-											_register(false), _op(false) {
-}
+Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr), _nickname(""),
+										_username(""), _hostname(""), _servername(""),
+										_realname(""), _password(""), _register(false), _op(false) {}
 
 Client::Client(Client const &rhs) : SocketConnection(rhs) {}
 
@@ -76,34 +73,39 @@ void Client::updateRegister()
 	std::cout << "| isRegister: " << std::endl;
 	std::cout << "* ------------" << "\e[0m" << std::endl;
 
-    std::cout << "\e[34m" << "| Nickname: " << "\e[0m";
-    std::cout << (!this->getNickname().empty() ? "\e[32mOK" : "\e[31mKO");
-    if (!this->getNickname().empty())
-		std::cout << " (" << getNickname() << ")";
-	std::cout << "\e[0m" << std::endl;
-    std::cout << "\e[34m" << "| Password: " << "\e[0m";
-    std::cout << (!this->getPassword().empty() ? "\e[32mOK" : "\e[31mKO");
-    if (!this->getPassword().empty())
-		std::cout << " (" << getPassword() << ")";
-	std::cout << "\e[0m" << std::endl;
-    std::cout << "\e[34m" << "| Username: " << "\e[0m";
-    std::cout << (!this->getUsername().empty() ? "\e[32mOK" : "\e[31mKO");
-    if (!this->getUsername().empty())
-		std::cout << " (" << getUsername() << ")";
-	std::cout << "\e[0m" << std::endl;
-    std::cout << "\e[34m" << "| RealName: " << "\e[0m";
-    std::cout << (!this->getRealName().empty() ? "\e[32mOK" : "\e[31mKO");
-    if (!this->getRealName().empty())
-		std::cout << " (" << getRealName() << ")";
-	std::cout << "\e[0m" << std::endl;
     std::cout << "\e[34m" << "| Hostname: " << "\e[0m";
     std::cout << (!this->getHostname().empty() ? "\e[32mOK" : "\e[31mKO");
     if (!this->getHostname().empty())
 		std::cout << " (" << getHostname() << ")";
 	std::cout << "\e[0m" << std::endl;
+	
+    std::cout << "\e[34m" << "| Nickname: " << "\e[0m";
+    std::cout << (!this->getNickname().empty() ? "\e[32mOK" : "\e[31mKO");
+    if (!this->getNickname().empty())
+		std::cout << " (" << getNickname() << ")";
+	std::cout << "\e[0m" << std::endl;
+	
+    std::cout << "\e[34m" << "| Password: " << "\e[0m";
+    std::cout << (!this->getPassword().empty() ? "\e[32mOK" : "\e[31mKO");
+    if (!this->getPassword().empty())
+		std::cout << " (" << getPassword() << ")";
+	std::cout << "\e[0m" << std::endl;
+	
+    std::cout << "\e[34m" << "| Username: " << "\e[0m";
+    std::cout << (!this->getUsername().empty() ? "\e[32mOK" : "\e[31mKO");
+    if (!this->getUsername().empty())
+		std::cout << " (" << getUsername() << ")";
+	std::cout << "\e[0m" << std::endl;
+	
+    std::cout << "\e[34m" << "| RealName: " << "\e[0m";
+    std::cout << (!this->getRealName().empty() ? "\e[32mOK" : "\e[31mKO");
+    if (!this->getRealName().empty())
+		std::cout << " (" << getRealName() << ")";
+	std::cout << "\e[0m" << std::endl;
+
 	std::cout << "\e[34m" << "* ------------" << "\e[0m" << std::endl;
     // if (this->getNickname().empty() || this->getPassword().empty() || this->getUsername().empty() || this->getRealName().empty() || this->getHostname().empty())
-    if (this->getNickname().empty() || this->getPassword().empty())
+    if (this->getHostname().empty() || this->getNickname().empty() || this->getPassword().empty())
 		return ;
     this->setRegister(true);
 	*(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());

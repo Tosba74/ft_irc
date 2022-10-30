@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/28 12:25:24 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 04:09:37 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,8 @@ void			Server::setPassword(std::string password) { _password = password; }
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
+	tmp->setHostname(this->hostname);
 	isAuthenticate(*tmp);
-	// tmp->updateRegister();
-	// if (tmp->getRegister() == true)
-		// *tmp << RPL_WELCOME(tmp->getNickname(), tmp->getHostname());
 	std::cout << "New connection IRC from " << *tmp << std::endl;
     fdConnectionMap.insert(std::pair<int, Client*>(connectionFd, tmp));
 }
@@ -73,11 +71,6 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 		stop();
 	Client &client = static_cast<Client&>(connection);
 	isAuthenticate(client);
-	// client.updateRegister();
-	// if (client.getRegister() == true) {
-		// // std::cout << "Le client est register" << std::endl;
-		// // client << RPL_WELCOME(client.getNickname(), client.getHostname());
-	// }
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	SocketServer::onMessage(connection, message);
 	parseCommand(message, client);

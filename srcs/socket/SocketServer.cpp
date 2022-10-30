@@ -6,13 +6,13 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 00:21:23 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/29 13:50:07 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "socket/SocketServer.hpp"
 
-SocketServer::SocketServer(std::string const& hostname, int service): SocketListener(), isRunning(false), hostname(hostname), service(service), timeout(TIMEOUT)
+SocketServer::SocketServer(std::string const& hostname, int port): SocketListener(), isRunning(false), hostname(hostname), port(port), timeout(TIMEOUT)
 {
    pushFd(sock, POLLIN);
 }
@@ -66,7 +66,7 @@ void	SocketServer::onMessage(Connection& connection, std::string const& message)
 
 void SocketServer::start()
 {
-    bind(this->hostname, this->service);
+    bind(this->hostname, this->port);
     listen();
     isRunning = true;
     while (isRunning)
@@ -159,6 +159,6 @@ void SocketServer::poll() {
 
 void SocketServer::listen() {
     SocketListener::listen();
-    std::cout << "Listening on " << hostname << ":" << service << std::endl;
+    std::cout << "Listening on " << hostname << ":" << port << std::endl;
 
 }
