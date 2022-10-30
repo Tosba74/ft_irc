@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:25 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/30 19:33:07 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 22:33:29 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ SocketServer::~SocketServer() {
 }
 
 std::string         SocketServer::getHostname() const { return hostname; }
+
 int                 SocketServer::getPort() const { return port; }
 
 void	SocketServer::onConnection(int connectionFd, sockaddr_in& address) {

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/30 18:49:51 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 23:24:49 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class Client: public SocketConnection {
         std::string                         _servername;
         std::string                         _version;
         std::string                         _realname;
-        std::string                         _password;
+        std::string                         _pass;
         std::string                         _mode;
         listChannel                         _channels;
         bool                                _register;
@@ -48,7 +48,7 @@ class Client: public SocketConnection {
         void                                setServerName(std::string nameserver);
         void                                setVersion(std::string version);
         void                                setRealName(std::string realname);
-        void                                setPassword(std::string password);
+        void                                setPass(std::string pass);
         void                                setRegister(bool register);
         
         
@@ -58,7 +58,7 @@ class Client: public SocketConnection {
         std::string                         getNameServer() const;
         std::string                         getVersion() const;
         std::string                         getRealName() const;
-        std::string                         getPassword() const;
+        std::string                         getPass() const;
         std::string                         getMode() const;
         std::map<std::string ,Channel*>     getChannels() const;
         bool                                getRegister() const;

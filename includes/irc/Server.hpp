@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/27 18:23:00 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 23:02:23 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 #include "irc/Channel.hpp"
 #include "client/Client.hpp"
 #include "client/command/NICK.hpp"
-#include "client/command/PASSWORD.hpp"
+#include "client/command/PASS.hpp"
 #include "client/command/JOIN.hpp"
+#include "client/command/MSGPRIV.hpp"
 
 class ACommand;
 class Channel;
@@ -42,7 +43,7 @@ class Server: public SocketServer
 		~Server() throw();
 
 		std::string 	getPassword() const;
-
+		Client*			getClient(const std::string& name) const;
 		void			setPassword(std::string password);
 
 		void			onConnection(int connectionFd, sockaddr_in& address);

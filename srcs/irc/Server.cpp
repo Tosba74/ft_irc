@@ -6,14 +6,15 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 20:37:33 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 23:26:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
 #include "client/command/NICK.hpp"
 #include "client/command/JOIN.hpp"
-#include "client/command/PASSWORD.hpp"
+#include "client/command/PASS.hpp"
+#include "client/command/MSGPRIV.hpp"
 // #include "client/command/USER.hpp"
 // #include "client/command/LIST.hpp"
 // #include "client/command/HELP.hpp"
@@ -21,13 +22,15 @@
 // #include "client/command/QUIT.hpp"
 // #include "client/command/BAN.hpp"
 // #include "client/command/OP.hpp"
-#include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
+// #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
 #include <unistd.h>
 
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
-	_commandes["PASSWORD"] = new PASSWORD(this);
+	_commandes["PASS"] = new PASS(this);
 	_commandes["JOIN"] = new JOIN(this);
+	_commandes["MSGPRIV"] = new MSGPRIV(this);
+	_commandes["MSG"] = new MSGPRIV(this);
 //	_commandes["USER"] = new USER(this);
 //	_commandes["LIST"] = new LIST(this);
 //	_commandes["HELP"] = new HELP(this);
@@ -47,6 +50,17 @@ Server::~Server() throw() {
 }
 
 std::string 	Server::getPassword() const { return _password; }
+
+Client*			Server::getClient(const std::string& name) const {
+	for (ConnectionMap::const_iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it) {
+		Client*		clicli = static_cast<Client*>(it->second);
+		if (!clicli->getNickname().compare(name))
+			return clicli;
+	}
+	return NULL;
+	// return this->fdConnectionMap.at(name);	
+}
+
 void			Server::setPassword(std::string password) { _password = password; }
 
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
@@ -103,7 +117,8 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 			command->descr(client);
 		else
 			command->execute(client, str);
-	}
+	} else
+		client << ERR_UNKNOWNCOMMAND(str[0]);
 	/*
 	size_t i = 0;
 	size_t pos;
@@ -147,7 +162,7 @@ int				Server::leaveChannel(std::string const &name, Client& client) {
 
 bool			Server::isAuthenticate(Client& client) {
 	//Check password
-	if (!getPassword().compare(client.getPassword()))
+	if (!getPassword().compare(client.getPass()))
 		client.updateRegister();
 	else
 		std::cout << "\e[31mIncorrect Password\e[0m" << std::endl;

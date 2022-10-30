@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 20:15:22 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 23:24:23 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr), _nickname(""),
 										_username(""), _hostname(""), _servername("ircserv"), _version("1.3"),
-										_realname(""), _password("lol"), _register(false), _op(false) {}
+										_realname(""), _pass("lol"), _register(false), _op(false) {}
 
 Client::Client(Client const &rhs) : SocketConnection(rhs), _nickname(rhs._nickname), _username(rhs._username),
 									_hostname(rhs._hostname), _servername(rhs._servername), _version(rhs._version),
-									_realname(rhs._realname), _password(rhs._password), _register(rhs._register), _op(rhs._op) {
+									_realname(rhs._realname), _pass(rhs._pass), _register(rhs._register), _op(rhs._op) {
 	_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
 }
 
@@ -37,7 +37,7 @@ void                                Client::setHostname(std::string hostname) { 
 void                                Client::setServerName(std::string nameserver) { _servername = nameserver; }
 void                                Client::setVersion(std::string version) { _version = version; };
 void                                Client::setRealName(std::string realname) { _realname = realname; }
-void                                Client::setPassword(std::string password) { _password = password; }
+void                                Client::setPass(std::string pass) { _pass= pass; }
 bool 							  	Client::getRegister() const { return (_register); }
 std::string							Client::getUsername() const { return _username; }
 std::string							Client::getNickname() const { return _nickname; }
@@ -45,7 +45,7 @@ std::string							Client::getHostname() const { return _hostname; }
 std::string							Client::getNameServer() const { return _servername; }
 std::string							Client::getVersion() const { return _version; }
 std::string							Client::getRealName() const { return _realname; }
-std::string							Client::getPassword() const { return _password; }
+std::string							Client::getPass() const { return _pass; }
 std::string							Client::getMode() const { return _mode; }
 std::map<std::string ,Channel*>     Client::getChannels() const { return _channels; }
 bool                                Client::getOp() const { return _op; }
@@ -95,10 +95,10 @@ void Client::updateRegister()
 	}
 	std::cout << "\e[0m" << std::endl;
 	
-    std::cout << "\e[34m" << "| Password: " << "\e[0m";
-    std::cout << (!this->getPassword().empty() ? "\e[32mOK" : "\e[31mKO");
-    if (!this->getPassword().empty())
-		std::cout << " (" << getPassword() << ")";
+    std::cout << "\e[34m" << "| Pass: " << "\e[0m";
+    std::cout << (!this->getPass().empty() ? "\e[32mOK" : "\e[31mKO");
+    if (!this->getPass().empty())
+		std::cout << " (" << getPass() << ")";
 	std::cout << "\e[0m" << std::endl;
 	
 	std::cout << "\e[34m" << "* ------------" << "\e[0m" << std::endl;
@@ -122,9 +122,9 @@ void Client::updateRegister()
 	std::cout << "\e[0m" << std::endl;
 
 	std::cout << "\e[34m" << "* ------------" << "\e[0m" << std::endl;
-    // if (this->getNickname().empty() || this->getPassword().empty() || this->getUsername().empty() || this->getRealName().empty() || this->getHostname().empty())
+    // if (this->getNickname().empty() || this->getPass().empty() || this->getUsername().empty() || this->getRealName().empty() || this->getHostname().empty())
     if (!this->getHostname().empty() && !this->getRealName().empty()
-		&& !this->getNickname().empty() && !this->getPassword().empty()) {
+		&& !this->getNickname().empty() && !this->getPass().empty()) {
     	this->setRegister(true);
 		// *(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
 		*(this) << RPL_WELCOME(this->getNickname());
