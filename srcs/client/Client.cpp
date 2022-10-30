@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 19:54:12 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 20:15:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,15 +123,14 @@ void Client::updateRegister()
 
 	std::cout << "\e[34m" << "* ------------" << "\e[0m" << std::endl;
     // if (this->getNickname().empty() || this->getPassword().empty() || this->getUsername().empty() || this->getRealName().empty() || this->getHostname().empty())
-    // if (this->getHostname().empty() || this->getNickname().empty() || this->getPassword().empty())
-    if (!this->getHostname().empty() && !this->getNickname().empty() && !this->getPassword().empty()) {
+    if (!this->getHostname().empty() && !this->getRealName().empty()
+		&& !this->getNickname().empty() && !this->getPassword().empty()) {
     	this->setRegister(true);
 		// *(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
 		*(this) << RPL_WELCOME(this->getNickname());
 		*(this) << RPL_YOURHOST(this->getNameServer(), this->getVersion());
-		*(this) << RPL_CREATED(this->getNickname());
+		*(this) << RPL_CREATED(this->getRealName());
 		*(this) << RPL_MYINFO(this->getNickname(), this->getNameServer(), this->getVersion());
-	// *(this) << RPL_WELCOME(this->getNickname(), this->getHostname());
 	}
 	return ;
 }
