@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 04:09:37 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 19:55:46 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void			Server::setPassword(std::string password) { _password = password; }
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
-	tmp->setHostname(this->hostname);
-	isAuthenticate(*tmp);
+	tmp->setHostname(getHostname());
+	// isAuthenticate(*tmp);
 	std::cout << "New connection IRC from " << *tmp << std::endl;
     fdConnectionMap.insert(std::pair<int, Client*>(connectionFd, tmp));
 }
@@ -117,15 +117,18 @@ int				Server::leaveChannel(std::string const &name, Client& client) {
 }
 
 bool			Server::isAuthenticate(Client& client) {
-	client.updateRegister();
+	//Check password
+	if (!getPassword().compare(client.getPassword()))
+		client.updateRegister();
+	else
+		std::cout << "\e[31mIncorrect Password\e[0m" << std::endl;
+	// log console + bool
 	if (client.getRegister() == true) {
-		std::cout << "\e[34mLe client est register" << std::endl;
-		client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
+		std::cout << "\e[34mLe client est register\e[0m" << std::endl;
+		// client << RPL_WELCOME(client.getNickname(), client.getUsername(), client.getHostname());
 		return true;
 	} else {
-		std::cout << "Le client est pas du tout register" << std::endl;
-		client << "\e[31mYou must to be register!\n";
+		std::cout << "\e[31mLe client est pas du tout register\e[0m" << std::endl;
 		return false;
 	}
-	std::cout << "\e[0m";
 }

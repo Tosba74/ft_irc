@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/29 13:50:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 19:23:40 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ class SocketServer: public SocketListener
         SocketServer &operator=(SocketServer const &rhs);
         ~SocketServer();
 
+        std::string         getHostname() const;
+        int                 getPort() const;
+        
         virtual void	    onConnection(int connectionFd, sockaddr_in& address);
 	    virtual void		onDisconnection(Connection& connection);
 	    virtual void		onMessage(Connection& connection, std::string const& message);

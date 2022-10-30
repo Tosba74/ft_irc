@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/30 16:34:57 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 18:49:51 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 
 class Channel;
 
-class Client: public SocketConnection
-{
+class Client: public SocketConnection {
+    public:
+        typedef std::map<std::string, Channel*>     listChannel;
     private:
         std::string                         _nickname;
         std::string                         _username;
@@ -31,7 +32,7 @@ class Client: public SocketConnection
         std::string                         _realname;
         std::string                         _password;
         std::string                         _mode;
-        std::map<std::string ,Channel*>     _channels;
+        listChannel                         _channels;
         bool                                _register;
         bool                                _op;
         

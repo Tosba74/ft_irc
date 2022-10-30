@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 16:38:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 19:54:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 #include <string>
 
 Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr), _nickname(""),
-										_username(""), _hostname(""), _servername(""), _version("1.3"),
+										_username(""), _hostname(""), _servername("ircserv"), _version("1.3"),
 										_realname(""), _password("lol"), _register(false), _op(false) {}
 
-Client::Client(Client const &rhs) : SocketConnection(rhs) {}
+Client::Client(Client const &rhs) : SocketConnection(rhs), _nickname(rhs._nickname), _username(rhs._username),
+									_hostname(rhs._hostname), _servername(rhs._servername), _version(rhs._version),
+									_realname(rhs._realname), _password(rhs._password), _register(rhs._register), _op(rhs._op) {
+	_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
+}
 
 Client::~Client() throw() {}
 
@@ -75,12 +79,18 @@ void Client::updateRegister()
 	std::cout << "| isRegister: " << std::endl;
 	std::cout << "* ------------" << "\e[0m" << std::endl;
 
+    std::cout << "\e[34m" << "| NameServer: " << "\e[0m";
+    std::cout << (!this->getNameServer().empty() ? "\e[32mOK" : "\e[31mKO");
+    if (!this->getNameServer().empty())
+		std::cout << " (" << getNameServer() << ")";
+	std::cout << "\e[0m" << std::endl;
+	
     std::cout << "\e[34m" << "| Hostname: " << "\e[0m";
     std::cout << (!this->getHostname().empty() ? "\e[32mOK" : "\e[31mKO");
     if (!this->getHostname().empty()) {
 		std::cout << " (" << getHostname();
 		if (!this->getVersion().empty())
-			std::cout << "(version: " << this->getVersion() << ")";
+			std::cout << " v. " << this->getVersion();
 		std::cout << ")";
 	}
 	std::cout << "\e[0m" << std::endl;
@@ -96,7 +106,7 @@ void Client::updateRegister()
     std::cout << "\e[34m" << "| Nickname: " << "\e[0m";
     std::cout << (!this->getNickname().empty() ? "\e[32mOK" : "\e[31mKO");
     if (!this->getNickname().empty())
-		std::cout << " (v." << getNickname() << ")";
+		std::cout << " (" << getNickname() << ")";
 	std::cout << "\e[0m" << std::endl;
 	
     std::cout << "\e[34m" << "| Username: " << "\e[0m";
@@ -113,19 +123,22 @@ void Client::updateRegister()
 
 	std::cout << "\e[34m" << "* ------------" << "\e[0m" << std::endl;
     // if (this->getNickname().empty() || this->getPassword().empty() || this->getUsername().empty() || this->getRealName().empty() || this->getHostname().empty())
-    if (this->getHostname().empty() || this->getNickname().empty() || this->getPassword().empty())
-		return ;
-    this->setRegister(true);
-	*(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
-	*(this) << RPL_YOURHOST(this->getNameServer(), this->getVersion());
-	*(this) << RPL_CREATED(this->getNickname());
-	*(this) << RPL_MYINFO(this->getNickname(), this->getNameServer(), this->getVersion());
+    // if (this->getHostname().empty() || this->getNickname().empty() || this->getPassword().empty())
+    if (!this->getHostname().empty() && !this->getNickname().empty() && !this->getPassword().empty()) {
+    	this->setRegister(true);
+		// *(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
+		*(this) << RPL_WELCOME(this->getNickname());
+		*(this) << RPL_YOURHOST(this->getNameServer(), this->getVersion());
+		*(this) << RPL_CREATED(this->getNickname());
+		*(this) << RPL_MYINFO(this->getNickname(), this->getNameServer(), this->getVersion());
 	// *(this) << RPL_WELCOME(this->getNickname(), this->getHostname());
+	}
+	return ;
 }
 
 Client &Client::operator<<(std::string const &reply)
 {
-	std::string		msg = _servername + reply + "\r\n";
+	std::string		msg = getHostname() + reply + "\r\n";
 	std::cout << "\e[33m" << "Reply : " << "\e[0m" << msg;
 	SocketConnection::operator<<(msg);
 	flush();
