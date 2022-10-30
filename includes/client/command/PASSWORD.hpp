@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:37 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 23:41:31 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 20:43:08 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,5 @@ class PASSWORD: public ACommand
         PASSWORD(PASSWORD const& src);
         ~PASSWORD();
         int     execute(Client &clicli, std::vector<std::string> args);
+        void    descr(Client& clicli);
 };

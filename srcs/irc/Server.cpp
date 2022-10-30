@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 19:55:46 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 20:37:33 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,41 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 		str.push_back(message.substr(i, pos - i));
 		i = pos + 1;
 	}
+	str.push_back(message.substr(i, pos - i));
+	
+	//print split
+	std::cout << "\e[34msplit :" << std::endl;
+	for (std::vector<std::string>::iterator it = str.begin(); it != str.end(); ++it)
+		std::cout << *it << std::endl;	
+	std::cout << "**********" << std::endl;	
+	std::cout << "\e[0m";
+	// a delete apres
+
+	CommandMap::iterator it = _commandes.find(str[0]);
+	if (it != _commandes.end()) {
+		std::cout << "sa passe" << std::endl;
+		ACommand *command = it->second;
+		if (str[1].compare("-help") == true)
+			command->descr(client);
+		else
+			command->execute(client, str);
+	}
+	/*
+	size_t i = 0;
+	size_t pos;
+	std::vector<std::string> str;
+
+	while (pos = message.find(' ', i), pos != std::string::npos) {
+		str.push_back(message.substr(i, pos - i));
+		i = pos + 1;
+	}
 	str.push_back(message.substr(i));
 	CommandMap::iterator it = _commandes.find(str[0]);
 	if (it != _commandes.end()) {
 		ACommand *command = it->second;
 		command->execute(client, str);
 	}
+	*/
 }
 
 int				Server::createChannel(std::string const &name) {

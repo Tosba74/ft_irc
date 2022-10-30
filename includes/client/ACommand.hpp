@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 23:52:57 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/30 20:38:48 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ class ACommand {
         
         const Server *          getServ() const;
         virtual int             execute(Client& clicli, std::vector<std::string> args) = 0;
+        virtual void            descr(Client& clicli) = 0;
 };
 

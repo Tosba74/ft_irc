@@ -6,14 +6,13 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:18 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 16:59:13 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/30 20:40:03 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/ACommand.hpp"
 
-ACommand::ACommand(Server *serv) : _serv(serv) {
-}
+ACommand::ACommand(Server *serv) : _serv(serv) {}
 
 ACommand::ACommand(ACommand const& src)  : _serv(src._serv) {
     #ifdef DEBUG
