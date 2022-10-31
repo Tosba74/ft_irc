@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 02:27:44 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 02:34:40 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include "client/command/NICK.hpp"
 #include "client/command/PASS.hpp"
 #include "client/command/JOIN.hpp"
+#include "client/command/LIST.hpp"
+#include "client/command/MODE.hpp"
 #include "client/command/MSGPRIV.hpp"
 
 class ACommand;

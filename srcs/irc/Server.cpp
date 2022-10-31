@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 00:43:22 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 02:35:45 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include "client/command/PASS.hpp"
 #include "client/command/MSGPRIV.hpp"
 #include "client/command/USER.hpp"
-// #include "client/command/LIST.hpp"
+#include "client/command/MODE.hpp"
+#include "client/command/LIST.hpp"
 // #include "client/command/HELP.hpp"
 // #include "client/command/KICK.hpp"
 // #include "client/command/QUIT.hpp"
@@ -32,7 +33,8 @@ Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port)
 	_commandes["MSGPRIV"] = new MSGPRIV(this);
 	_commandes["MSG"] = new MSGPRIV(this);
 	_commandes["USER"] = new USER(this);
-//	_commandes["LIST"] = new LIST(this);
+	_commandes["MODE"] = new MODE(this);
+	_commandes["LIST"] = new LIST(this);
 //	_commandes["HELP"] = new HELP(this);
 //	_commandes["KICK"] = new KICK(this);
 //	_commandes["QUIT"] = new QUIT(this);
