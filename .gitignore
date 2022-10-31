@@ -8,3 +8,4 @@ ircserv
 *.so
 *.dylib
 .bin
+*.swp

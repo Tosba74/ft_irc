@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/24 15:49:50 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/31 11:08:54 by ahuber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr),
 											_nickname(""), _username(""),
 											_hostname(""), _servername(""),
 											_realname(""), _password(""),
-											_register(false), _op(false) {
+											_register(false), _op(false), _awayStatus(0) {
 }
 
 Client::Client(Client const &rhs) : SocketConnection(rhs) {}
@@ -36,6 +36,8 @@ void                                Client::setHostname(std::string hostname) { 
 void                                Client::setServerName(std::string nameserver) { _servername = nameserver; }
 void                                Client::setRealName(std::string realname) { _realname = realname; }
 void                                Client::setPassword(std::string password) { _password = password; }
+void				    Client::setAway(bool away) { _awayStatus = away };
+void				    Client::setAwayMsg(std::string msg) { _awayMsg = msg };
 bool 							  	Client::getRegister() const { return (_register); }
 std::string							Client::getUsername() const { return _username; }
 std::string							Client::getNickname() const { return _nickname; }
@@ -44,8 +46,10 @@ std::string							Client::getNameServer() const { return _servername; }
 std::string							Client::getRealName() const { return _realname; }
 std::string							Client::getPassword() const { return _password; }
 std::string							Client::getMode() const { return _mode; }
+std::string							Client::getAwayMsg const { return _awayMsg; }
 std::map<std::string ,Channel*>     Client::getChannels() const { return _channels; }
 bool                                Client::getOp() const { return _op; }
+bool				    Client::getAway const { return _awayStatus; }
 
 void                                Client::readChannels() const {
 	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it) {

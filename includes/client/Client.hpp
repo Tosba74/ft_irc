@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/19 15:56:14 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 11:08:56 by ahuber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ class Client: public SocketConnection
         std::map<std::string ,Channel*>     _channels;
         bool                                _register;
         bool                                _op;
+	bool				    _awayStatus;
+	std::string			    _awayMsg;
         
     public:
         Client(int sock, sockaddr_in &addr);
@@ -47,6 +49,8 @@ class Client: public SocketConnection
         void                                setRealName(std::string realname);
         void                                setPassword(std::string password);
         void                                setRegister(bool register);
+	void				    setAway(bool away);
+	void				    setAwayMsg(std::string msg);
         
         
         std::string                         getUsername() const;
@@ -56,9 +60,11 @@ class Client: public SocketConnection
         std::string                         getRealName() const;
         std::string                         getPassword() const;
         std::string                         getMode() const;
+	std::string			    getAwayMsg() const;
         std::map<std::string ,Channel*>     getChannels() const;
         bool                                getRegister() const;
         bool                                getOp() const;
+	bool				    getAway() const;
         
         void                                readChannels() const;
         
