@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 01:25:17 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 02:27:44 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ class Server: public SocketServer
 	private:
 		std::string		_password;
 		CommandMap 		_commandes;
+	public:
 		ChannelMap 		_channels;
 		
 	public:
