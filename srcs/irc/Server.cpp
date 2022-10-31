@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 02:35:45 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 16:27:37 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port)
 	_commandes["USER"] = new USER(this);
 	_commandes["MODE"] = new MODE(this);
 	_commandes["LIST"] = new LIST(this);
+//	_commandes["OP"] = new OP(this);
 //	_commandes["HELP"] = new HELP(this);
 //	_commandes["KICK"] = new KICK(this);
 //	_commandes["QUIT"] = new QUIT(this);
 //	_commandes["BAN"] = new BAN(this);
-//	_commandes["OP"] = new OP(this);
 }
 
 Server::~Server() throw() {
@@ -60,7 +60,6 @@ Client*			Server::getClient(const std::string& name) const {
 			return clicli;
 	}
 	return NULL;
-	// return this->fdConnectionMap.at(name);	
 }
 
 void			Server::setPassword(std::string password) { _password = password; }
@@ -83,13 +82,13 @@ void			Server::onDisconnection(Connection& connection) {
 }
 
 void			Server::onMessage(Connection& connection, std::string const& message) {
-	if (message == "EXIT")
+	if (!message.compare("EXIT"))
 		stop();
 	Client &client = static_cast<Client&>(connection);
 	std::cout << "Message from " << client << ": " << message << std::endl;
-	SocketServer::onMessage(connection, message);
 	parseCommand(message, client);
 	isAuthenticate(client);
+	SocketServer::onMessage(connection, message);
 }
 
 void			Server::parseCommand(std::string const &message, Client& client) {

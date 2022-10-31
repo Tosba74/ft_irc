@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 02:34:40 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 15:23:09 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 #include "client/Client.hpp"
 #include "client/command/NICK.hpp"
 #include "client/command/PASS.hpp"
+#include "client/command/USER.hpp"
 #include "client/command/JOIN.hpp"
 #include "client/command/LIST.hpp"
 #include "client/command/MODE.hpp"
 #include "client/command/MSGPRIV.hpp"
+// #include "client/command/OP.hpp"
 
 class ACommand;
 class Channel;
@@ -47,6 +49,7 @@ class Server: public SocketServer
 
 		std::string 	getPassword() const;
 		Client*			getClient(const std::string& name) const;
+		ConnectionMap	getClients() const;
 		void			setPassword(std::string password);
 
 		void			onConnection(int connectionFd, sockaddr_in& address);
