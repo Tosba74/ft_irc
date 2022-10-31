@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/30 23:24:49 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 00:25:33 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class Client: public SocketConnection {
         void                                setNickname(std::string nickname);
         void                                setUsername(std::string username);
         void                                setHostname(std::string hostname);
-        void                                setServerName(std::string nameserver);
+        void                                setNameserver(std::string nameserver);
         void                                setVersion(std::string version);
         void                                setRealName(std::string realname);
         void                                setPass(std::string pass);
@@ -55,7 +55,7 @@ class Client: public SocketConnection {
         std::string                         getUsername() const;
         std::string                         getNickname() const;
         std::string                         getHostname() const;
-        std::string                         getNameServer() const;
+        std::string                         getNameserver() const;
         std::string                         getVersion() const;
         std::string                         getRealName() const;
         std::string                         getPass() const;

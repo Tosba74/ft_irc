@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 23:20:19 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 00:58:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 #define RPL_MYINFO(nick, serv, version) " 004 " + nick + " " + serv + " " + version + " none " + "none."
 
 #define RPL_AWAY(target) " 301 " + target + " :<message d'absence>"
+
+// Réponse du serveur indiquant les détails de sa version. <version> est la version actuelle
+// du programme utilisé (comprenant le numéro de mise à jour) et <debuglevel> est utilisé
+// pour indiquer si le serveur fonctionne en mode débugage.
+// Le champ <commentaire> peut contenir n'importe quel commentaire au sujet de la version,
+// ou des détails supplémentaires sur la version.
+#define RPL_VERSION(version, debug, serv, commit) " 351 " + version + "." + debug + " " + serv + " :" + commit
+
 // Utilisé pour indiquer que le pseudonyme passé en paramètre à la commande
 // n'est pas actuellement utilisé.
 #define ERR_NOSUCHNICK(target) " 401 " + target + " :No such nick/channel"
@@ -59,3 +67,6 @@
 // n'a pas fourni assez de paramètres.
 #define  ERR_NEEDMOREPARAMS(cmd) "461" + cmd + " :Not enough parameters"
 
+// Retourné par le serveur à tout lien qui tente de changer les détails enregistrés
+// (tels que mot de passe et détails utilisateur du second message USER)
+#define ERR_ALREADYREGISTRED() " 462 :You may not reregister"

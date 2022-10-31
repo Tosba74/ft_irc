@@ -6,7 +6,7 @@
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/10/30 22:58:14 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2022/10/30 23:43:34 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ NAME := ircserv
 FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
 FILES_USER			:= Client ACommand
-FILES_COMMAND		:= NICK PASS JOIN MSGPRIV
+FILES_COMMAND		:= NICK PASS JOIN MSGPRIV USER
 
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
 					${addprefix ${PATH_SOCK}/, ${FILES_SOCK}} \

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 20:47:25 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 00:45:09 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int NICK::execute(Client &clicli, std::vector<std::string> args) {
 	std::string nick = args[1];
 	clicli.setNickname(nick);
 	// jai mis sa pour pas init au debut des connection
-	if (clicli.getUsername().empty())
-		clicli.setUsername(nick);
-	if (clicli.getRealName().empty())
-		clicli.setRealName(nick);
+	// if (clicli.getUsername().empty())
+		// clicli.setUsername(nick);
+	// if (clicli.getRealName().empty())
+		// clicli.setRealName(nick);
 	return 0;
 }
 

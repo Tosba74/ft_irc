@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 23:24:23 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 00:26:04 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void								Client::setRegister(bool b) { _register = b; }
 void                                Client::setNickname(std::string nickname) { _nickname = nickname; }
 void                                Client::setUsername(std::string username) { _username = username; }
 void                                Client::setHostname(std::string hostname) { _hostname = hostname; }
-void                                Client::setServerName(std::string nameserver) { _servername = nameserver; }
+void                                Client::setNameserver(std::string nameserver) { _servername = nameserver; }
 void                                Client::setVersion(std::string version) { _version = version; };
 void                                Client::setRealName(std::string realname) { _realname = realname; }
 void                                Client::setPass(std::string pass) { _pass= pass; }
@@ -42,7 +42,7 @@ bool 							  	Client::getRegister() const { return (_register); }
 std::string							Client::getUsername() const { return _username; }
 std::string							Client::getNickname() const { return _nickname; }
 std::string							Client::getHostname() const { return _hostname; }
-std::string							Client::getNameServer() const { return _servername; }
+std::string							Client::getNameserver() const { return _servername; }
 std::string							Client::getVersion() const { return _version; }
 std::string							Client::getRealName() const { return _realname; }
 std::string							Client::getPass() const { return _pass; }
@@ -80,9 +80,9 @@ void Client::updateRegister()
 	std::cout << "* ------------" << "\e[0m" << std::endl;
 
     std::cout << "\e[34m" << "| NameServer: " << "\e[0m";
-    std::cout << (!this->getNameServer().empty() ? "\e[32mOK" : "\e[31mKO");
-    if (!this->getNameServer().empty())
-		std::cout << " (" << getNameServer() << ")";
+    std::cout << (!this->getNameserver().empty() ? "\e[32mOK" : "\e[31mKO");
+    if (!this->getNameserver().empty())
+		std::cout << " (" << getNameserver() << ")";
 	std::cout << "\e[0m" << std::endl;
 	
     std::cout << "\e[34m" << "| Hostname: " << "\e[0m";
@@ -128,9 +128,9 @@ void Client::updateRegister()
     	this->setRegister(true);
 		// *(this) << RPL_WELCOME(this->getNickname(), this->getUsername(), this->getHostname());
 		*(this) << RPL_WELCOME(this->getNickname());
-		*(this) << RPL_YOURHOST(this->getNameServer(), this->getVersion());
+		*(this) << RPL_YOURHOST(this->getNameserver(), this->getVersion());
 		*(this) << RPL_CREATED(this->getRealName());
-		*(this) << RPL_MYINFO(this->getNickname(), this->getNameServer(), this->getVersion());
+		*(this) << RPL_MYINFO(this->getNickname(), this->getNameserver(), this->getVersion());
 	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 23:26:12 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 00:43:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "client/command/JOIN.hpp"
 #include "client/command/PASS.hpp"
 #include "client/command/MSGPRIV.hpp"
-// #include "client/command/USER.hpp"
+#include "client/command/USER.hpp"
 // #include "client/command/LIST.hpp"
 // #include "client/command/HELP.hpp"
 // #include "client/command/KICK.hpp"
@@ -31,7 +31,7 @@ Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port)
 	_commandes["JOIN"] = new JOIN(this);
 	_commandes["MSGPRIV"] = new MSGPRIV(this);
 	_commandes["MSG"] = new MSGPRIV(this);
-//	_commandes["USER"] = new USER(this);
+	_commandes["USER"] = new USER(this);
 //	_commandes["LIST"] = new LIST(this);
 //	_commandes["HELP"] = new HELP(this);
 //	_commandes["KICK"] = new KICK(this);
@@ -84,10 +84,10 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 	if (message == "EXIT")
 		stop();
 	Client &client = static_cast<Client&>(connection);
-	isAuthenticate(client);
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	SocketServer::onMessage(connection, message);
 	parseCommand(message, client);
+	isAuthenticate(client);
 }
 
 void			Server::parseCommand(std::string const &message, Client& client) {
