@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   VERSION.hpp                                        :+:      :+:    :+:   */
+/*   MODE.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/31 01:08:34 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 01:29:57 by bmangin          ###   ########lyon.fr   */
+/*   Created: 2022/10/31 01:51:52 by bmangin           #+#    #+#             */
+/*   Updated: 2022/10/31 02:04:20 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/ACommand.hpp"
-
 #pragma once
 
-class VERSION : public ACommand
-{
+class MODE : public ACommand {
 	public:
-		VERSION(Server *serv);
-		VERSION(VERSION const& src);
-		~VERSION();
+		MODE(Server *serv);
+		MODE(MODE const& src);
+		~MODE();
 		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };
+

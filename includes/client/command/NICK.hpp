@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 14:57:20 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/30 23:35:39 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 01:53:04 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 #include "client/ACommand.hpp"
 
-class NICK : public ACommand
-{
+class NICK : public ACommand {
 	public:
 		NICK(Server *serv);
 		NICK(NICK const& src);

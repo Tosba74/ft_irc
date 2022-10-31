@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 23:33:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 00:39:25 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 01:51:39 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ USER::~USER() {}
 int		USER::execute(Client &clicli, std::vector<std::string> args) {
 	// Commande: USER
 	// Paramètres: <nom d'utilisateur> <hôte> <nom de serveur> <nom réel>
-	std::cout << "\e[32mUSER use !!!\e[0m"; 
 	if (args.size() < 4)
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 	clicli.setUsername(args[1]);

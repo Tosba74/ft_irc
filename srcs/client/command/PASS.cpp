@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:56 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/30 23:26:50 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 02:02:53 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ int PASS::execute(Client &clicli, std::vector<std::string> args) {
 }
 
 void    PASS::descr(Client& clicli) {
-    clicli << "Usage: PASSWORD <password>\n";
+    clicli << "Usage: PASS <password>\n";
 }

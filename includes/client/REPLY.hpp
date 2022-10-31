@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 00:58:15 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 01:57:20 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@
 #define RPL_YOURHOST(serv, version) " 002 Your host is " + serv + " running version " + version
 #define RPL_CREATED(created) " 003 This server was created " + created
 #define RPL_MYINFO(nick, serv, version) " 004 " + nick + " " + serv + " " + version + " none " + "none."
+
+
+// Pour répondre à une requête au sujet du mode du client, RPL_UMODEIS est renvoyé.
+// 251 RPL_LUSERCLIENT
+// ":There are <entier> users and <entier> invisible on <entier> servers"
+// 252 RPL_LUSEROP
+// "<entier> :operator(s) online"
+// 253 RPL_LUSERUNKNOWN
+// "<entier> :unknown connection(s)"
+// 254 RPL_LUSERCHANNELS
+// "<entier> :channels formed"
+// 255 RPL_LUSERME
+// ":I have <entier> clients and <integer> servers"
+
 
 #define RPL_AWAY(target) " 301 " + target + " :<message d'absence>"
 
