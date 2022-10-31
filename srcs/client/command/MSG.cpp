@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MSG.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahuber <ahuber@student.42lausanne.fr>      +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:07:06 by ahuber            #+#    #+#             */
-/*   Updated: 2022/10/28 14:17:14 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/10/30 20:28:32 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int MSG::execute(Client &clicli, std::vector<std::string> args)
 			Client	*Target = getTarget(args[0]);
 			std::string message = "PRIVMSG ";
 			message.join(args[0] + " :" + args[1]);
+			// Target << message;
 			send(Target.sock, message.c_str(), message.length(), 0)
 		}
 	}
