@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 16:27:37 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/10/31 17:14:04 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
 	tmp->setHostname(getHostname());
-	// isAuthenticate(*tmp);
+	isAuthenticate(*tmp);
 	std::cout << "New connection IRC from " << *tmp << std::endl;
     fdConnectionMap.insert(std::pair<int, Client*>(connectionFd, tmp));
 }
@@ -87,7 +87,9 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 	Client &client = static_cast<Client&>(connection);
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	parseCommand(message, client);
-	isAuthenticate(client);
+	if (!client.getRegister())
+		isAuthenticate(client);
+		return ;
 	SocketServer::onMessage(connection, message);
 }
 
@@ -96,6 +98,7 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 	size_t pos;
 	std::vector<std::string> str;
 
+    std::cout << "\e[31mMSG: " << message << "\e[0m" << std::endl;
 	while (pos = message.find(' ', i), pos != std::string::npos) {
 		str.push_back(message.substr(i, pos - i));
 		i = pos + 1;
@@ -103,7 +106,7 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 	str.push_back(message.substr(i, pos - i));
 	
 	//print split
-	std::cout << "\e[34msplit :" << std::endl;
+	std::cout << "\e[34msplit : " << message << std::endl;
 	for (std::vector<std::string>::iterator it = str.begin(); it != str.end(); ++it)
 		std::cout << *it << std::endl;	
 	std::cout << "**********" << std::endl;	
@@ -118,8 +121,9 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 			command->descr(client);
 		else
 			command->execute(client, str);
-	} else
-		client << ERR_UNKNOWNCOMMAND(str[0]);
+	}
+	// else
+		// client << ERR_UNKNOWNCOMMAND(str[0]);
 	/*
 	size_t i = 0;
 	size_t pos;
@@ -148,8 +152,9 @@ int				Server::createChannel(std::string const &name) {
 
 int				Server::joinChannel(std::string const &name, Client& client) {
 	if (_channels.find(name) == _channels.end())
-		createChannel(name);	
-	_channels.at(name)->addClient(client);
+		createChannel(name);
+	if (!client.isInChannel(name))
+		_channels.at(name)->addClient(client);
 	return 0;
 }
 
