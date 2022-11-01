@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 13:43:54 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 19:49:26 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ class Server: public SocketServer
 	private:
 		std::string				_password;
 		CommandMap 				_commandes;
-		std::vector<int>		_listOp;		
 
 	public:
 		ChannelMap 				_channels;
@@ -51,11 +50,8 @@ class Server: public SocketServer
 		~Server() throw();
 
 		std::string 			getPassword() const;
-		std::vector<int>		getOp();		
 		Client*					getClient(const std::string& name) const;
-		ConnectionMap			getClients() const;
 		void					setPassword(std::string password);
-		void					setOp(Connection& connection);		
 
 		void					onConnection(int connectionFd, sockaddr_in& address);
 		void					onDisconnection(Connection& connection);
@@ -68,3 +64,5 @@ class Server: public SocketServer
 		
 		bool					isAuthenticate(Client& client);
 };
+
+std::ostream&			operator<<(std::ostream& o, Server const& rhs);

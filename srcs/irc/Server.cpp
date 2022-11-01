@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 14:46:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 21:20:08 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ Server::~Server() throw() {
 
 std::string 	Server::getPassword() const { return _password; }
 
-std::vector<int>	Server::getOp() { return _listOp; }
-
 Client*			Server::getClient(const std::string& name) const {
 	for (ConnectionMap::const_iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it) {
 		Client*		clicli = static_cast<Client*>(it->second);
@@ -66,13 +64,6 @@ Client*			Server::getClient(const std::string& name) const {
 
 void			Server::setPassword(std::string password) { _password = password; }
 		
-void			Server::setOp(Connection& connection) {
-	for (std::vector<int>::iterator it = getOp().begin(); it != getOp().end(); ++it)
-		if ((*it) == connection.getSock())
-			return ;
-	_listOp.push_back(connection.getSock());	
-}
-
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);
     Client *tmp = new Client(connectionFd, address);
@@ -124,31 +115,14 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 
 	CommandMap::iterator it = _commandes.find(str[0]);
 	if (it != _commandes.end()) {
-		std::cout << "sa passe" << std::endl;
 		ACommand *command = it->second;
 		if (str[1].compare("-help") == true)
 			command->descr(client);
 		else
 			command->execute(client, str);
 	}
-	// else
-		// client << ERR_UNKNOWNCOMMAND(str[0]);
-	/*
-	size_t i = 0;
-	size_t pos;
-	std::vector<std::string> str;
-
-	while (pos = message.find(' ', i), pos != std::string::npos) {
-		str.push_back(message.substr(i, pos - i));
-		i = pos + 1;
-	}
-	str.push_back(message.substr(i));
-	CommandMap::iterator it = _commandes.find(str[0]);
-	if (it != _commandes.end()) {
-		ACommand *command = it->second;
-		command->execute(client, str);
-	}
-	*/
+	else
+		client << ERR_UNKNOWNCOMMAND(str[0]);
 }
 
 int				Server::createChannel(std::string const &name) {
@@ -190,4 +164,10 @@ bool			Server::isAuthenticate(Client& client) {
 		std::cout << "\e[31mLe client est pas du tout register\e[0m" << std::endl;
 		return false;
 	}
+}
+
+std::ostream&                       operator<<(std::ostream& o, Server const& rhs) {
+	o << "Server Youpi"<< std::endl;
+	(void)rhs;
+	return o;
 }

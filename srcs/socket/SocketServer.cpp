@@ -36,6 +36,10 @@ std::string         SocketServer::getHostname() const { return hostname; }
 
 int                 SocketServer::getPort() const { return port; }
 
+void                SocketServer::setOp(Connection& connection) {
+    opConnection.insert(connection.getSock());
+}
+
 void	SocketServer::onConnection(int connectionFd, sockaddr_in& address) {
     (void)address;
     #ifdef DEBUG
@@ -48,6 +52,7 @@ void	SocketServer::onDisconnection(Connection& connection) {
     #ifdef DEBUG
         std::cout << "Disconnection from " << connection.getAddr()<< ":" << connection.getPort() << std::endl;
     #endif
+    opConnection.erase(connection.getSock());
     popFd(connection.getSock());
 }
 
@@ -130,53 +135,6 @@ void SocketServer::receiveAndSend(Connection &connection) {
         std::cerr << e.what() << std::endl;
     }
 }
-/*
-void SocketServer::receiveAndSend(Connection &connection) {
-    try {
-	    size_t i = 0;
-	    size_t pos;
-        std::string message;
-        
-        connection >> message;
-	    while (pos = message.find("\r\n", i), pos != std::string::npos) {
-            onMessage(connection, message.substr(i, pos - i));
-            message.erase(i, pos - i + 2);
-	    	i = pos + 1;
-	    }
-        onMessage(connection, message.substr(i, pos - i + 2) + "\r\n");
-        message.erase(i, pos - i + 2);
-    } catch (SocketException const& e) {
-        std::cerr << e.what() << std::endl;
-    } try {
-        connection.flush();
-        ;
-    } catch (SocketException const& e) {
-        std::cerr << e.what() << std::endl;
-    }
-}
-void SocketServer::receiveAndSend(Connection &connection) {
-    try {
-        std::string message;
-        connection >> message;
-        std::cout << "\e[31m" << message << "\e[0m" << std::endl;
-        while (message.find("\r\n") != std::string::npos) {
-            size_t pos = message.find("\r\n");
-            
-            std::cout << "\e[31m" << "Hello" << "\e[0m" << std::endl;
-            if (pos != std::string::npos) {
-                onMessage(connection, message.substr(0, pos));
-                message.erase(0, pos + 2);
-            }
-        }
-    } catch (SocketException const& e) {
-        std::cerr << e.what() << std::endl;
-    } try {
-        connection.flush();
-    } catch (SocketException const& e) {
-        std::cerr << e.what() << std::endl;
-    }
-}
-*/
 
 void SocketServer::pushFd(int fd, int events) {
     pollfd pollfd;

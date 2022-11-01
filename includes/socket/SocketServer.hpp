@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 16:08:09 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 19:30:26 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,29 @@
 
 class SocketServer: public SocketListener
 {
-     private:
+    private:
         int     isRunning;
         void    pushFd(int fd, int events);
         void    popFd(int fd);
+        std::string                             hostname;
+        int                                     port;
         
     protected:
         typedef SocketConnection                Connection;
         typedef	std::pair<int, Connection*>     ConnectionPair;
 	    typedef	std::map<int, Connection*>		ConnectionMap;
 	    typedef	std::queue<int>					ConnectionQueue;
+        typedef std::set<int>                   ConnectionOperator;
 
-        std::string                             hostname;
-        int                                     port;
-        
+    protected:
         struct sockaddr_in                      addr;
         socklen_t                               addrsize;
         ConnectionMap		                    fdConnectionMap;
 	    ConnectionQueue		                    disconnectedFds;
+        ConnectionOperator                      opConnection;
 
         std::vector<pollfd>                     pollFds;
         int                                     timeout;
-
-
 
     public:
         SocketServer(std::string const& hostname, int port);
@@ -54,6 +54,9 @@ class SocketServer: public SocketListener
 
         std::string         getHostname() const;
         int                 getPort() const;
+        ConnectionOperator  getOp() const { return opConnection; };
+        
+        void                setOp(Connection& connection);        
         
         virtual void	    onConnection(int connectionFd, sockaddr_in& address);
 	    virtual void		onDisconnection(Connection& connection);
@@ -64,4 +67,6 @@ class SocketServer: public SocketListener
         void                receiveAndSend(Connection& connection);
         void                poll();
         void                listen();
+        
+        
 };

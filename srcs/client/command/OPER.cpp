@@ -22,34 +22,18 @@ OPER::OPER(OPER const& src) : ACommand(src) {
 
 OPER::~OPER() {}
 
-	// clicli << ERR_NEEDMOREPARAMS(args[0]);
-	// clicli << ERR_NOOPERHOST();
-	// clicli << ERR_PASSWDMISMATCH();
-	// clicli << RPL_YOUREOPER();
-
 int		OPER::execute(Client &clicli, std::vector<std::string> args) {
-	if (clicli.getOp())
-		return 1;
-	if (args.size() != 3) {
+	if (args.size() != 3)
 		clicli << ERR_NEEDMOREPARAMS(args[0]); 
-		return 1;
-	} else {
-		if (_serv->getPassword().compare(args[2])) {
-			clicli << ERR_PASSWDMISMATCH();
-			return 1;
-		}
-		// pas sur du tout
-		for (std::vector<int>::iterator it = _serv->getOp().begin(); it != _serv->getOp().end(); ++it) {
-			if ((*it) == clicli.getSock()) {
-				clicli << ERR_NOOPERHOST();
-				return 1;
-			}
-		}
-		// rien n est gere si l OPER quitte le server
+	else if (clicli.getUsername().compare(args[1]))
+		clicli << ERR_NOOPERHOST();
+	else if (_serv->getPassword().compare(args[2]))
+		clicli << ERR_PASSWDMISMATCH();
+	else {
+		_serv->setOp(clicli);
+		// clicli.setOp(true);
+		clicli << RPL_YOUREOPER();
 	}
-	_serv->setOp(clicli);
-	clicli.setOp(true);
-	clicli << RPL_YOUREOPER();
 	return 0;
 }
 
