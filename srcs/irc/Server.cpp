@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 11:02:21 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 14:46:08 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ Server::~Server() throw() {
 
 std::string 	Server::getPassword() const { return _password; }
 
+std::vector<int>	Server::getOp() { return _listOp; }
+
 Client*			Server::getClient(const std::string& name) const {
 	for (ConnectionMap::const_iterator it = fdConnectionMap.begin(); it != fdConnectionMap.end(); ++it) {
 		Client*		clicli = static_cast<Client*>(it->second);
@@ -63,6 +65,13 @@ Client*			Server::getClient(const std::string& name) const {
 }
 
 void			Server::setPassword(std::string password) { _password = password; }
+		
+void			Server::setOp(Connection& connection) {
+	for (std::vector<int>::iterator it = getOp().begin(); it != getOp().end(); ++it)
+		if ((*it) == connection.getSock())
+			return ;
+	_listOp.push_back(connection.getSock());	
+}
 
 void			Server::onConnection(int connectionFd, sockaddr_in& address) {
 	SocketServer::onConnection(connectionFd, address);

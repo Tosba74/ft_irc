@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 11:15:32 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 12:37:58 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@
 // Le champ <commentaire> peut contenir n'importe quel commentaire au sujet de la version,
 // ou des détails supplémentaires sur la version.
 #define RPL_VERSION(version, debug, serv, commit) " 351 " + version + "." + debug + " " + serv + " :" + commit
+
+// RPL_YOUREOPER est renvoyé à un client qui vient d'émettre un message OPER
+// et a obtenu le statut d'opérateur.
+#define RPL_YOUREOPER() " 381 :You are now an IRC operator"
 
 // Utilisé pour indiquer que le pseudonyme passé en paramètre à la commande
 // n'est pas actuellement utilisé.
@@ -85,11 +89,10 @@
 // (tels que mot de passe et détails utilisateur du second message USER)
 #define ERR_ALREADYREGISTRED() " 462 :You may not reregister"
 
-// RPL_YOUREOPER est renvoyé à un client qui vient d'émettre un message OPER
-// et a obtenu le statut d'opérateur.
-#define RPL_YOUREOPER() " 381 :You are now an IRC operator"
-
 // Retourné pour indiquer l'échec d'une tentative d'enregistrement d'une connexion dû
 // à un mot de passe incorrect ou manquant.
 #define ERR_PASSWDMISMATCH() " 464 :Password incorrect"
 
+// Si un client envoie un message OPER et que le serveur n'a pas été configuré pour autoriser
+// les connexions d'opérateurs de cet hôte, cette erreur doit être retournée.
+#define ERR_NOOPERHOST() " 491 :No O-lines for your host"
