@@ -22,6 +22,11 @@ OPER::OPER(OPER const& src) : ACommand(src) {
 
 OPER::~OPER() {}
 
+	// clicli << ERR_NEEDMOREPARAMS(args[0]);
+	// clicli << ERR_NOOPERHOST();
+	// clicli << ERR_PASSWDMISMATCH();
+	// clicli << RPL_YOUREOPER();
+
 int		OPER::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() != 3) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]); 

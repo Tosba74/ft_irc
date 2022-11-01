@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/31 16:38:36 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 17:32:59 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@ JOIN::JOIN(JOIN const& src): ACommand(src) {
 }
 
 JOIN::~JOIN() {}
+
+// clicli << ERR_CHANNELISFULL(args[1]);
+// clicli << ERR_BANNEDFROMCHAN(args[1]);
+// clicli << ERR_INVITEONLYCHAN(args[1]);
+// clicli << ERR_BADCHANMASK(args[1]);
+// clicli << ERR_BADCHANNELKEY(args[1]);
+// clicli << RPL_TOPIC(args[1], "Welcome " + clicli->getNickname());
+// clicli << ERR_NEEDMOREPARAMS(args[0]);
+// clicli << ERR_NOSUCHCHANNEL(args[1]);
+// clicli << ERR_TOOMANYCHANNELS(args[1]);
 
 int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     if (clicli.getRegister() == true)

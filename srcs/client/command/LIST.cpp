@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/31 02:32:17 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 17:12:31 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ LIST::LIST(LIST const& src): ACommand(src) {
 }
 
 LIST::~LIST() {}
+
+
+    // clicli << ERR_NOSUCHSERVER(_serv);
+    // clicli << RPL_LISTSTART();
+    // clicli << RPL_LIST(args[1], "?", getChan(args[1]));
+    // clicli << RPL_LISTEND();
 
 int LIST::execute(Client &clicli, std::vector<std::string> args) {
     (void)args;

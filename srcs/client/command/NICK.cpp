@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 00:45:09 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 16:02:42 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ NICK::NICK(Server *serv) : ACommand(serv) {}
 
 NICK::~NICK() {}
 
+// clicli << ERR_NONICKNAMEGIVEN();
+// clicli << ERR_ERRONEUSNICKNAME(clicli,getNickname());
+// clicli << ERR_NICKNAMEINUSE(srgs[0]);
+// clicli << ERR_NICKCOLLISION(srgs[0]);
+	
 int NICK::execute(Client &clicli, std::vector<std::string> args) {
 	std::size_t len = std::distance(args.begin(), args.end());
 	if (len < 2) {

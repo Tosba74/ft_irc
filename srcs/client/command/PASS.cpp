@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:56 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/31 02:02:53 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 15:34:46 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ PASS::PASS(PASS const& src) : ACommand(src) {
 
 PASS::~PASS() {}
 
+
 int PASS::execute(Client &clicli, std::vector<std::string> args) {
     std::size_t len = std::distance(args.begin(), args.end());
+// clicli << ERR_NEEDMOREPARAMS(args[0]);
+// clicli << ERR_ALREADYREGISTRED();
     if (len < 2) {
         descr(clicli);
         // clicli << "Usage: PASSWORD <password>\n";
