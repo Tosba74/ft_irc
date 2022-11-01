@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 02:04:38 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 10:57:38 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 }
 
 void	MODE::descr(Client& clicli) {
-	clicli << "Usage: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]";
+	clicli << "Usage: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]\n";
 }

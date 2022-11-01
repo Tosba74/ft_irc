@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 01:57:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 11:15:32 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,17 @@
 
 // Renvoyé par un serveur par de nombreuses commandes, afin d'indiquer que le client
 // n'a pas fourni assez de paramètres.
-#define  ERR_NEEDMOREPARAMS(cmd) "461" + cmd + " :Not enough parameters"
+#define  ERR_NEEDMOREPARAMS(cmd) " 461 " + cmd + " :Not enough parameters"
 
 // Retourné par le serveur à tout lien qui tente de changer les détails enregistrés
 // (tels que mot de passe et détails utilisateur du second message USER)
 #define ERR_ALREADYREGISTRED() " 462 :You may not reregister"
+
+// RPL_YOUREOPER est renvoyé à un client qui vient d'émettre un message OPER
+// et a obtenu le statut d'opérateur.
+#define RPL_YOUREOPER() " 381 :You are now an IRC operator"
+
+// Retourné pour indiquer l'échec d'une tentative d'enregistrement d'une connexion dû
+// à un mot de passe incorrect ou manquant.
+#define ERR_PASSWDMISMATCH() " 464 :Password incorrect"
+

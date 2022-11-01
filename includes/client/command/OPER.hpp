@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MODE.hpp                                           :+:      :+:    :+:   */
+/*   OPER.hpp                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/31 01:51:52 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 10:46:23 by bmangin          ###   ########lyon.fr   */
+/*   Created: 2022/11/01 10:46:34 by bmangin           #+#    #+#             */
+/*   Updated: 2022/11/01 10:49:38 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 #include "client/ACommand.hpp"
 
-class MODE : public ACommand {
+class Server;
+
+class OPER : public ACommand {
 	public:
-		MODE(Server *serv);
-		MODE(MODE const& src);
-		~MODE();
+		OPER(Server *serv);
+		OPER(OPER const& src);
+		~OPER();
 		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };
-
