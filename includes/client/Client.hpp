@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/31 17:52:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 17:42:42 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ class Client: public SocketConnection {
         void                                setRealName(std::string realname);
         void                                setPass(std::string pass);
         void                                setRegister(bool register);
-        
+        void                                setOp(bool op);
         std::string                         getUsername() const;
         std::string                         getNickname() const;
         std::string                         getHostname() const;

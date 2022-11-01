@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 17:51:04 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 17:48:44 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void                                Client::setNameserver(std::string nameserver
 void                                Client::setVersion(std::string version) { _version = version; };
 void                                Client::setRealName(std::string realname) { _realname = realname; }
 void                                Client::setPass(std::string pass) { _pass= pass; }
+void                                Client::setOp(bool op) { _op = op; };
 bool 							  	Client::getRegister() const { return (_register); }
 std::string							Client::getUsername() const { return _username; }
 std::string							Client::getNickname() const { return _nickname; }

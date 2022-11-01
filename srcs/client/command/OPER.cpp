@@ -28,6 +28,8 @@ OPER::~OPER() {}
 	// clicli << RPL_YOUREOPER();
 
 int		OPER::execute(Client &clicli, std::vector<std::string> args) {
+	if (clicli.getOp())
+		return 1;
 	if (args.size() != 3) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]); 
 		return 1;
@@ -46,6 +48,7 @@ int		OPER::execute(Client &clicli, std::vector<std::string> args) {
 		// rien n est gere si l OPER quitte le server
 	}
 	_serv->setOp(clicli);
+	clicli.setOp(true);
 	clicli << RPL_YOUREOPER();
 	return 0;
 }
