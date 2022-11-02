@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/02 10:30:16 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 11:51:23 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,15 +169,19 @@ bool			Server::isAuthenticate(Client& client) {
 }
 
 std::ostream&                       operator<<(std::ostream& o, Server const& rhs) {
+	if (rhs._channels.begin() != rhs._channels.end()) {
+		o << "\e[34m" << "* ------------" << std::endl << "List des Channels :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
+		std::map<std::string, Channel*>::const_iterator ite = rhs._channels.end();
+		for (std::map<std::string, Channel*>::const_iterator it = rhs._channels.begin(); it != ite; ++it)
+			o << "\t" << it->first <<std::endl;
 	o << "\e[34m" << "* ------------" << std::endl << "List de Operateur :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
-	std::set<int>::iterator ite = rhs.getOp().end();
-	for (std::set<int>::iterator it = rhs.getOp().begin(); it != ite; ++it) {
-		Client	*clicli = static_cast<Client *>(rhs.fdConnectionMap.at(*it));
-		o << "\t\e[32m" << clicli->getUsername() << std::endl;
 	}
-	// o << "\e[34m" << "* ------------" << std::endl << "List des Channels :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
-	// for (std::map<std::string, Channel*>::const_iterator it = rhs._channels.begin(); it != rhs._channels.end(); ++it) {
-		// o << "\t" << it->first <<std::endl;
-	// }
+	if (rhs.getOp().begin() != rhs.getOp().end()) {
+		std::set<int>::iterator ite = rhs.getOp().end();
+		for (std::set<int>::iterator it = rhs.getOp().begin(); it != ite; ++it) {
+			Client	*clicli = static_cast<Client *>(rhs.fdConnectionMap.at(*it));
+			o << "\t\e[32m" << clicli->getUsername() << std::endl;
+		}
+	}
 	return o;
 }
