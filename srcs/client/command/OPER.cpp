@@ -34,6 +34,7 @@ int		OPER::execute(Client &clicli, std::vector<std::string> args) {
 		// clicli.setOp(true);
 		clicli << RPL_YOUREOPER();
 	}
+	std::cout << *_serv;
 	return 0;
 }
 

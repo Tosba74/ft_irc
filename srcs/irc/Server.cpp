@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 21:20:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 10:30:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 // #include "client/command/BAN.hpp"
 // #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
 #include <unistd.h>
+
+#include "client/Client.hpp"
 
 Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
@@ -167,7 +169,15 @@ bool			Server::isAuthenticate(Client& client) {
 }
 
 std::ostream&                       operator<<(std::ostream& o, Server const& rhs) {
-	o << "Server Youpi"<< std::endl;
-	(void)rhs;
+	o << "\e[34m" << "* ------------" << std::endl << "List de Operateur :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
+	std::set<int>::iterator ite = rhs.getOp().end();
+	for (std::set<int>::iterator it = rhs.getOp().begin(); it != ite; ++it) {
+		Client	*clicli = static_cast<Client *>(rhs.fdConnectionMap.at(*it));
+		o << "\t\e[32m" << clicli->getUsername() << std::endl;
+	}
+	// o << "\e[34m" << "* ------------" << std::endl << "List des Channels :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
+	// for (std::map<std::string, Channel*>::const_iterator it = rhs._channels.begin(); it != rhs._channels.end(); ++it) {
+		// o << "\t" << it->first <<std::endl;
+	// }
 	return o;
 }

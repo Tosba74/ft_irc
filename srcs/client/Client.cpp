@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 21:17:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 10:32:01 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	printC(Client const& rhs) {
     if (!rhs.getHostname().empty()) {
 		std::cout << " (" << rhs.getHostname();
 		if (!rhs.getVersion().empty())
-			std::cout << " v. " << rhs.getVersion();
+			std::cout << " - v." << rhs.getVersion();
 		std::cout << ")";
 	}
 	std::cout << "\e[0m" << std::endl;

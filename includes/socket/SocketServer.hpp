@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 19:30:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 22:29:36 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ class SocketServer: public SocketListener
 	    typedef	std::queue<int>					ConnectionQueue;
         typedef std::set<int>                   ConnectionOperator;
 
-    protected:
         struct sockaddr_in                      addr;
         socklen_t                               addrsize;
+    public:
         ConnectionMap		                    fdConnectionMap;
 	    ConnectionQueue		                    disconnectedFds;
         ConnectionOperator                      opConnection;

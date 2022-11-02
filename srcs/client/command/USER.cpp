@@ -6,12 +6,12 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 23:33:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 15:50:07 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 22:42:39 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/command/USER.hpp"
-
+#include "irc/Server.hpp"
 
 USER::USER(Server *serv) : ACommand(serv) {}
 		
@@ -21,19 +21,18 @@ USER::USER(USER const& src) : ACommand(src) {
 }
 
 USER::~USER() {}
-
-	// clicli << ERR_NEEDMOREPARAMS(args[0]);
-	// clicli << ERR_ALREADYREGISTRED();
 	
 int		USER::execute(Client &clicli, std::vector<std::string> args) {
-	if (args.size() < 4)
+	if (args.size() < 5) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
-	clicli.setUsername(args[1]);
-	clicli.setHostname(args[2]);
-	clicli.setNameserver(args[3]);
-	clicli.setRealName(args[4]);
-	(void)clicli;
-	(void)args;
+	} else if (_serv->getPassword().compare(clicli.getPass())) {
+		clicli << ERR_ALREADYREGISTRED();
+	} else {
+		clicli.setUsername(args[1]);
+		clicli.setHostname(args[2]);
+		clicli.setNameserver(args[3]);
+		clicli.setRealName(args[4]);
+	}
 	return 0;
 }
 

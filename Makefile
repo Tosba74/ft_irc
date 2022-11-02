@@ -6,7 +6,7 @@
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/11/01 11:58:37 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2022/11/02 10:33:39 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
 FILES_USER			:= Client ACommand
 FILES_COMMAND		:= NICK PASS JOIN MSGPRIV USER VERSION MODE LIST OPER
+FILES_REPLY			:= ${addprefix ${PATH_U}/, REPLY}
 
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
 					${addprefix ${PATH_SOCK}/, ${FILES_SOCK}} \
@@ -37,14 +38,14 @@ FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
 					${addprefix ${PATH_C}/, ${FILES_COMMAND}}
 
 SRCS				= ${addprefix ${PATH_S}/, ${addsuffix .cpp, ${FILES} main}}
-HEADER				:= ${addprefix ${PATH_I}/, ${addsuffix .hpp, ${FILES} client/REPLY}}
+HEADER				:= ${addprefix ${PATH_I}/, ${addsuffix .hpp, ${FILES} ${FILES_REPLY}}}
 OBJS				:= ${addprefix ${PATH_B}/, ${notdir ${SRCS:.cpp=.o}}}
 
 INC		:= -I${PATH_I}
 CC		:= g++
 FLAG	:= -Wall -Werror -Wextra
 CPP_V	:= -std=c++98
-DEB		:= -D DEBUG=1
+DEB		:= -D DEBUG=0
 FS		:= -g3 -fsanitize=address 
 CCF		:= ${CC} ${FLAG} ${CPP_V} ${INC}
 CCFS	:= ${CC} ${FLAG} ${CPP_V} ${FS} ${INC} ${DEB}

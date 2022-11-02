@@ -6,11 +6,12 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:56 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/01 20:11:37 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/01 21:56:57 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/command/PASS.hpp"
+#include "irc/Server.hpp"
 
 PASS::PASS(Server *serv) : ACommand(serv) {}
 
@@ -21,17 +22,13 @@ PASS::PASS(PASS const& src) : ACommand(src) {
 
 PASS::~PASS() {}
 
-
 int PASS::execute(Client &clicli, std::vector<std::string> args) {
-    std::size_t len = std::distance(args.begin(), args.end());
-    if (len < 2) {
+    if (args.size() < 2)
         clicli << ERR_NEEDMOREPARAMS(args[0]);
-        return 1;
-    }
-    if (!clicli.getRegister())
+    else if (_serv->getPassword().compare(args[1]))
         clicli << ERR_ALREADYREGISTRED();
-    std::string pass = args[1];
-    clicli.setPass(pass);
+    else
+        clicli.setPass(args[1]);
     return 0;
 }
 
