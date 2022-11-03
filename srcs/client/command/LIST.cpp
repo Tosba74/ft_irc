@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/01 17:12:31 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 04:32:54 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ LIST::~LIST() {}
 int LIST::execute(Client &clicli, std::vector<std::string> args) {
     (void)args;
     for (std::map<std::string, Channel*>::iterator it = _serv->_channels.begin(); it != _serv->_channels.end(); ++it) {
-        clicli << it->first + "\n";
+        clicli << it->first;
     }
     return 0;
 }

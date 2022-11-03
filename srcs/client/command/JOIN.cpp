@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/03 03:10:03 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 12:54:59 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ JOIN::~JOIN() {}
 // clicli << ERR_TOOMANYCHANNELS(args[1]);
 
 int JOIN::execute(Client &clicli, std::vector<std::string> args) {
-    if (args[1].at(0) == '#' && clicli.getRegister() == true) {
+    if (args[1].size() > 1 && args[1].at(0) == '#' && clicli.getRegister() == true) {
         _serv->joinChannel(args[1].erase(0, 1), clicli);
         _serv->getChannel(args[1])->addClient(clicli);
     }

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 03:39:15 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 04:38:02 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ bool								Client::isInChannel(std::string name) const {
 	return false;
 }
 
-void Client::updateRegister()
-{
+void Client::updateRegister() {
 	if (_register)
 		return ;
 	printC(*this);	
