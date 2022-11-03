@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/01 21:17:50 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 03:19:38 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ class Client: public SocketConnection {
         std::string                         _version;
         std::string                         _realname;
         std::string                         _pass;
+        std::string                         _currChan;
         std::string                         _mode;
+        std::string                         _awayMsg; 
         listChannel                         _channels;
         bool                                _register;
-        bool                                _op;
+        bool                                _away;
         
     public:
         Client(int sock, sockaddr_in &addr);
@@ -49,7 +51,10 @@ class Client: public SocketConnection {
         void                                setVersion(std::string version);
         void                                setRealName(std::string realname);
         void                                setPass(std::string pass);
+        void								setCurrchan(std::string name);
         void                                setRegister(bool register);
+        void                                setAwayMsg(std::string msg);
+        void                                setAway(bool away);
         // void                                setOp(bool op);
         std::string                         getUsername() const;
         std::string                         getNickname() const;
@@ -59,7 +64,10 @@ class Client: public SocketConnection {
         std::string                         getRealName() const;
         std::string                         getPass() const;
         std::string                         getMode() const;
+        std::string							getCurrchan() const;
+        std::string                         getAwayMsg() const;
         std::map<std::string ,Channel*>     getChannels() const;
+        bool                                getAway() const;
         bool                                getRegister() const;
         // bool                                getOp() const;
         

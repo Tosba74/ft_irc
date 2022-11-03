@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 16:02:42 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:49:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ NICK::~NICK() {}
 // clicli << ERR_NICKCOLLISION(srgs[0]);
 	
 int NICK::execute(Client &clicli, std::vector<std::string> args) {
-	std::size_t len = std::distance(args.begin(), args.end());
-	if (len < 2) {
+	if (args.size() < 2) {
 		clicli << "Usage: NICK <nickname>\n";
 		return 0;
 	}

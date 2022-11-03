@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/02 11:51:23 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 03:48:48 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 #include "client/Client.hpp"
 
-Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password) {
+Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
 	_commandes["PASS"] = new PASS(this);
 	_commandes["JOIN"] = new JOIN(this);
@@ -63,6 +63,14 @@ Client*			Server::getClient(const std::string& name) const {
 	}
 	return NULL;
 }
+Channel*		Server::getChannel(const std::string& name) const {
+	for (ChannelMap::const_iterator it = _channels.begin(); it != _channels.end(); ++it) {
+		Channel*		chan = static_cast<Channel*>(it->second);
+		if (!chan->getName().compare(name))
+			return chan;
+	}
+	return NULL;
+}
 
 void			Server::setPassword(std::string password) { _password = password; }
 		
@@ -89,9 +97,10 @@ void			Server::onMessage(Connection& connection, std::string const& message) {
 	Client &client = static_cast<Client&>(connection);
 	std::cout << "Message from " << client << ": " << message << std::endl;
 	parseCommand(message, client);
-	if (!client.getRegister())
+	if (!client.getRegister()) {
 		isAuthenticate(client);
 		return ;
+	}
 	SocketServer::onMessage(connection, message);
 }
 
@@ -169,19 +178,33 @@ bool			Server::isAuthenticate(Client& client) {
 }
 
 std::ostream&                       operator<<(std::ostream& o, Server const& rhs) {
-	if (rhs._channels.begin() != rhs._channels.end()) {
+	if (!rhs._channels.empty()) {
 		o << "\e[34m" << "* ------------" << std::endl << "List des Channels :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
 		std::map<std::string, Channel*>::const_iterator ite = rhs._channels.end();
 		for (std::map<std::string, Channel*>::const_iterator it = rhs._channels.begin(); it != ite; ++it)
 			o << "\t" << it->first <<std::endl;
-	o << "\e[34m" << "* ------------" << std::endl << "List de Operateur :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
+			o << "\e[34m" << "* ------------"  << "\e[0m" << std::endl;
 	}
-	if (rhs.getOp().begin() != rhs.getOp().end()) {
-		std::set<int>::iterator ite = rhs.getOp().end();
-		for (std::set<int>::iterator it = rhs.getOp().begin(); it != ite; ++it) {
-			Client	*clicli = static_cast<Client *>(rhs.fdConnectionMap.at(*it));
-			o << "\t\e[32m" << clicli->getUsername() << std::endl;
+	try {
+	if (!rhs.getOp().empty()) {
+		o << "\e[34m" << "* ------------" << std::endl << "List de Operateur :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
+		// std::set<int>::iterator ite = rhs.getOp().end();
+		// for (std::set<int>::iterator it = rhs.getOp().begin(); it != ite; ++it) {
+		int i = 0;
+		// std::set<const int>::const_iterator ite = rhs.getOp().end();
+		for (std::set<const int>::const_iterator it = rhs.getOp().begin(); it != rhs.getOp().end(); ++it) {
+			// Client	*clicli = static_cast<Client &>(rhs.fdConnectionMap.at(*it));
+			// o << "\t\e[32m" << clicli->getUsername() << std::endl;
+			o << "\t\e[32m" << (static_cast<Client *>(rhs.fdConnectionMap.at(*it)))->getUsername() << std::endl;
+			// o << "\t\e[32m" << (static_cast<Client *>(rhs.fdConnectionMap.at(*it)))->getUsername() << std::endl;
+			i++;
 		}
+		o << "| iteration = " << i << std::endl;
+		o << "\e[34m" << "* ------------"  << "\e[0m" << std::endl;
 	}
+    } catch(std::exception &e) {
+        std::cerr << "fucking exception: " << e.what() << std::endl;
+    }
+	o << "\e[0m";
 	return o;
 }

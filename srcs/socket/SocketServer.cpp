@@ -36,6 +36,8 @@ std::string         SocketServer::getHostname() const { return hostname; }
 
 int                 SocketServer::getPort() const { return port; }
 
+std::set<const int>       SocketServer::getOp() const { return opConnection; };
+
 void                SocketServer::setOp(Connection& connection) {
     opConnection.insert(connection.getSock());
 }

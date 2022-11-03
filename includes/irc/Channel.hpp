@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 15:25:29 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 02:36:24 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ class Client;
 
 class Channel {
 	private:
-		std::string					_name;
-		std::map<int, Client&>		_clients;
+		std::string						_name;
+		std::map<int, Client&>			_clients;
 		
 	public:
 		Channel(std::string name);

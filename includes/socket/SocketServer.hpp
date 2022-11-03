@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:31:47 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 22:29:36 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 01:22:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ class SocketServer: public SocketListener
         typedef	std::pair<int, Connection*>     ConnectionPair;
 	    typedef	std::map<int, Connection*>		ConnectionMap;
 	    typedef	std::queue<int>					ConnectionQueue;
-        typedef std::set<int>                   ConnectionOperator;
+        typedef std::set<const int>             ConnectionOperator;
 
         struct sockaddr_in                      addr;
         socklen_t                               addrsize;
@@ -54,7 +54,7 @@ class SocketServer: public SocketListener
 
         std::string         getHostname() const;
         int                 getPort() const;
-        ConnectionOperator  getOp() const { return opConnection; };
+        std::set<const int> getOp() const;
         
         void                setOp(Connection& connection);        
         

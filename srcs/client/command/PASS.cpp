@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:56 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/01 21:56:57 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/02 16:32:25 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int PASS::execute(Client &clicli, std::vector<std::string> args) {
         clicli << ERR_NEEDMOREPARAMS(args[0]);
     else if (_serv->getPassword().compare(args[1]))
         clicli << ERR_ALREADYREGISTRED();
-    else
+    else if (_serv->getPassword().compare(clicli.getPass()))
         clicli.setPass(args[1]);
     return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 19:49:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 01:39:26 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ class Server: public SocketServer
 
 		std::string 			getPassword() const;
 		Client*					getClient(const std::string& name) const;
+		Channel*				getChannel(const std::string& name) const;
 		void					setPassword(std::string password);
 
 		void					onConnection(int connectionFd, sockaddr_in& address);

@@ -6,27 +6,41 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/02 10:32:01 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 03:39:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/Client.hpp"
 #include <string>
 
-Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr), _nickname(""),
-										_username(""), _hostname(""), _servername("ircserv"), _version("1.3"),
-										_realname(""), _pass(""), _register(false), _op(false) {}
+Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr), _nickname(""), _username(""),
+											_hostname(""), _servername("ircserv"), _version("1.3"), _realname(""),
+											_pass(""), _currChan(""), _awayMsg(""), _register(false), _away(false) {}
 
 Client::Client(Client const &rhs) : SocketConnection(rhs), _nickname(rhs._nickname), _username(rhs._username),
 									_hostname(rhs._hostname), _servername(rhs._servername), _version(rhs._version),
-									_realname(rhs._realname), _pass(rhs._pass), _register(rhs._register), _op(rhs._op) {
+									_realname(rhs._realname), _pass(rhs._pass), _currChan(rhs._currChan), _awayMsg(rhs._awayMsg),
+									_register(rhs._register), _away(rhs._away) {
+	*this = rhs;
 	_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
 }
 
 Client::~Client() throw() {}
 
 Client								&Client::operator=(Client const &rhs) {
-	(void)rhs;
+	if (this != &rhs) {
+    	_nickname = rhs.getNickname();
+    	_username = rhs.getUsername();
+    	_hostname = rhs.getHostname();
+    	_servername = rhs.getNameserver();
+    	_version = rhs.getVersion();
+    	_realname = rhs.getRealName();
+    	_pass = rhs.getPass();
+    	_mode = rhs.getMode();
+    	_awayMsg =  rhs.getAwayMsg(); 
+    	_register = rhs.getRegister();
+		_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
+	}
 	return (*this);
 }
 
@@ -38,8 +52,13 @@ void                                Client::setNameserver(std::string nameserver
 void                                Client::setVersion(std::string version) { _version = version; };
 void                                Client::setRealName(std::string realname) { _realname = realname; }
 void                                Client::setPass(std::string pass) { _pass= pass; }
+void								Client::setCurrchan(std::string name) { _currChan = name; }
+void                                Client::setAway(bool away) { _away = away;}
+void                                Client::setAwayMsg(std::string msg) { _awayMsg = msg;}
 // void                                Client::setOp(bool op) { _op = op; };
 bool 							  	Client::getRegister() const { return (_register); }
+bool                                Client::getAway() const {return _away; }
+std::string                         Client::getAwayMsg() const {return _awayMsg; }
 std::string							Client::getUsername() const { return _username; }
 std::string							Client::getNickname() const { return _nickname; }
 std::string							Client::getHostname() const { return _hostname; }
@@ -47,6 +66,7 @@ std::string							Client::getNameserver() const { return _servername; }
 std::string							Client::getVersion() const { return _version; }
 std::string							Client::getRealName() const { return _realname; }
 std::string							Client::getPass() const { return _pass; }
+std::string							Client::getCurrchan() const { return _currChan; }
 std::string							Client::getMode() const { return _mode; }
 std::map<std::string ,Channel*>     Client::getChannels() const { return _channels; }
 // bool                                Client::getOp() const { return _op; }

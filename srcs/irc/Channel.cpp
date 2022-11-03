@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/10/31 16:41:43 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 03:38:36 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void							Channel::addClient(Client& client) {
 	for (std::map<int, Client&>::iterator it = _clients.begin(); it != _clients.end(); ++it)
 		if (it->second == client)
 			return ;
+	client.setCurrchan(_name);
 	_clients.insert(std::pair<int, Client&>(client.getSock(), client));
 }
 void							Channel::removeClient(Client& client) {
