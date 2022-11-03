@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 23:33:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 22:42:39 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 13:33:30 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ USER::USER(USER const& src) : ACommand(src) {
 }
 
 USER::~USER() {}
-	
+
+// To do verif conflit d'identite dans le server
 int		USER::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() < 5) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);

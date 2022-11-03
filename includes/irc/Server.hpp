@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 01:39:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 13:37:05 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@
 #include "client/command/JOIN.hpp"
 #include "client/command/LIST.hpp"
 #include "client/command/MODE.hpp"
+#include "client/command/OPER.hpp"
+#include "client/command/AWAY.hpp"
 #include "client/command/MSGPRIV.hpp"
-// #include "client/command/OPER.hpp"
+#include "client/command/ME.hpp"
 
 class ACommand;
 class Channel;

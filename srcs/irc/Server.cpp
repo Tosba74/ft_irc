@@ -6,19 +6,21 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 03:48:48 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/03 13:37:31 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
 #include "client/command/NICK.hpp"
-#include "client/command/JOIN.hpp"
 #include "client/command/PASS.hpp"
-#include "client/command/MSGPRIV.hpp"
 #include "client/command/USER.hpp"
-#include "client/command/MODE.hpp"
+#include "client/command/JOIN.hpp"
 #include "client/command/LIST.hpp"
+#include "client/command/MODE.hpp"
 #include "client/command/OPER.hpp"
+#include "client/command/AWAY.hpp"
+#include "client/command/MSGPRIV.hpp"
+#include "client/command/ME.hpp"
 // #include "client/command/HELP.hpp"
 // #include "client/command/KICK.hpp"
 // #include "client/command/QUIT.hpp"
@@ -38,6 +40,8 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["MODE"] = new MODE(this);
 	_commandes["LIST"] = new LIST(this);
 	_commandes["OPER"] = new OPER(this);
+	_commandes["ME"] = new ME(this);
+	_commandes["AWAY"] = new AWAY(this);
 //	_commandes["HELP"] = new HELP(this);
 //	_commandes["KICK"] = new KICK(this);
 //	_commandes["QUIT"] = new QUIT(this);
