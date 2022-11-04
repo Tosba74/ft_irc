@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 13:37:31 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 15:09:42 by ahuber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ std::ostream&                       operator<<(std::ostream& o, Server const& rh
 			o << "\t" << it->first <<std::endl;
 			o << "\e[34m" << "* ------------"  << "\e[0m" << std::endl;
 	}
-	try {
+	/*try {
 	if (!rhs.getOp().empty()) {
 		o << "\e[34m" << "* ------------" << std::endl << "List de Operateur :"<< std::endl << "* ------------" << "\e[0m" << std::endl;
 		// std::set<int>::iterator ite = rhs.getOp().end();
@@ -208,7 +208,7 @@ std::ostream&                       operator<<(std::ostream& o, Server const& rh
 	}
     } catch(std::exception &e) {
         std::cerr << "fucking exception: " << e.what() << std::endl;
-    }
+    }*/
 	o << "\e[0m";
 	return o;
 }

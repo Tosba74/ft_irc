@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 04:38:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/04 15:37:36 by ahuber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void Client::updateRegister() {
 
 Client &Client::operator<<(std::string const &reply)
 {
-	// std::string		msg = getHostname() + reply + "\r\n";
-	std::string		msg = getHostname() + reply + "\n";
+	std::string		msg = ":" + getHostname() + reply + getHostname() + "\r\n";
+	// std::string		msg = getHostname() + reply + "\n";
 	std::cout << "\e[33m" << "Reply : " << "\e[0m" << msg;
 	SocketConnection::operator<<(msg);
 	flush();
