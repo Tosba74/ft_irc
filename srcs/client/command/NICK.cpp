@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/02 16:49:16 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:27:25 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ int NICK::execute(Client &clicli, std::vector<std::string> args) {
 }
 
 void    NICK::descr(Client& clicli) {
-	(void)clicli;
+	clicli << "Usage : NICK <pseudonyme> [ <compteur de distance> ]\n";
 }

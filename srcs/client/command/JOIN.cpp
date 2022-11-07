@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/07 16:09:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:30:13 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ JOIN::JOIN(JOIN const& src): ACommand(src) {
 
 JOIN::~JOIN() {}
 
-// clicli << ERR_BANNEDFROMCHAN(args[1]);
 // clicli << ERR_BADCHANMASK(args[1]);
 
+// clicli << ERR_BANNEDFROMCHAN(args[1]);
 // clicli << ERR_BADCHANNELKEY(args[1]);
 // clicli << ERR_TOOMANYCHANNELS(args[1]);
 // clicli << ERR_INVITEONLYCHAN(args[1]);
@@ -47,6 +47,13 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
             _serv->getChannel(args[1])->setKey(args[2]);
     }
     
+    for (std::map<int, Client&>::const_iterator it = _serv->getChannel(args[1])->getBan().begin(); it != _serv->getChannel(args[1])->getBan().end(); it++) {
+        if (it->second == clicli) {
+            clicli << ERR_BANNEDFROMCHAN(args[1]);
+            return 1;
+        }
+    }
+
     if (_serv->getChannel(args[1])->getClients().size() > 10000000) {
         clicli << ERR_TOOMANYCHANNELS(args[1]);
         return 1;
@@ -73,5 +80,5 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 }
 
 void    JOIN::descr(Client& clicli) {
-    clicli << "\e[31mExemple\e[0m\n";
+    clicli << "Usage: JOIN <canal>{,<canal>} [<clé>{,<clé>}]\n";
 }

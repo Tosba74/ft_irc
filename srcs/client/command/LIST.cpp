@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/03 04:32:54 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:25:19 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ LIST::~LIST() {}
 
 int LIST::execute(Client &clicli, std::vector<std::string> args) {
     (void)args;
+    std::cout << "\e[32mChan actuel\e[0m" << clicli.getCurrchan() << std::endl;
     for (std::map<std::string, Channel*>::iterator it = _serv->_channels.begin(); it != _serv->_channels.end(); ++it) {
         clicli << it->first;
     }
@@ -37,5 +38,5 @@ int LIST::execute(Client &clicli, std::vector<std::string> args) {
 }
 
 void    LIST::descr(Client& clicli) {
-    clicli << "\e[31mExemple\e[0m\n";
+    clicli << "Usage: LIST [<canal>{,<canal>} [<serveur>]]\n"
 }

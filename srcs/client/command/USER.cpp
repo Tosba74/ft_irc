@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 23:33:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 13:33:30 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:29:54 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int		USER::execute(Client &clicli, std::vector<std::string> args) {
 }
 
 void	USER::descr(Client& clicli) {
-	clicli << "Usage:: USER <nom d'utilisateur> <hôte> <nom de serveur> <nom réel>\n";
+	clicli << "Usage: USER <nom d'utilisateur> <hôte> <nom de serveur> <nom réel>\n";
 }

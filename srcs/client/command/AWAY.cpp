@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:29:04 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 03:43:06 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 18:34:57 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ int AWAY::execute(Client &clicli, std::vector<std::string> args) {
 }
 
 void	AWAY::descr(Client& clicli) {
-	(void)clicli;
+	clicli << "Commande: AWAY [message]\n";
 }
