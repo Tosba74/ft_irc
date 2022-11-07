@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 21:45:12 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 14:54:06 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@
 
 // Lors de l'envoi d'un message TOPIC pour déterminer le sujet d'un canal, une de ces deux
 // réponses est envoyée. Si le sujet est défini, RPL_TOPIC est renvoyée, sinon c'est RPL_NOTOPIC.
-#define RPL_NOTOPIC(chan) " 331 " + canal + " :No topic is set"
-#define RPL_TOPIC(chan, sujet) " 332 " + canal + " :" + sujet
+#define RPL_NOTOPIC(canal) " 331 " + canal + " :No topic is set"
+
+#define RPL_TOPIC(canal, sujet) " 332 " + canal + " :" + sujet
 
 // Réponse du serveur indiquant les détails de sa version. <version> est la version actuelle
 // du programme utilisé (comprenant le numéro de mise à jour) et <debuglevel> est utilisé

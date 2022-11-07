@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/07 13:13:07 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 16:09:20 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,53 @@ JOIN::JOIN(JOIN const& src): ACommand(src) {
 
 JOIN::~JOIN() {}
 
-// clicli << ERR_CHANNELISFULL(args[1]);
 // clicli << ERR_BANNEDFROMCHAN(args[1]);
-// clicli << ERR_INVITEONLYCHAN(args[1]);
 // clicli << ERR_BADCHANMASK(args[1]);
+
 // clicli << ERR_BADCHANNELKEY(args[1]);
-// clicli << RPL_TOPIC(args[1], "Welcome " + clicli->getNickname());
-// clicli << ERR_NEEDMOREPARAMS(args[0]);
-// clicli << ERR_NOSUCHCHANNEL(args[1]);
 // clicli << ERR_TOOMANYCHANNELS(args[1]);
+// clicli << ERR_INVITEONLYCHAN(args[1]);
+// clicli << ERR_CHANNELISFULL(args[1]);
+// clicli << ERR_NOSUCHCHANNEL(args[1]);
+// clicli << ERR_NEEDMOREPARAMS(args[0]);
 
 int JOIN::execute(Client &clicli, std::vector<std::string> args) {
-    if (args[1].size() > 2 && args[1].at(0) == '#' && clicli.getRegister() == true) {
-        _serv->joinChannel(args[1].substr(1, args[1].size() - 1), clicli);
-        // _serv->getChannel(args[1])->addClient(clicli);
-        clicli.setCurrchan(args[1].substr(1, args[1].size() - 1));
+    if (args.size() < 2) {
+        clicli << ERR_NEEDMOREPARAMS(args[0]);
+        return 1;
     }
-    else
-        clicli << "You must be authenticated to join a channel\n";
+    if (args[1].size() < 2 || args[1].at(0) != '#') {
+        clicli << ERR_NOSUCHCHANNEL(args[1]);
+        return 1;
+    }
+	if (_serv->getChannel(args[1]) == NULL) {
+	    _serv->createChannel(args[1]);
+        if (args.size() == 3)
+            _serv->getChannel(args[1])->setKey(args[2]);
+    }
+    
+    if (_serv->getChannel(args[1])->getClients().size() > 10000000) {
+        clicli << ERR_TOOMANYCHANNELS(args[1]);
+        return 1;
+    } else if (_serv->getChannel(args[1])->getLimit() <= _serv->getChannel(args[1])->getClients().size()) {
+        clicli << ERR_CHANNELISFULL(args[1]);
+        return 1;
+    } else if (_serv->getChannel(args[1])->getVip() == true) {
+        clicli << ERR_INVITEONLYCHAN(args[1]);
+        return 1;
+    }
+    if (args.size() == 3 || _serv->getChannel(args[1])->getKey() != "") {
+        if (_serv->getChannel(args[1])->getKey() != args[2]) {
+            clicli << ERR_BADCHANNELKEY(args[1]);
+            return 1;
+        }
+    }
+	clicli.setCurrchan(args[1]);
+    _serv->joinChannel(args[1], clicli);
+    clicli << RPL_TOPIC(args[1], ("Welcome " + clicli.getNickname()));
+    // _serv->getChannel(args[1])->addClient(clicli);
+    // else
+        // clicli << "You must be authenticated to join a channel\n";
     return 0;
 }
 

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 04:38:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 16:08:21 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ Client::Client(Client const &rhs) : SocketConnection(rhs), _nickname(rhs._nickna
 	_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
 }
 
-Client::~Client() throw() {}
+Client::~Client() throw() {
+	for (listChannel::iterator it = _channels.begin(); it != _channels.end(); it++)
+		it->second->removeClient(*this, it->second->getClients());
+	_channels.clear();
+}
 
 Client								&Client::operator=(Client const &rhs) {
 	if (this != &rhs) {
