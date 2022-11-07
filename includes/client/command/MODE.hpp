@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:52 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 15:10:56 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/07 12:07:29 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,10 @@
 
 
 class MODE : public ACommand {
+	private:
+		int		checkChannel(Client &clicli, std::string args);
+		int		checkMode(Client &clicli, std::string args);
+		int		indexage(char c);
 	public:
 		MODE(Server *serv);
 		MODE(MODE const& src);
