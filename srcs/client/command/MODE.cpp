@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/08 15:28:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 16:12:02 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		MODE::indexage(char c, const char *ismode) {
 			return i;
 	return -1;
 }
-
+/*
 int		MODE::checkMode(Client &clicli, std::string arg) {
 	int i = 0;
 	
@@ -116,6 +116,7 @@ int		MODE::checkMode(Client &clicli, std::string arg) {
 	}
 	return 0;
 }
+*/
 
 int		MODE::checkChannel(Client &clicli, std::string arg) {
 	// std::string		name = arg.substr(1, arg.size() - 1);
@@ -125,6 +126,23 @@ int		MODE::checkChannel(Client &clicli, std::string arg) {
 	} else if (!_serv->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
 		clicli << ERR_NOTONCHANNEL(arg);
 		return 1;
+	}
+	return 0;
+}
+
+int		MODE::checkMode(Client &clicli, std::string arg, const char *cmp) {
+	std::string::iterator it = arg.begin();
+	if (!(*it == '+' || *it == '-')) {
+		clicli << ERR_UMODEUNKNOWNFLAG();
+		return -1;
+	}
+	++it; 
+	for (; it != arg.end(); ++it) {
+		std::cout << *it << std::endl;
+		if (indexage(*it, cmp) == -1) {
+			clicli << ERR_USERSDONTMATCH();
+			return -1;
+		}
 	}
 	return 0;
 }
@@ -139,15 +157,24 @@ int		MODE::verifArgs(Client &clicli, std::vector<std::string> args) {
 				clicli << ERR_NOTONCHANNEL(args[1]);
 				return -1;
 			} else {
-				std::string::iterator it = args[2].begin() + 1; 
-				for (; it != args[2].end(); ++it) {
-					std::cout << *it << std::endl;
-					if (indexage(*it, "opsitnmlbv") == -1) {
-						clicli << ERR_USERSDONTMATCH();
-						return -1;
-					}
-				}
-				return 0;
+				if (checkMode(clicli, args[2], "opsitnmlbv"))
+					return -1;
+				else
+					return 0;
+				// std::string::iterator it = args[2].begin();
+				// if (!(*it == '+' || *it == '-')) {
+					// clicli << ERR_UMODEUNKNOWNFLAG();
+					// return 1;
+				// }
+				// ++it; 
+				// for (; it != args[2].end(); ++it) {
+					// std::cout << *it << std::endl;
+					// if (indexage(*it, "opsitnmlbv") == -1) {
+						// clicli << ERR_USERSDONTMATCH();
+						// return -1;
+					// }
+				// }
+				// return 0;
 			}
 		}
 	} else {
@@ -155,12 +182,16 @@ int		MODE::verifArgs(Client &clicli, std::vector<std::string> args) {
 			clicli << ERR_NOSUCHNICK(args[1]);
 			return -1;
 		} else {
-			for (std::string::iterator it = args[1].begin(); it != args[1].end(); ++it) {
-				if (indexage(*it, "iswo") == -1) {
-					clicli << ERR_USERSDONTMATCH();
-					return -1;
-				}
-			}
+			if (checkMode(clicli, args[2], "iswo"))
+				return -1;
+			else
+				return 0;
+			// for (std::string::iterator it = args[1].begin(); it != args[1].end(); ++it) {
+				// if (indexage(*it, "iswo") == -1) {
+					// clicli << ERR_USERSDONTMATCH();
+					// return -1;
+				// }
+			// }
 		}
 			return 1;
 	}
