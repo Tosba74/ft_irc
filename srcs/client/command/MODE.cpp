@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/08 11:11:21 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 15:28:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,63 @@ int		MODE::checkChannel(Client &clicli, std::string arg) {
 	return 0;
 }
 
+int		MODE::verifArgs(Client &clicli, std::vector<std::string> args) {
+	if (args[1][0] == '#') {
+		if (!_serv->getChannel(args[1])) {
+			clicli << ERR_NOSUCHCHANNEL(args[1]);
+			return -1;
+		} else {
+			if (args[1].compare(clicli.getCurrchan())) {
+				clicli << ERR_NOTONCHANNEL(args[1]);
+				return -1;
+			} else {
+				std::string::iterator it = args[2].begin() + 1; 
+				for (; it != args[2].end(); ++it) {
+					std::cout << *it << std::endl;
+					if (indexage(*it, "opsitnmlbv") == -1) {
+						clicli << ERR_USERSDONTMATCH();
+						return -1;
+					}
+				}
+				return 0;
+			}
+		}
+	} else {
+		if (!_serv->getClient(args[1])) {
+			clicli << ERR_NOSUCHNICK(args[1]);
+			return -1;
+		} else {
+			for (std::string::iterator it = args[1].begin(); it != args[1].end(); ++it) {
+				if (indexage(*it, "iswo") == -1) {
+					clicli << ERR_USERSDONTMATCH();
+					return -1;
+				}
+			}
+		}
+			return 1;
+	}
+}
+
+int		MODE::execute(Client &clicli, std::vector<std::string> args) {
+	if (args.size() < 3) {
+		clicli << ERR_NEEDMOREPARAMS(args[0]);
+		return 1;
+	}
+	int i = verifArgs(clicli, args);
+	
+	if (i == -1) {
+		return 1;
+	} else if (i == 1) {
+		;
+	} else {
+		;
+	}
+	
+	(void)clicli;
+	(void)args;
+	return 0;
+}
+/*
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() < 3) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
@@ -148,7 +205,6 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		if (args[2][0] == '-')
 			_serv->getChannel(args[2])->_mod |= MOD_CHAN_VIP;
 	}
-
 	// if (_serv->getChannel(clicli.getCurrchan()) ==  NULL) {
 		// clicli << ERR_NOTONCHANNEL(args[1]);
 		// return 1;
@@ -160,6 +216,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	(void)args;
 	return 0;
 }
+*/
 
 void	MODE::descr(Client& clicli) {
 	clicli << "Usage: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]\n";
