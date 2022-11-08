@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/07 18:25:19 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 06:03:48 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int LIST::execute(Client &clicli, std::vector<std::string> args) {
 }
 
 void    LIST::descr(Client& clicli) {
-    clicli << "Usage: LIST [<canal>{,<canal>} [<serveur>]]\n"
+    clicli << "Usage: LIST [<canal>{,<canal>} [<serveur>]]\n";
 }

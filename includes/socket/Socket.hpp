@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:28:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 18:46:27 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 05:38:07 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#define PURE = 0
+# define MOD_CHAN_VIP 0b00000001
+# define MOD_CHAN_KEY 0b00000010
 
 class Socket
 {

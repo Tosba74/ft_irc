@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/07 14:54:06 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 10:26:00 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 // 255 RPL_LUSERME
 // ":I have <entier> clients and <integer> servers"
 
-
 #define RPL_AWAY(target) " 301 " + target + " :<message d'absence>"
 
 // Les réponses RPL_LISTSTART, RPL_LIST, RPL_LISTEND marquent le début, les réponses
@@ -58,6 +57,13 @@
 // Le champ <commentaire> peut contenir n'importe quel commentaire au sujet de la version,
 // ou des détails supplémentaires sur la version.
 #define RPL_VERSION(version, debug, serv, commit) " 351 " + version + "." + debug + " " + serv + " :" + commit
+
+// En réponse à un message NAMES, une paire consistant de RPL_NAMREPLY et RPL_ENDOFNAMES est
+// renvoyée par le serveur au client.
+// S'il n'y a pas de canal résultant de la requête, seul RPL_ENDOFNAMES est retourné.
+// L'exception à cela est lorsqu'un message NAMES est env
+#define RPL_NAMREPLY(canal, nick) " 353" + canal + " :[[@|+]" + nick + " [[@|+]" + nick + " [...]]]"
+#define RPL_ENDOFNAMES(canal) " 366 " + canal + " :End of /NAMES list."
 
 // "<canal> <identification de bannissement>"
 #define RPL_BANLIST(canal, id) " 367 " + canal + " " + id

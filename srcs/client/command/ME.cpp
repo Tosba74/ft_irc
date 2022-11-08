@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:23:14 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 13:32:06 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 10:47:10 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ int ME::execute(Client &clicli, std::vector<std::string> args) {
 
 	for (unsigned long i = 1; i < args.size(); ++i)
 		msg.append(" " + args[i]);
-	std::cout << "\e[32m" << msg;
+	std::cout << "\e[32m" << msg << "\e[0m" << std::endl;
 	for (std::map<int, Client&>::const_iterator it = curr->getClients().begin(); it != curr->getClients().end(); ++it)
 		(*it).second << msg;
+	// curr << msg;
 	return 0;
 }
 

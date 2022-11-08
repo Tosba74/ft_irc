@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/07 18:30:13 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 09:32:30 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         clicli << ERR_INVITEONLYCHAN(args[1]);
         return 1;
     }
-    if (args.size() == 3 || _serv->getChannel(args[1])->getKey() != "") {
+    if (args.size() == 3 || (_serv->getChannel(args[1])->_mod | MOD_CHAN_VIP && _serv->getChannel(args[1])->getKey() != "")) {
         if (_serv->getChannel(args[1])->getKey() != args[2]) {
             clicli << ERR_BADCHANNELKEY(args[1]);
             return 1;

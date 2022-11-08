@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/07 13:03:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 11:11:21 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,7 @@
 #include "irc/Server.hpp"
 // #include <ios>
 
-
-MODE::MODE(Server *serv) : ACommand(serv) {}
-
-MODE::MODE(MODE const& src) : ACommand(src) {
-    if (this != &src)
-        this->_serv = src._serv;
-}
-
-MODE::~MODE() {}
+// Commande: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]
 
 // REPLY :
 	// clicli << RPL_CHANNELMODEIS(args[1], clicli.getMode(), args[5]);
@@ -37,7 +29,6 @@ MODE::~MODE() {}
 	
 	// clicli << ERR_UNKNOWNMODE(char);
 
-// Commande: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]
 // Les modes disponibles pour les canaux sont les suivants :
 	// o - donne/retire les privilèges d'opérateur de canal
 	// p - drapeau de canal privé
@@ -56,27 +47,16 @@ MODE::~MODE() {}
 	// s - marque un utilisateur comme recevant les notifications du serveur ;
 	// w - l'utilisateur reçoit les WALLOPs ;
 	// o - drapeau d'opérateur.
-	
-// if (cmpArgs(mode[i], "opsitnmlbvk")) {
-	
-// bool	cmpArgs(std::string mode, std::string cmp) {
-// 	for (unsigned long i = 0; i < cmp.size(); ++i) {
-// 		(void)mode;
-// 	}
-// }
 
-// bool	MODE::checkmode(std::string mode) {
-// 	int	i = 0;
-// 	if (mode[i] != '-' && mode[i] != '+')
-// 		return false;
-// 	while (mode[i]) {
-// 		if (cmpArgs(mode[i], "opsitnmlbvk")) {
-// 			;
-// 		} else if (cmpArgs(mode[i], "iswo")) {
-// 			;
-// 		}
-// 	}
-// }
+MODE::MODE(Server *serv) : ACommand(serv) {}
+
+MODE::MODE(MODE const& src) : ACommand(src) {
+    if (this != &src)
+        this->_serv = src._serv;
+}
+
+MODE::~MODE() {}
+
 enum e_mode {
 	o = (1 << 0),
 	p = (1 << 1),
@@ -91,8 +71,20 @@ enum e_mode {
 	k = (1 << 10)
 };
 
-int		MODE::indexage(char c) {
-	const char *ismode = "opsitnmlbv";
+// REPLY :
+	// clicli << RPL_CHANNELMODEIS(args[1], clicli.getMode(), args[5]);
+	// clicli << ERR_CHANOPRIVSNEEDED(args[1]);
+	// clicli << RPL_BANLIST(args[1], args[5]);
+	// clicli << RPL_ENDOFBANLIST(args[1]);
+	// clicli << ERR_KEYSET(args[1]);
+	// clicli << ERR_USERSDONTMATCH();
+	// clicli << RPL_UMODEIS(clicli.getMode());
+	// clicli << ERR_UMODEUNKNOWNFLAG();
+	
+	// clicli << ERR_UNKNOWNMODE(char);
+	// clicli << ERR_NOSUCHNICK(args[4]);
+	
+int		MODE::indexage(char c, const char *ismode) {
 	int i = -1;
 	
 	while (ismode[++i])
@@ -106,12 +98,18 @@ int		MODE::checkMode(Client &clicli, std::string arg) {
 	
 	for (std::string::iterator it = arg.begin(); it != arg.end(); ++it) {
 		if (i == 0 && !(*it == '+' || *it == '-')) {
-				clicli << ERR_UMODEUNKNOWNFLAG();
-				return 1;
+			clicli << ERR_UMODEUNKNOWNFLAG();
+			return 1;
 		}
-		if (i > 0 && indexage(*it) == -1) {
-				clicli << ERR_UNKNOWNMODE(arg.substr(i, 1));
-				return 1;
+		// Commande: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]
+		if (i > 0 && indexage(*it, "opsitnmlbv") == -1) {
+			clicli << ERR_UNKNOWNMODE(arg.substr(i, 1));
+			return 1;
+		}
+		// Commande: MODE <pseudonyme> {[+|-]|i|w|s|o}
+		if (i > 0 && indexage(*it, "iswo") == -1) {
+			clicli << ERR_UNKNOWNMODE(arg.substr(i, 1));
+			return 1;
 		}
 		// Probleme JOIN set currrchan
 		i++;
@@ -120,11 +118,11 @@ int		MODE::checkMode(Client &clicli, std::string arg) {
 }
 
 int		MODE::checkChannel(Client &clicli, std::string arg) {
-	std::string		name = arg.substr(1, arg.size() - 1);
-	if (arg[0] != '#' || !_serv->getChannel(name)) {
+	// std::string		name = arg.substr(1, arg.size() - 1);
+	if (arg[0] != '#' || !_serv->getChannel(arg)) {
 		clicli << ERR_NOSUCHCHANNEL(arg);
 		return 1;
-	} else if (!_serv->getChannel(clicli.getCurrchan()) || name.compare(clicli.getCurrchan())) {
+	} else if (!_serv->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
 		clicli << ERR_NOTONCHANNEL(arg);
 		return 1;
 	}
@@ -136,10 +134,21 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	}
+	std::cout << "Parser passe !!!";
 	if (checkChannel(clicli, args[1]))
 		return 1;
 	if (checkMode(clicli, args[2]))
 		return 1;
+	
+	std::cout << "Verif arguments !";
+	if (args[2][1] == 'p') {
+		std::cout << "parser P";
+		if (args[2][0] == '+')
+			_serv->getChannel(args[2])->_mod ^= MOD_CHAN_VIP;
+		if (args[2][0] == '-')
+			_serv->getChannel(args[2])->_mod |= MOD_CHAN_VIP;
+	}
+
 	// if (_serv->getChannel(clicli.getCurrchan()) ==  NULL) {
 		// clicli << ERR_NOTONCHANNEL(args[1]);
 		// return 1;
@@ -154,4 +163,5 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 
 void	MODE::descr(Client& clicli) {
 	clicli << "Usage: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]\n";
+	clicli << "Usage: MODE <pseudonyme> {[+|-]|i|w|s|o}";
 }

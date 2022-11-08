@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/07 16:06:25 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/08 06:26:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ class Client;
 class Channel {
 	private:
 		std::string						_name;
-		std::string						_mode;
 		std::string						_key;
-		unsigned int					_limit;
 		bool							_vip;
+		unsigned int					_limit;
 		std::map<int, Client&>			_clients;
 		std::map<int, Client&>			_ban;
 		
+	protected:
+
 	public:
+		int								_mod;
 		Channel(std::string name);
 		Channel(Channel const &src);
 		Channel &operator=(Channel const &rhs);
@@ -36,7 +38,7 @@ class Channel {
 		std::string	const&				getName() const;
 		std::map<int, Client&> const&	getClients() const;
 		std::map<int, Client&> const&	getBan() const;
-		std::string						getMode() const;
+		// std::string						getMode() const;
 		std::string						getKey() const;
 		unsigned int					getLimit() const;
 		bool							getVip() const;
@@ -47,6 +49,7 @@ class Channel {
 		void							removeClient(Client& client, std::map<int, Client&> lst);
 		// void							addClient(Client& client);
 		// void							removeClient(Client& client);
+		Channel&						operator<<(std::string const& msg);
 };
 
 std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);
