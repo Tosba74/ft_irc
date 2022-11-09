@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/03 03:19:38 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 15:13:30 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ class Client: public SocketConnection {
         std::string                         _realname;
         std::string                         _pass;
         std::string                         _currChan;
-        std::string                         _mode;
         std::string                         _awayMsg; 
         listChannel                         _channels;
         bool                                _register;
         bool                                _away;
         
     public:
+        char                                _mod;
         Client(int sock, sockaddr_in &addr);
         Client(Client const &src);
         Client  &operator=(Client const &rhs);
@@ -63,7 +63,7 @@ class Client: public SocketConnection {
         std::string                         getVersion() const;
         std::string                         getRealName() const;
         std::string                         getPass() const;
-        std::string                         getMode() const;
+        char                                getMode() const;
         std::string							getCurrchan() const;
         std::string                         getAwayMsg() const;
         std::map<std::string ,Channel*>     getChannels() const;

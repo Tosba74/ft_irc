@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/08 06:26:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 14:11:14 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ class Channel {
 		std::string						_name;
 		std::string						_key;
 		bool							_vip;
-		unsigned int					_limit;
+		unsigned long					_limit;
 		std::map<int, Client&>			_clients;
 		std::map<int, Client&>			_ban;
 		
@@ -30,6 +30,7 @@ class Channel {
 
 	public:
 		int								_mod;
+
 		Channel(std::string name);
 		Channel(Channel const &src);
 		Channel &operator=(Channel const &rhs);
@@ -40,11 +41,12 @@ class Channel {
 		std::map<int, Client&> const&	getBan() const;
 		// std::string						getMode() const;
 		std::string						getKey() const;
-		unsigned int					getLimit() const;
+		unsigned long					getLimit() const;
 		bool							getVip() const;
 		
 		void							setName(std::string name);
 		void							setKey(std::string key);
+		void							setLimit(unsigned long nb);
 		void							addClient(Client& client, std::map<int, Client&> lst);
 		void							removeClient(Client& client, std::map<int, Client&> lst);
 		// void							addClient(Client& client);

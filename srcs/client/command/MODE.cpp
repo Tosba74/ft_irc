@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/08 16:12:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 13:31:85by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,14 @@ int		MODE::checkMode(Client &clicli, std::string arg, const char *cmp) {
 	std::string::iterator it = arg.begin();
 	if (!(*it == '+' || *it == '-')) {
 		clicli << ERR_UMODEUNKNOWNFLAG();
-		return -1;
+		return 1;
 	}
 	++it; 
 	for (; it != arg.end(); ++it) {
 		std::cout << *it << std::endl;
 		if (indexage(*it, cmp) == -1) {
 			clicli << ERR_USERSDONTMATCH();
-			return -1;
+			return 1;
 		}
 	}
 	return 0;
@@ -157,24 +157,10 @@ int		MODE::verifArgs(Client &clicli, std::vector<std::string> args) {
 				clicli << ERR_NOTONCHANNEL(args[1]);
 				return -1;
 			} else {
-				if (checkMode(clicli, args[2], "opsitnmlbv"))
+				if (checkMode(clicli, args[2], "psimntkvlob") == -1)
 					return -1;
 				else
 					return 0;
-				// std::string::iterator it = args[2].begin();
-				// if (!(*it == '+' || *it == '-')) {
-					// clicli << ERR_UMODEUNKNOWNFLAG();
-					// return 1;
-				// }
-				// ++it; 
-				// for (; it != args[2].end(); ++it) {
-					// std::cout << *it << std::endl;
-					// if (indexage(*it, "opsitnmlbv") == -1) {
-						// clicli << ERR_USERSDONTMATCH();
-						// return -1;
-					// }
-				// }
-				// return 0;
 			}
 		}
 	} else {
@@ -182,40 +168,80 @@ int		MODE::verifArgs(Client &clicli, std::vector<std::string> args) {
 			clicli << ERR_NOSUCHNICK(args[1]);
 			return -1;
 		} else {
-			if (checkMode(clicli, args[2], "iswo"))
+			if (checkMode(clicli, args[2], "iswo") == 1)
 				return -1;
 			else
-				return 0;
-			// for (std::string::iterator it = args[1].begin(); it != args[1].end(); ++it) {
-				// if (indexage(*it, "iswo") == -1) {
-					// clicli << ERR_USERSDONTMATCH();
-					// return -1;
-				// }
-			// }
+				return 1;
 		}
-			return 1;
 	}
+	return -1;
 }
 
+#include <cstdlib>
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() < 3) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	}
 	int i = verifArgs(clicli, args);
-	
 	if (i == -1) {
 		return 1;
 	} else if (i == 1) {
-		;
+		std::cout << "args[2] is a Client" << std::endl;
+		Client		*dest = _serv->getClient(args[1]);
+		std::string::iterator it = args[2].begin();
+		++it; 
+		for (; it != args[2].end(); ++it) {
+			int		index = indexage(*it, "iswo") + 1;
+			if (index < 4)
+				dest->_mod ^= (1 << index);
+		}
 	} else {
-		;
+		std::cout << "args[2] is a Channel" << std::endl;
+		Channel		*chan = _serv->getChannel(args[1]);
+		std::string::iterator it = args[2].begin();
+		++it; 
+		for (; it != args[2].end(); ++it) {
+			int		index = indexage(*it, "psimntkvlob") + 1;
+			if (index < 9) {
+				chan->_mod ^= (1 << index);
+			} else if (index == 9) {
+				std::cout << "size: " << args.size() << std::endl;
+				if (args.size() == 3) {
+					clicli << ERR_NEEDMOREPARAMS(args[0]);
+					return 1;
+				} else {
+					if (std::strtoul(args[3].c_str(), NULL, 10) > 0)
+						chan->setLimit(std::strtoul(args[3].c_str(), NULL, 10));
+					// if (std::strtoul(args[3].c_str()) > 0)
+						// chan->setLimit(std::strtoul(args[3].c_str()));
+				}
+			} else if (index == 10) {
+				// clicli + o;
+				;
+			} else if (index == 11) {
+				if (args.size() == 3) {
+					clicli << ERR_NEEDMOREPARAMS(args[0]);
+					return 1;
+				} else {
+					std::vector<std::string>::iterator it = args.begin();
+					++it;
+					for (; it != args.end(); ++it) {
+						if (!_serv->getClient(*it)) {
+							clicli << ERR_NOSUCHNICK(*it);
+							return 1;
+						} else {
+							chan->addClient(*(_serv->getClient(*it)), chan->getBan());
+							// _ban.insert(it);
+						}
+					}
+				}
+			}
+		}
 	}
-	
-	(void)clicli;
-	(void)args;
 	return 0;
 }
+
 /*
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() < 3) {
@@ -251,5 +277,5 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 
 void	MODE::descr(Client& clicli) {
 	clicli << "Usage: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]\n";
-	clicli << "Usage: MODE <pseudonyme> {[+|-]|i|w|s|o}";
+	clicli << "Usage: MODE <pseudonyme> {[+|-]|i|w|s|o}\n";
 }

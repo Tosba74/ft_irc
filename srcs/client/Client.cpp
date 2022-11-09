@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/07 16:08:21 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/09 15:14:52 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr), _nickname(""), _username(""),
 											_hostname(""), _servername("ircserv"), _version("1.3"), _realname(""),
-											_pass(""), _currChan(""), _awayMsg(""), _register(false), _away(false) {}
+											_pass(""), _currChan(""), _awayMsg(""), _register(false), _away(false), _mod(0) {}
 
 Client::Client(Client const &rhs) : SocketConnection(rhs), _nickname(rhs._nickname), _username(rhs._username),
 									_hostname(rhs._hostname), _servername(rhs._servername), _version(rhs._version),
 									_realname(rhs._realname), _pass(rhs._pass), _currChan(rhs._currChan), _awayMsg(rhs._awayMsg),
-									_register(rhs._register), _away(rhs._away) {
+									_register(rhs._register), _away(rhs._away), _mod(rhs._mod) {
 	*this = rhs;
 	_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
 }
@@ -40,7 +40,7 @@ Client								&Client::operator=(Client const &rhs) {
     	_version = rhs.getVersion();
     	_realname = rhs.getRealName();
     	_pass = rhs.getPass();
-    	_mode = rhs.getMode();
+    	_mod = rhs.getMode();
     	_awayMsg =  rhs.getAwayMsg(); 
     	_register = rhs.getRegister();
 		_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
@@ -71,7 +71,7 @@ std::string							Client::getVersion() const { return _version; }
 std::string							Client::getRealName() const { return _realname; }
 std::string							Client::getPass() const { return _pass; }
 std::string							Client::getCurrchan() const { return _currChan; }
-std::string							Client::getMode() const { return _mode; }
+char								Client::getMode() const { return _mod; }
 std::map<std::string ,Channel*>     Client::getChannels() const { return _channels; }
 // bool                                Client::getOp() const { return _op; }
 
