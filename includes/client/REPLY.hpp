@@ -6,13 +6,13 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/04 15:31:23 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/11/01 21:45:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#define RPL_WELCOME(nick) " 001 " + nick + " :Welcome to this awesome IRC server !" + nick + "!" + nick + "@"
+#define RPL_WELCOME(nick) " 001 " + nick + " Hi ! Welcome to this awesome IRC server !, " + nick
 #define RPL_YOURHOST(serv, version) " 002 Your host is " + serv + " running version " + version
 #define RPL_CREATED(created) " 003 This server was created " + created
 #define RPL_MYINFO(nick, serv, version) " 004 " + nick + " " + serv + " " + version + " none " + "none."
