@@ -21,6 +21,7 @@
 #include "client/command/AWAY.hpp"
 #include "client/command/MSGPRIV.hpp"
 #include "client/command/ME.hpp"
+#include "client/command/PING.hpp"
 // #include "client/command/HELP.hpp"
 // #include "client/command/KICK.hpp"
 // #include "client/command/QUIT.hpp"
@@ -30,7 +31,7 @@
 
 #include "client/Client.hpp"
 
-Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), _password(password) {
+Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
 	_commandes["PASS"] = new PASS(this);
 	_commandes["JOIN"] = new JOIN(this);
@@ -42,6 +43,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["OPER"] = new OPER(this);
 	_commandes["ME"] = new ME(this);
 	_commandes["AWAY"] = new AWAY(this);
+	_commandes["PING"] = new PING(this);
 //	_commandes["HELP"] = new HELP(this);
 //	_commandes["KICK"] = new KICK(this);
 //	_commandes["QUIT"] = new QUIT(this);

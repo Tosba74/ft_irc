@@ -101,7 +101,7 @@ void Client::updateRegister() {
 
 Client &Client::operator<<(std::string const &reply)
 {
-	std::string		msg_send = ":" + getHostname() + reply + "\r\n";
+	std::string		msg_send = ":" + getHostname() + " " + reply + "\r\n";
 	std::string		msg = getHostname() + reply + "\n";
 	std::cout << "\e[33m" << "Reply : " << "\e[0m" << msg;
 	SocketConnection::operator<<(msg_send);
