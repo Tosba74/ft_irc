@@ -17,6 +17,8 @@
 #define RPL_CREATED(created) " 003 This server was created " + created
 #define RPL_MYINFO(nick, serv, version) " 004 " + nick + " " + serv + " " + version + " none " + "none."
 
+#define RPL_JOIN(nick, serv, channel) ":0 " + nick + "!" + nick + "@" + serv + " JOIN #" + channel
+
 // Pour répondre à une requête au sujet du mode du client, RPL_UMODEIS est renvoyé.
 #define RPL_UMODEIS(mode) " 221 " + mode
 
@@ -48,8 +50,8 @@
 
 // Lors de l'envoi d'un message TOPIC pour déterminer le sujet d'un canal, une de ces deux
 // réponses est envoyée. Si le sujet est défini, RPL_TOPIC est renvoyée, sinon c'est RPL_NOTOPIC.
-#define RPL_NOTOPIC(chan) " 331 " + canal + " :No topic is set"
-#define RPL_TOPIC(chan, sujet) " 332 " + canal + " :" + sujet
+#define RPL_NOTOPIC(chan) " 331 " + chan + " :No topic is set"
+#define RPL_TOPIC(chan, sujet, nick) " 332 " + nick + " #" + chan + " :" + sujet
 
 // Réponse du serveur indiquant les détails de sa version. <version> est la version actuelle
 // du programme utilisé (comprenant le numéro de mise à jour) et <debuglevel> est utilisé
@@ -57,6 +59,12 @@
 // Le champ <commentaire> peut contenir n'importe quel commentaire au sujet de la version,
 // ou des détails supplémentaires sur la version.
 #define RPL_VERSION(version, debug, serv, commit) " 351 " + version + "." + debug + " " + serv + " :" + commit
+
+// Reponse du server indiquant les utilisateurs connectes a un channel lors d'un JOIN
+#define RPL_NAMREPLY(chan, nick) " 353 " + nick + " = #" + chan + " :" 
+
+// Reponse du server indiquant la fin de liste des utilisateurs lors d'un JOIN
+#define RPL_ENDOFNAMES(chan, nick) " 366 " + nick + " #" + chan + " :End of NAMES list"
 
 // "<canal> <identification de bannissement>"
 #define RPL_BANLIST(canal, id) " 367 " + canal + " " + id

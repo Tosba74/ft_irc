@@ -35,8 +35,20 @@ JOIN::~JOIN() {}
 int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     if (args[1].size() > 1 && args[1].at(0) == '#' /*&& clicli.getRegister() == true*/) {
         _serv->joinChannel(args[1].erase(0, 1), clicli);
+	if (_serv->getChannel(args[1]) == NULL)
+		_serv->createChannel(args[1]);
         _serv->getChannel(args[1])->addClient(clicli);
-    }
+    	clicli << RPL_TOPIC(args[1], "Sujet TEST", clicli.getNickname());
+	std::string	reply = RPL_NAMREPLY(args[1], clicli.getNickname());
+	std::map<int, Client&>	clients = _serv->getChannel(args[1])->getClients();
+	for (std::map<int, Client&>::iterator i = clients.begin(); i != clients.end(); i++)
+	{
+		reply += " ";
+		reply += i->first;
+	}
+	clicli << reply;
+	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
+	}
     else
         clicli << "You must be authenticated to join a channel\n";
     return 0;

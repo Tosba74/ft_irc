@@ -45,6 +45,7 @@ void							Channel::addClient(Client& client) {
 	client.setCurrchan(_name);
 	_clients.insert(std::pair<int, Client&>(client.getSock(), client));
 }
+
 void							Channel::removeClient(Client& client) {
 	_clients.erase(client.getSock());
 }
