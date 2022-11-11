@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   USER.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 23:33:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 13:33:30 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 14:03:44 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "irc/Server.hpp"
 
 USER::USER(Server *serv) : ACommand(serv) {}
-		
+
 USER::USER(USER const& src) : ACommand(src) {
 	if (this != &src)
       		this->_serv = src._serv;
@@ -22,7 +22,7 @@ USER::USER(USER const& src) : ACommand(src) {
 
 USER::~USER() {}
 
-// To do verif conflit d'identite dans le server
+// TODO: verif conflit d'identite dans le server
 int		USER::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() < 5) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
@@ -32,6 +32,7 @@ int		USER::execute(Client &clicli, std::vector<std::string> args) {
 		clicli.setUsername(args[1]);
 		clicli.setHostname(args[2]);
 		clicli.setNameserver(args[3]);
+		args[4].erase(0,1);
 		clicli.setRealName(args[4]);
 	}
 	return 0;
