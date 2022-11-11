@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 04:38:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 13:55:44 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Client								&Client::operator=(Client const &rhs) {
     	_realname = rhs.getRealName();
     	_pass = rhs.getPass();
     	_mode = rhs.getMode();
-    	_awayMsg =  rhs.getAwayMsg(); 
+    	_awayMsg =  rhs.getAwayMsg();
     	_register = rhs.getRegister();
 		_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
 	}
@@ -76,7 +76,7 @@ void                                Client::readChannels() const {
 		std::cout << it->first << std::endl;
 	}
 }
-		
+
 bool								Client::isInChannel(std::string name) const {
 	for (std::map<std::string ,Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
 		if (it->first == name)
@@ -87,7 +87,6 @@ bool								Client::isInChannel(std::string name) const {
 void Client::updateRegister() {
 	if (_register)
 		return ;
-	printC(*this);	
     if (!this->getHostname().empty() && !this->getRealName().empty()
 		&& !this->getNickname().empty() && !this->getPass().empty()) {
     	this->setRegister(true);
@@ -96,6 +95,7 @@ void Client::updateRegister() {
 		*(this) << RPL_CREATED(this->getRealName());
 		*(this) << RPL_MYINFO(this->getNickname(), this->getNameserver(), this->getVersion());
 	}
+	printC(*this);
 	return ;
 }
 
@@ -132,7 +132,7 @@ void	printC(Client const& rhs) {
     if (!rhs.getNameserver().empty())
 		std::cout << " (" << rhs.getNameserver() << ")";
 	std::cout << "\e[0m" << std::endl;
-	
+
     std::cout << "\e[34m" << "| Hostname: " << "\e[0m";
     std::cout << (!rhs.getHostname().empty() ? "\e[32mOK" : "\e[31mKO");
     if (!rhs.getHostname().empty()) {
@@ -142,27 +142,27 @@ void	printC(Client const& rhs) {
 		std::cout << ")";
 	}
 	std::cout << "\e[0m" << std::endl;
-	
+
     std::cout << "\e[34m" << "| Pass: " << "\e[0m";
     std::cout << (!rhs.getPass().empty() ? "\e[32mOK" : "\e[31mKO");
     if (!rhs.getPass().empty())
 		std::cout << " (" << rhs.getPass() << ")";
 	std::cout << "\e[0m" << std::endl;
-	
+
 	std::cout << "\e[34m" << "* ------------" << "\e[0m" << std::endl;
-	
+
     std::cout << "\e[34m" << "| Nickname: " << "\e[0m";
     std::cout << (!rhs.getNickname().empty() ? "\e[32mOK" : "\e[31mKO");
     if (!rhs.getNickname().empty())
 		std::cout << " (" << rhs.getNickname() << ")";
 	std::cout << "\e[0m" << std::endl;
-	
+
     std::cout << "\e[34m" << "| Username: " << "\e[0m";
     std::cout << (!rhs.getUsername().empty() ? "\e[32mOK" : "\e[31mKO");
     if (!rhs.getUsername().empty())
 		std::cout << " (" << rhs.getUsername() << ")";
 	std::cout << "\e[0m" << std::endl;
-	
+
     std::cout << "\e[34m" << "| RealName: " << "\e[0m";
     std::cout << (!rhs.getRealName().empty() ? "\e[32mOK" : "\e[31mKO");
     if (!rhs.getRealName().empty())
@@ -170,6 +170,6 @@ void	printC(Client const& rhs) {
 	std::cout << "\e[0m" << std::endl;
 
 	// std::cout << "\e[34m" << "| isServerOperateur: " << (rhs.getOp() ? "\e[32mY" : "\e[31mN") << std::endl;
-	
+
 	std::cout << "\e[34m" << "* ------------" << "\e[0m" << std::endl;
 }
