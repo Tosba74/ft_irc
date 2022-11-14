@@ -157,7 +157,7 @@ int		MODE::verifArgs(Client &clicli, std::vector<std::string> args) {
 				clicli << ERR_NOTONCHANNEL(args[1]);
 				return -1;
 			} else {
-				if (checkMode(clicli, args[2], "psimntkvlob") == -1)
+				if (checkMode(clicli, args[2], "psimtknvlob") == -1)
 					return -1;
 				else
 					return 0;
@@ -201,7 +201,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		std::string::iterator it = args[2].begin();
 		++it; 
 		for (; it != args[2].end(); ++it) {
-			int		index = indexage(*it, "psimntkvlob") + 1;
+			int		index = indexage(*it, "psimtknvlob") + 1;
 			if (index < 9) {
 				chan->_mod ^= (1 << index);
 			} else if (index == 9) {

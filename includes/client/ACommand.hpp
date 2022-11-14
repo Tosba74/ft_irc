@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/09 17:28:29 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 22:26:26 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@
 #include <iostream>
 #include "client/Client.hpp"
 
+
+# define CHAN_PER_USER     100
+
 # define MOD_CHAN_PRIVE     0b00000001
 # define MOD_CHAN_SECRET    0b00000010
 # define MOD_CHAN_VIP       0b00000100
 # define MOD_CHAN_MODERE    0b00001000
-# define MOD_CHAN_EXTMSG    0b00010000
-# define MOD_CHAN_ONLYOP    0b00100000
-# define MOD_CHAN_KEY       0b01000000
+# define MOD_CHAN_ONLYOP    0b00010000
+# define MOD_CHAN_KEY       0b00100000
+# define MOD_CHAN_EXTMSG    0b01000000
 # define MOD_CHAN_MSGMOD    0b10000000
 
 # define MOD_USER_INVIS     0b00000001

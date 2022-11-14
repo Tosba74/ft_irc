@@ -6,14 +6,14 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/09 14:10:48 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 21:56:05 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Channel.hpp"
 
 
-Channel::Channel(std::string name) : _name(name), _key(""), _vip(false), _limit(0), _mod(0) {}
+Channel::Channel(std::string name) : _name(name), _key(""), _vip(false), _limit(4096), _mod(0) {}
 
 Channel::Channel(Channel const &src) {
 	if (this != &src)
@@ -53,7 +53,13 @@ bool							Channel::getVip() const { return _vip; }
 
 void							Channel::setName(std::string name) { _name = name; }
 
-void							Channel::setKey(std::string key) { _key = key; }
+void							Channel::setKey(std::string key) {
+	_key = key;
+	if (!_key.compare(""))
+		_mod ^= (1 << 6);
+	else
+	_mod |= (1 << 6);
+}
 
 void							Channel::setLimit(unsigned long nb) { _limit = nb; } 
 

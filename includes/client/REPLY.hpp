@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/08 10:26:00 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 21:00:51 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@
 #define ERR_KEYSET(canal) " 467 " + canal + " :Channel key already set"
 
 // Impossible de joindre le canal (+l)
-#define ERR_CHANNELISFULL(canal) "  474 " + canal + " :Cannot join channel (+l)"
+#define ERR_CHANNELISFULL(canal) "  471 " + canal + " :Cannot join channel (+l)"
 
 // Mode Inconnu.
 #define ERR_UNKNOWNMODE(char) " 472 " + char + " :is unknown mode char to me"
