@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/09 15:13:30 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 20:56:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "irc/Channel.hpp"
 #include "client/REPLY.hpp"
 #include "socket/SocketConnection.hpp"
+
+#include <unistd.h>
 
 class Channel;
 
@@ -38,7 +40,7 @@ class Client: public SocketConnection {
         bool                                _away;
         
     public:
-        char                                _mod;
+        int                                 _mod;
         Client(int sock, sockaddr_in &addr);
         Client(Client const &src);
         Client  &operator=(Client const &rhs);
@@ -78,5 +80,6 @@ class Client: public SocketConnection {
         Client                              &operator<<(std::string const &reply);
 };
 
-std::ostream&                  operator<<(std::ostream& o, Client const& rhs);
-void                           printC(Client const& rhs);
+std::ostream&                   operator<<(std::ostream& o, Client const& rhs);
+int                             ft_putbytes(int nb);
+void                            printC(Client const& rhs);

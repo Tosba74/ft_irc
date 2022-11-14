@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/09 15:14:52 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/13 20:58:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,39 @@ std::ostream &						operator<<(std::ostream & o, Client const &rhs) {
 	return o;
 }
 
+int					ft_putbytes(int nb) {
+	if (nb == 1) {
+		std::cout << "1";
+		return (0);
+	} else if (nb == 0) {
+		std::cout << "0";
+		return (0);
+	} else {
+		ft_putbytes(nb / 2);
+		if ((nb % 2) > 0)
+			std::cout << "1";
+		else
+			std::cout << "0";
+	}
+	return (1);
+}
+// int     ft_putbytes(int nb) {
+	// if (nb == 1) {
+		// write(1, '1', 1);
+		// return (0);
+	// } else if (nb == 0) {
+		// write(1, '0', 1);
+		// return (0);
+	// } else {
+		// ft_putbytes(nb / 2);
+		// if ((nb % 2) > 0)
+			// write(1, '1', 1);
+		// else
+			// write(1, '0', 1);
+	// }
+	// return (1);
+// }
+
 void	printC(Client const& rhs) {
 	std::cout << "\e[34m" << "* ------------" << std::endl;
 	std::cout << "\e[34m" << "| isRegister: " << (rhs.getRegister() ? "\e[32mY" : "\e[31mN") << std::endl;
@@ -173,6 +206,10 @@ void	printC(Client const& rhs) {
 		std::cout << " (" << rhs.getRealName() << ")";
 	std::cout << "\e[0m" << std::endl;
 
+    std::cout << "\e[32m" << "| Droit User: " << "\e[34m";
+	ft_putbytes(rhs._mod);
+	std::cout << "\e[0m" << std::endl;
+	
 	// std::cout << "\e[34m" << "| isServerOperateur: " << (rhs.getOp() ? "\e[32mY" : "\e[31mN") << std::endl;
 	
 	std::cout << "\e[34m" << "* ------------" << "\e[0m" << std::endl;

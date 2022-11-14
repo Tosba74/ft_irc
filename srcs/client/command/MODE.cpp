@@ -177,7 +177,6 @@ int		MODE::verifArgs(Client &clicli, std::vector<std::string> args) {
 	return -1;
 }
 
-#include <cstdlib>
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() < 3) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
@@ -232,7 +231,6 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 							return 1;
 						} else {
 							chan->addClient(*(_serv->getClient(*it)), chan->getBan());
-							// _ban.insert(it);
 						}
 					}
 				}
