@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/15 00:19:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:54:01 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,13 @@ LIST::~LIST() {}
     // clicli << RPL_LIST(args[1], "?", getChan(args[1]));
     // clicli << RPL_LISTEND();
 
-int LIST::execute(Client &clicli, std::vector<std::string> args) {
+int     LIST::secureArgs(Client &clicli, std::vector<std::string> args) {
+    (void)clicli;
+    (void)args;
+    return 0;
+}
+
+int     LIST::execute(Client &clicli, std::vector<std::string> args) {
     (void)args;
     std::cout << "\e[32mChan actuel\e[0m" << clicli.getCurrchan() << std::endl;
     for (std::map<std::string, Channel*>::iterator it = _serv->_channels.begin(); it != _serv->_channels.end(); ++it) {

@@ -20,6 +20,7 @@ class BAN : public ACommand
         BAN(Server *serv);
         BAN(BAN const& src);
         ~BAN();
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
         int     execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

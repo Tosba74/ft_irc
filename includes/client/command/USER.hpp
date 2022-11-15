@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 23:33:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 15:38:50 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:35:44 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ class USER : public ACommand
 		USER(Server *serv);
 		USER(USER const& src);
 		~USER();
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
 		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

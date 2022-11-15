@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:56 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/02 16:32:25 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:55:56 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ PASS::PASS(PASS const& src) : ACommand(src) {
 }
 
 PASS::~PASS() {}
+
+int     PASS::secureArgs(Client &clicli, std::vector<std::string> args) {
+    (void)clicli;
+    (void)args;
+    return 0;
+}
 
 int PASS::execute(Client &clicli, std::vector<std::string> args) {
     if (args.size() < 2)

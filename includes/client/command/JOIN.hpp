@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:24 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/14 21:45:47 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:44:29 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,11 @@
     // :WiZ JOIN #Twilight_zone ; message JOIN de WiZ
 
 class JOIN : public ACommand {
-    private:
-        int     secureArgs(Client &clicli, std::vector<std::string> args);
-
     public:
         JOIN(Server *serv);
         JOIN(JOIN const& src);
         ~JOIN();
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
         int     execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

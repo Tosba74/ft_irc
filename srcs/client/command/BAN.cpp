@@ -21,6 +21,13 @@ BAN::BAN(BAN const& src): ACommand(src) {
 }
 
 BAN::~BAN() {}
+
+int		AWAY::secureArgs(Client &clicli, std::vector<std::string> args) { 
+    (void)clicli;
+    (void)args;
+    return 0;
+}
+
 int BAN::execute(Client &clicli, std::vector<std::string> args) {}
 
 void    BAN::descr(Client& clicli) {

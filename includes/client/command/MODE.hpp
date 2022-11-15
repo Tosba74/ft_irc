@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:52 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/09 10:44:51 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:33:07 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ class MODE : public ACommand {
 		MODE(Server *serv);
 		MODE(MODE const& src);
 		~MODE();
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
 		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

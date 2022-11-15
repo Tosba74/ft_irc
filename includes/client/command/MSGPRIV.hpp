@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 21:13:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 15:21:50 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:35:13 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ class MSGPRIV : public ACommand
 		MSGPRIV(Server *serv);
 		MSGPRIV(MSGPRIV const& src);
 		~MSGPRIV();
-		int execute(Client &clicli, std::vector<std::string> args);
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
+		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

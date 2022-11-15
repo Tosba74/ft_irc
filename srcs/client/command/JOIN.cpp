@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/15 00:12:10 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:37:42 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,6 @@ int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
     return 0;
 }
     
-    // } else if (_serv->getChannel(args[1])->getLimit() <= _serv->getChannel(args[1])->getClients().size()) {
-        // clicli << ERR_CHANNELISFULL(args[1]);
-        // return 1;
-    // } else if (_serv->getChannel(args[1])->getVip() == true) {
-        // clicli << ERR_INVITEONLYCHAN(args[1]);
-        // return 1;
-    // }
-    // if (args.size() == 3 || (_serv->getChannel(args[1])->_mod | MOD_CHAN_KEY && _serv->getChannel(args[1])->getKey() != "")) {
-        // if (_serv->getChannel(args[1])->getKey() != args[2]) {
-            // clicli << ERR_BADCHANNELKEY(args[1]);
-            // return 1;
-        // }
-    // }
-// }
-
 int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     if (args.size() < 2 || args.size() > 3) {
         clicli << ERR_NEEDMOREPARAMS(args[0]);

@@ -147,7 +147,8 @@ int		MODE::checkMode(Client &clicli, std::string arg, const char *cmp) {
 	return 0;
 }
 
-int		MODE::verifArgs(Client &clicli, std::vector<std::string> args) {
+int		MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
+// int		MODE:verifArgs(Client &clicli, std::vector<std::string> args) {
 	if (args[1][0] == '#') {
 		if (!_serv->getChannel(args[1])) {
 			clicli << ERR_NOSUCHCHANNEL(args[1]);
@@ -182,7 +183,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	}
-	int i = verifArgs(clicli, args);
+	int i = secureArgs(clicli, args);
 	if (i == -1) {
 		return 1;
 	} else if (i == 1) {

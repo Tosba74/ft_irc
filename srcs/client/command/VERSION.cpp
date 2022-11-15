@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:08:32 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 15:46:35 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:56:32 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ VERSION::~VERSION() {}
 // clicli << ERR_NOSUCHSERVER(_serv);
 // clicli << RPL_VERSION(_serv->getServ(), 0, _serv, "jc po du tt"");
 	
+int     VERSION::secureArgs(Client &clicli, std::vector<std::string> args) {
+	(void)clicli;
+	(void)args;
+	return 0;
+}
+
 int		VERSION::execute(Client &clicli, std::vector<std::string> args) {
 	clicli.setVersion(args[2]);
 	return 0;

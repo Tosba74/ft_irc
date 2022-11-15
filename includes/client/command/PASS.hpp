@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:37 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/01 15:31:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:35:37 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class PASS: public ACommand
         PASS(Server *serv);
         PASS(PASS const& src);
         ~PASS();
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
         int     execute(Client &clicli, std::vector<std::string> args);
         void    descr(Client& clicli);
 };

@@ -55,6 +55,7 @@ class OPER : public ACommand {
 		OPER(Server *serv);
 		OPER(OPER const& src);
 		~OPER();
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
 		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

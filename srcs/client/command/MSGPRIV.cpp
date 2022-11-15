@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/01 16:22:18 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:52:48 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ MSGPRIV::~MSGPRIV() {}
 	//	clicli << ERR_TOOMANYTARGETS(args[1]);
 	// 	clicli << ERR_NOSUCHNICK(args[1]);
 	// 	clicli << RPL_AWAY(args[1]);
+
+int     MSGPRIV::secureArgs(Client &clicli, std::vector<std::string> args) {
+	(void)clicli;
+	(void)args;
+	return 0;
+}
 
 int MSGPRIV::execute(Client &clicli, std::vector<std::string> args) {
 	Client	*target = _serv->getClient(args[1]);

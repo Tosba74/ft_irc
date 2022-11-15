@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:28:33 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/07 18:34:14 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:34:41 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class AWAY : public ACommand
 		AWAY(Server *serv);
 		AWAY(AWAY const& src);
 		~AWAY();
-		int execute(Client &clicli, std::vector<std::string> args);
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
+		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

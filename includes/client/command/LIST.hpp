@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:24 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/14 23:23:19 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:43:39 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class LIST : public ACommand
         LIST(Server *serv);
         LIST(LIST const& src);
         ~LIST();
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
         int     execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

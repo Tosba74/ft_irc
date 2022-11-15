@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:23:14 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/08 10:47:10 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:54:47 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ ME::ME(ME const& src) : ACommand(src) {
 
 ME::~ME() {}
 
-int ME::execute(Client &clicli, std::vector<std::string> args) {
+int     ME::secureArgs(Client &clicli, std::vector<std::string> args) {
+	(void)clicli;
+	(void)args;
+	return 0;
+}
+
+int		ME::execute(Client &clicli, std::vector<std::string> args) {
 	/*
 	std::map<int, Client&> Clients = _channels.getClients(); // ajouter current channel
 

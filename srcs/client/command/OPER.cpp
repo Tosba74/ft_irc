@@ -22,6 +22,12 @@ OPER::OPER(OPER const& src) : ACommand(src) {
 
 OPER::~OPER() {}
 
+int     OPER::secureArgs(Client &clicli, std::vector<std::string> args) {
+	(void)clicli;
+	(void)args;
+	return 0;
+}
+
 int		OPER::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() != 3)
 		clicli << ERR_NEEDMOREPARAMS(args[0]); 

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 14:57:20 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/03 03:35:46 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 00:35:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ class NICK : public ACommand {
 		NICK(Server *serv);
 		NICK(NICK const& src);
 		~NICK();
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
 		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };
