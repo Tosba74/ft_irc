@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/03 12:54:59 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 02:19:58 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,22 @@ PING::PING(PING const& src): ACommand(src) {
 
 PING::~PING() {}
 
-int PING::execute(Client &clicli, std::vector<std::string> args) {
-    if (args.size() > 1 /*&& clicli.getRegister() == true*/) {
-	std::string	pong = "PONG";
-	for (unsigned long i = 1; i < args.size(); i++)
-	{
-		pong += " ";
-		pong += args[i];
-	}
-	clicli << pong;
+int     PING::secureArgs(Client &clicli, std::vector<std::string> args) {
+	(void)clicli;
+	(void)args;
+	return 0;
+}
+		
+int		PING::execute(Client &clicli, std::vector<std::string> args) {
+    if (args.size() < 2 /*&& clicli.getRegister() == true*/) {
+		clicli << ERR_NEEDMOREPARAMS(args[0]);
+		return 1;
+	} else {
+		std::string	pong = "PONG";
+		for (unsigned long i = 1; i < args.size(); i++)
+			pong += (" " + args[i]);
+		clicli << pong;
     }
-    else
-	clicli << "DEBUGG";
     return 0;
 }
 

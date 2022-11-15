@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/13 20:58:12 by bmangin          ###   ########lyon.fr   */
-=======
-/*   Updated: 2022/11/11 13:55:44 by gaubert          ###   ########.fr       */
->>>>>>> newauth
+/*   Updated: 2022/11/15 02:16:10 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +40,8 @@ Client								&Client::operator=(Client const &rhs) {
     	_version = rhs.getVersion();
     	_realname = rhs.getRealName();
     	_pass = rhs.getPass();
-<<<<<<< HEAD
-    	_mod = rhs.getMode();
+    	_mod = rhs._mod;
     	_awayMsg =  rhs.getAwayMsg(); 
-=======
-    	_mode = rhs.getMode();
-    	_awayMsg =  rhs.getAwayMsg();
->>>>>>> newauth
     	_register = rhs.getRegister();
 		_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
 	}

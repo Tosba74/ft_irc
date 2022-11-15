@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/14 21:36:13 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 02:07:52 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 #include "client/Client.hpp"
 
-Server::Server(int port, std::string password) : SocketServer("127.0.0.1", port), _password(password) {
+Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
 	_commandes["PASS"] = new PASS(this);
 	_commandes["JOIN"] = new JOIN(this);

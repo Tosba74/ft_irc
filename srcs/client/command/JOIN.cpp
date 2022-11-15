@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/15 01:45:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 02:19:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         } else
             return 1;
     }
-    clicli << RPL_TOPIC(args[1], ("Welcome " + clicli.getNickname()));
+    clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
     return 0;
 }
 

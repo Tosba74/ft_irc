@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:18 by emenella          #+#    #+#             */
-/*   Updated: 2022/10/24 00:16:13 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 02:04:48 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,18 @@ int  SocketConnection::receive() {
 
 SocketConnection &SocketConnection::operator<<(std::string const &msg) {
     // remplacement du write/flush + protection en cas d'envoi incomplet
+    // qu'est ce qui protege ??
     int b_sent = 0;
     int total_b_sent = 0;
     do {
 	b_sent = send(this->getSock(), &msg[b_sent], msg.size() - total_b_sent, 0);
 	total_b_sent += b_sent;
 	} while (total_b_sent != (int)msg.size());
+    // je suis vraiment pas convaincu !!!
+
+    // this->writeBuffer += msg;
+    // this->writeBuffer += "\r\n";
+    // flush();
     return *this;
 }
 
