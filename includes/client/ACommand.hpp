@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 00:33:33 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 01:07:10 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,14 @@
 
 class Server;
 
-class ACommand {
+class ICommand {
+    public:
+        virtual int             secureArgs(Client &clicli, std::vector<std::string> args) = 0;
+        virtual int             execute(Client& clicli, std::vector<std::string> args) = 0;
+        virtual void            descr(Client& clicli) = 0;
+};
+
+class ACommand : public ICommand {
     protected:
         Server *                _serv;
     public:
@@ -46,9 +53,6 @@ class ACommand {
         ACommand& operator=(ACommand const& rhs);
         
         const Server *          getServ() const;
-        virtual int             secureArgs(Client &clicli, std::vector<std::string> args) = 0;
-        virtual int             execute(Client& clicli, std::vector<std::string> args) = 0;
-        virtual void            descr(Client& clicli) = 0;
 };
 
 
