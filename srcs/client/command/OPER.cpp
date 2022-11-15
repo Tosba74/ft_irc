@@ -25,6 +25,7 @@ OPER::~OPER() {}
 int     OPER::secureArgs(Client &clicli, std::vector<std::string> args) {
 	(void)clicli;
 	(void)args;
+	(void)args;
 	return 0;
 }
 
