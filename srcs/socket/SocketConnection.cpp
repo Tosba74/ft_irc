@@ -65,10 +65,15 @@ int  SocketConnection::receive() {
         this->readBuffer += buffer;
     return n;
 }
+
 SocketConnection &SocketConnection::operator<<(std::string const &msg) {
-    this->writeBuffer += msg;
-    this->writeBuffer += "\r\n";
-	flush();
+    // remplacement du write/flush + protection en cas d'envoi incomplet
+    int b_sent = 0;
+    int total_b_sent = 0;
+    do {
+	b_sent = send(this->getSock(), &msg[b_sent], msg.size() - total_b_sent, 0);
+	total_b_sent += b_sent;
+	} while (total_b_sent != (int)msg.size());
     return *this;
 }
 

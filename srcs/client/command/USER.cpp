@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 23:33:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 00:56:13 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 01:54:14 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "irc/Server.hpp"
 
 USER::USER(Server *serv) : ACommand(serv) {}
-		
+
 USER::USER(USER const& src) : ACommand(src) {
 	if (this != &src)
       		this->_serv = src._serv;
@@ -38,6 +38,7 @@ int		USER::execute(Client &clicli, std::vector<std::string> args) {
 		clicli.setUsername(args[1]);
 		clicli.setHostname(args[2]);
 		clicli.setNameserver(args[3]);
+		args[4].erase(0,1);
 		clicli.setRealName(args[4]);
 	}
 	return 0;

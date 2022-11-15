@@ -29,7 +29,7 @@ NAME := ircserv
 FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
 FILES_USER			:= Client ACommand
-FILES_COMMAND		:= NICK PASS JOIN MSGPRIV USER VERSION MODE LIST OPER ME AWAY
+FILES_COMMAND		:= NICK PASS JOIN MSGPRIV USER VERSION MODE LIST OPER ME AWAY PING
 FILES_REPLY			:= ${addprefix ${PATH_U}/, REPLY}
 
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \

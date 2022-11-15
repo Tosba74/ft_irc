@@ -6,16 +6,18 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/14 21:00:51 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/15 01:49:57 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#define RPL_WELCOME(nick) " 001 " + nick + " Hi ! Welcome to this awesome IRC server !"
+#define RPL_WELCOME(nick) " 001 " + nick + " Hi ! Welcome to this awesome IRC server !, " + nick
 #define RPL_YOURHOST(serv, version) " 002 Your host is " + serv + " running version " + version
 #define RPL_CREATED(created) " 003 This server was created " + created
 #define RPL_MYINFO(nick, serv, version) " 004 " + nick + " " + serv + " " + version + " none " + "none."
+
+#define RPL_JOIN(nick, serv, channel) ":0 " + nick + "!" + nick + "@" + serv + " JOIN #" + channel
 
 // Pour répondre à une requête au sujet du mode du client, RPL_UMODEIS est renvoyé.
 #define RPL_UMODEIS(mode) " 221 " + mode
@@ -47,9 +49,8 @@
 
 // Lors de l'envoi d'un message TOPIC pour déterminer le sujet d'un canal, une de ces deux
 // réponses est envoyée. Si le sujet est défini, RPL_TOPIC est renvoyée, sinon c'est RPL_NOTOPIC.
-#define RPL_NOTOPIC(canal) " 331 " + canal + " :No topic is set"
-
-#define RPL_TOPIC(canal, sujet) " 332 " + canal + " :" + sujet
+#define RPL_NOTOPIC(chan) " 331 " + chan + " :No topic is set"
+#define RPL_TOPIC(chan, sujet, nick) " 332 " + nick + " " + chan + " :" + sujet
 
 // Réponse du serveur indiquant les détails de sa version. <version> est la version actuelle
 // du programme utilisé (comprenant le numéro de mise à jour) et <debuglevel> est utilisé
@@ -62,8 +63,12 @@
 // renvoyée par le serveur au client.
 // S'il n'y a pas de canal résultant de la requête, seul RPL_ENDOFNAMES est retourné.
 // L'exception à cela est lorsqu'un message NAMES est env
-#define RPL_NAMREPLY(canal, nick) " 353" + canal + " :[[@|+]" + nick + " [[@|+]" + nick + " [...]]]"
-#define RPL_ENDOFNAMES(canal) " 366 " + canal + " :End of /NAMES list."
+
+// Reponse du server indiquant les utilisateurs connectes a un channel lors d'un JOIN
+#define RPL_NAMREPLY(chan, nick) " 353 " + nick + " = #" + chan + " :" 
+
+// Reponse du server indiquant la fin de liste des utilisateurs lors d'un JOIN
+#define RPL_ENDOFNAMES(chan, nick) " 366 " + nick + " #" + chan + " :End of NAMES list"
 
 // "<canal> <identification de bannissement>"
 #define RPL_BANLIST(canal, id) " 367 " + canal + " " + id
