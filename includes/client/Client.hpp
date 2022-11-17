@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/13 20:56:15 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 11:17:04 by ahuber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ class Client: public SocketConnection {
         bool                                isInChannel(std::string name) const;
         void                                updateRegister();
         Client                              &operator<<(std::string const &reply);
+		Client								&simpleMessage(std::string &reply);
 };
 
 std::ostream&                   operator<<(std::ostream& o, Client const& rhs);
