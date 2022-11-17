@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/15 02:19:12 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 13:34:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,18 @@ int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
     // Check MODE ERR #474 #475
     if (_serv->getChannel(args[1])->_mod != 0) {
         int tmp = 0;
-        if (!(tmp | (_serv->getChannel(args[1])->_mod & MOD_CHAN_VIP))) {
+        if ((tmp | (_serv->getChannel(args[1])->_mod & MOD_CHAN_VIP))) {
             // if (clicli._mod & MOD_USER_VIP) {
                 clicli << ERR_INVITEONLYCHAN(args[1]);
                 return 1;
             // }
         // } else if (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY ) {
         } else if (!(tmp | (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY))) {
-            if (_serv->getChannel(args[1])->getKey() != args[2]) {
+            if (args.size() != 3 || _serv->getChannel(args[1])->getKey().compare(args[2])) {
                 clicli << ERR_BADCHANNELKEY(args[1]);
                 return 1;
-            }
+            } else
+                return 0;
         }
     }
     return 0;

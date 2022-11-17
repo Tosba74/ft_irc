@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 01:51:46 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 09:49:46 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ void							Channel::addClient(Client& client, std::map<int, Client&> lst) {
 void							Channel::removeClient(Client& client, std::map<int, Client&> lst) {
 	lst.erase(client.getSock());
 }
-Channel&						Channel::operator<<(std::string const& msg) {
-	for (std::map<int, Client&>::iterator it = _clients.begin(); it != _clients.end(); ++it)
-		it->second << msg;
-	return *this;	
-}
+// Channel&						operator<<(Channel& chan, std::string const& msg) {
+	// for (std::map<int, Client&>::iterator it = chan._clients.begin(); it != chan._clients.end(); ++it)
+		// it->second << msg;
+	// return *this;	
+// }
 
-std::ostream&					operator<<(std::ostream& o, Channel const& rhs) {
-	o << "Channel [" << rhs.getName() << "]:" << std::endl;
-	for (std::map<int, Client&>::const_iterator it = rhs.getClients().begin(); it != rhs.getClients().end(); ++it)
-		o << "\t" << it->second.getNickname() << "(" << it->first << ")"<< std::endl;
-	return o;
-}
+// std::ostream&					operator<<(std::ostream& o, Channel const& rhs) {
+	// o << "Channel [" << rhs.getName() << "]:" << std::endl;
+	// for (std::map<int, Client&>::const_iterator it = rhs.getClients().begin(); it != rhs.getClients().end(); ++it)
+		// o << "\t" << it->second.getNickname() << "(" << it->first << ")"<< std::endl;
+	// return o;
+// }

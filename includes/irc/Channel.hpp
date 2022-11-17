@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/09 14:11:14 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 09:49:58 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ class Channel {
 		void							removeClient(Client& client, std::map<int, Client&> lst);
 		// void							addClient(Client& client);
 		// void							removeClient(Client& client);
-		Channel&						operator<<(std::string const& msg);
+// Channel&						operator<<(Channel& chan, std::string const& msg);
 };
 
-std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);
+		// Channel&						operator<<(std::string const& msg);
+// std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);
