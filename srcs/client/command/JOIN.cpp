@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/15 12:34:28 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/11/17 13:26:47 by ahuber           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,18 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         } else
             return 1;
     }
-    clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
+	std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
+	clicli.simpleMessage(validation);
+	clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
+	std::string	reply = RPL_NAMREPLY(args[1], clicli.getNickname());
+	std::map<int, Client&>	clients = _serv->getChannel(args[1])->getClients();
+	for (std::map<int, Client&>::iterator i = clients.begin(); i != clients.end(); i++)
+	{
+		reply += " ";
+		reply += i->first;
+	}
+	clicli << reply;
+	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;
 }
 
