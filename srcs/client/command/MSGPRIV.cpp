@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MSGPRIV.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 00:52:48 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 15:54:46 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ MSGPRIV::~MSGPRIV() {}
 	//	clicli << ERR_NOTOPLEVEL(masque);
 	// 	clicli << ERR_WILDTOPLEVEL(masque);
 	//	clicli << ERR_CANNOTSENDTOCHAN(canal);
-	
+
 	//	clicli << ERR_NOTEXTTOSEND();
 	//	clicli << ERR_NORECIPIENT(args[0]);
 	//	clicli << ERR_TOOMANYTARGETS(args[1]);
@@ -49,8 +49,7 @@ int MSGPRIV::execute(Client &clicli, std::vector<std::string> args) {
 			message += " ";
 		message += args[i];
 	}
-	
-	args[1].
+
 	if (!target)
 		clicli << ERR_NOSUCHNICK(args[0]);
 	else
