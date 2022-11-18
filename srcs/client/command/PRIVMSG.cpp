@@ -6,22 +6,22 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 00:52:48 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 14:34:08 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client/command/MSGPRIV.hpp"
+#include "client/command/PRIVMSG.hpp"
 #include "irc/Server.hpp"
 
-MSGPRIV::MSGPRIV(MSGPRIV const& src) : ACommand(src) {
+PRIVMSG::PRIVMSG(PRIVMSG const& src) : ACommand(src) {
 	if (this != &src) {
         this->_serv = src._serv;
 	}
 }
 
-MSGPRIV::MSGPRIV(Server *serv) : ACommand(serv) {}
+PRIVMSG::PRIVMSG(Server *serv) : ACommand(serv) {}
 
-MSGPRIV::~MSGPRIV() {}
+PRIVMSG::~PRIVMSG() {}
 
 // REPLY :
 	//	clicli << ERR_NOTOPLEVEL(masque);
@@ -34,13 +34,13 @@ MSGPRIV::~MSGPRIV() {}
 	// 	clicli << ERR_NOSUCHNICK(args[1]);
 	// 	clicli << RPL_AWAY(args[1]);
 
-int     MSGPRIV::secureArgs(Client &clicli, std::vector<std::string> args) {
+int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 	(void)clicli;
 	(void)args;
 	return 0;
 }
 
-int MSGPRIV::execute(Client &clicli, std::vector<std::string> args) {
+int PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
 	Client	*target = _serv->getClient(args[1]);
 	std::string message = "PRIVMSG " + clicli.getNickname() + " :" + args[2];
 	
@@ -51,6 +51,6 @@ int MSGPRIV::execute(Client &clicli, std::vector<std::string> args) {
 	return 0;
 }
 
-void	MSGPRIV::descr(Client& clicli) {
+void	PRIVMSG::descr(Client& clicli) {
 	clicli << "Usage: PRIVMSG <destinataire>{,<destinataire>} <texte à envoyer>\n";
 }

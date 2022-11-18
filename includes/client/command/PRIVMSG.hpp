@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 21:13:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 00:35:13 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 14:34:08 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@
 	// PRIVMSG $*.fi :Server tolsun.oulu.fi rebooting. ; Message à tous sur les serveurs dont les noms correspondent à *.fi.
 	// PRIVMSG #*.edu :NSFNet is undergoing work, expect interruptions ; Message à tous les utilisateurs qui viennent d'un hôte dont le nom correspond à *.edu.
 
-class MSGPRIV : public ACommand
+class PRIVMSG : public ACommand
 {
 	public:
-		MSGPRIV(Server *serv);
-		MSGPRIV(MSGPRIV const& src);
-		~MSGPRIV();
+		PRIVMSG(Server *serv);
+		PRIVMSG(PRIVMSG const& src);
+		~PRIVMSG();
         int     secureArgs(Client &clicli, std::vector<std::string> args);
 		int		execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
