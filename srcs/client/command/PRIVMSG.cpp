@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/18 16:04:47 by gaubert          ###   ########.fr       */
+/*   Updated: 2022/11/18 16:44:02 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 int PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
 	Client	*target = _serv->getClient(args[1]);
 	std::string message = "PRIVMSG " + clicli.getNickname() + " :";
-	for(int i = 2; args.size() <= (size_t)i; i++)
+	for(int i = 2; args.size() >= (size_t)i; i++)
 	{
 		if (i != 2)
 			message += " ";
