@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/17 13:24:56 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/11/19 15:01:35 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,6 @@ MODE::MODE(MODE const& src) : ACommand(src) {
 
 MODE::~MODE() {}
 
-enum e_mode {
-	o = (1 << 0),
-	p = (1 << 1),
-	s = (1 << 2),
-	i = (1 << 3),
-	t = (1 << 4),
-	n = (1 << 5),
-	m = (1 << 6),
-	l = (1 << 7),
-	b = (1 << 8),
-	v = (1 << 9),
-	k = (1 << 10)
-};
-
 // REPLY :
 	// clicli << RPL_CHANNELMODEIS(args[1], clicli.getMode(), args[5]);
 	// clicli << ERR_CHANOPRIVSNEEDED(args[1]);
@@ -119,7 +105,6 @@ int		MODE::checkMode(Client &clicli, std::string arg) {
 */
 
 int		MODE::checkChannel(Client &clicli, std::string arg) {
-	// std::string		name = arg.substr(1, arg.size() - 1);
 	if (arg[0] != '#' || !_serv->getChannel(arg)) {
 		clicli << ERR_NOSUCHCHANNEL(arg);
 		return 1;
@@ -197,7 +182,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 				dest->_mod ^= (1 << index);
 		}
 	} else {
-		std::cout << "args[2] is a Channel" << std::endl;
+		std::cout << args[2] << " is a Channel" << std::endl;
 		Channel		*chan = _serv->getChannel(args[1]);
 		std::string::iterator it = args[2].begin();
 		++it; 
@@ -231,7 +216,8 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 							clicli << ERR_NOSUCHNICK(*it);
 							return 1;
 						} else {
-							chan->addClient(*(_serv->getClient(*it)), chan->getBan());
+							// chan->addClient(*(_serv->getClient(*it)), chan->getBan());
+							chan->addClient(*(_serv->getClient(*it)));
 						}
 					}
 				}

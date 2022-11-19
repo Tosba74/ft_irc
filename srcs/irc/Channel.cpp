@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/17 09:49:46 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/19 14:57:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ std::map<int, Client&> const&	Channel::getBan() const { return _ban; }
 
 std::string						Channel::getKey() const { return _key; }
 
-unsigned long					Channel::getLimit() const { return _limit; }
+unsigned int					Channel::getLimit() const { return _limit; }
 
 bool							Channel::getVip() const { return _vip; }
 
@@ -58,16 +58,24 @@ void							Channel::setKey(std::string key) {
 	if (!_key.compare(""))
 		_mod ^= (1 << 6);
 	else
-	_mod |= (1 << 6);
+		_mod |= (1 << 6);
 }
 
 void							Channel::setLimit(unsigned long nb) { _limit = nb; } 
 
-void							Channel::addClient(Client& client, std::map<int, Client&> lst) {
-	for (std::map<int, Client&>::iterator it = lst.begin(); it != lst.end(); ++it)
-		if (it->second == client)
-			return ;
-	lst.insert(std::pair<int, Client&>(client.getSock(), client));
+void							Channel::addClient(Client& client) {
+	// for (std::map<int, Client&>::iterator it = lst.begin(); it != lst.end(); ++it)
+		// if (it->second == client)
+			// return ;
+	// lst.insert(std::pair<int, Client&>(client.getSock(), client));
+	
+	// if (lst.find(client.getSock()) != lst.end())
+		// return ;
+	// lst.insert(std::pair<int, Client&>(client.getSock(), client));
+	
+	if (_clients.find(client.getSock()) != _clients.end())
+		return ;
+	_clients.insert(std::pair<int, Client&>(client.getSock(), client));
 }
 
 void							Channel::removeClient(Client& client, std::map<int, Client&> lst) {

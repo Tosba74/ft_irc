@@ -6,11 +6,12 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:18 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/17 13:19:07 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/11/18 09:56:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/ACommand.hpp"
+#include "irc/Server.hpp"
 
 ACommand::ACommand(Server *serv) : _serv(serv) {}
 
@@ -25,13 +26,25 @@ ACommand::~ACommand() {
     #endif
 }
 
-ACommand&   ACommand::operator=(ACommand const& rhs) {
+ACommand&       ACommand::operator=(ACommand const& rhs) {
 	if (this != &rhs) {
 		this->_serv = rhs._serv;
 	}
 	return *this;
 }
 
-const Server *				ACommand::getServ() const {
+Server const*   ACommand::getServ() const {
 	return this->_serv;
+}
+
+int		        ACommand::checkChannel(Client &clicli, std::string arg) {
+	if ((arg[0] != '#' && arg[0] != '&' ) || arg.size() < 2 || arg.size() > 20) {
+		clicli << ERR_NOSUCHCHANNEL(arg);
+		return true;
+	}
+	// } else if (!getServ()->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
+		// clicli << ERR_NOTONCHANNEL(arg);
+		// return 1;
+	// }
+	return false;
 }

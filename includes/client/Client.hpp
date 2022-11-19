@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/17 11:17:04 by ahuber           ###   ########.fr       */
+/*   Updated: 2022/11/18 07:25:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ class Client: public SocketConnection {
         void                                readChannels() const;
         
         bool                                isInChannel(std::string name) const;
+        bool                                isBanned(std::string name) const;
         void                                updateRegister();
         Client                              &operator<<(std::string const &reply);
 		Client								&simpleMessage(std::string &reply);
