@@ -110,7 +110,8 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         }
     }
 	std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
-	clicli.simpleMessage(validation);
+	//clicli.simpleMessage(validation);
+	_serv->getChannel(args[1])->msgToUsers(validation);
 	clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
     
     std::cout << "\e[32m--------ICI!--------" << std::endl;

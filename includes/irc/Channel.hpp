@@ -53,6 +53,7 @@ class Channel {
 		void							removeClient(Client& client, std::map<int, Client&> lst);
                 void                                                    addModo(std::string newModo);
                 bool                                                    isModo(std::string queried);
+		void                                                    msgToUsers(std::string msg);
 // Channel&						operator<<(Channel& chan, std::string const& msg);
 };
 

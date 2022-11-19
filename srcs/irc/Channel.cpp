@@ -104,7 +104,15 @@ bool                                                    Channel::isModo(std::str
         return 1;
 }
 
+void							Channel::msgToUsers(std::string msg) {
 
+	std::map<int, Client&>	clients = getClients();
+	 for (std::map<int, Client&>::iterator it = clients.begin(); it != clients.end(); ++it) {
+		 it->second.simpleMessage(msg);
+	}
+	 return;
+}
+	
 // Channel&						operator<<(Channel& chan, std::string const& msg) {
 	// for (std::map<int, Client&>::iterator it = chan._clients.begin(); it != chan._clients.end(); ++it)
 		// it->second << msg;
