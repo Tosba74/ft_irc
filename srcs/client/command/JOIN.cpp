@@ -96,8 +96,10 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 
     // New Channel or not !?
 	if (_serv->getChannel(args[1]) == NULL) {
-        if (!checkChannel(clicli, args[1])) 
+        if (!checkChannel(clicli, args[1])) {
 	        _serv->joinChannel(args[1], clicli);
+		_serv->getChannel(args[1])->addModo(clicli.getNickname()); // si new chan, passer le createur modo
+	}
         if (args.size() == 3)
             _serv->getChannel(args[1])->setKey(args[2]);
     } else {
@@ -117,6 +119,8 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 	for (std::map<int, Client&>::iterator i = clients.begin(); i != clients.end(); i++)
 	{
 		reply += " ";
+		if (_serv->getChannel(args[1])->isModo(i->second.getNickname()) == 0)
+                        reply += "@";
 		reply += i->second.getNickname();
         std::cout << "#" << i->first << " " << i->second.getNickname() << std::endl;
 	}

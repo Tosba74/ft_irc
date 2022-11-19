@@ -14,6 +14,7 @@
 
 #include "client/Client.hpp"
 #include <map>
+#include <vector>
 
 class Client;
 
@@ -25,6 +26,7 @@ class Channel {
 		unsigned long					_limit;
 		std::map<int, Client&>			_clients;
 		std::map<int, Client&>			_ban;
+		std::vector<std::string>                _modo;
 		
 	protected:
 
@@ -49,7 +51,8 @@ class Channel {
 		void							setLimit(unsigned long nb);
 		void							addClient(Client& client);
 		void							removeClient(Client& client, std::map<int, Client&> lst);
-
+                void                                                    addModo(std::string newModo);
+                bool                                                    isModo(std::string queried);
 // Channel&						operator<<(Channel& chan, std::string const& msg);
 };
 

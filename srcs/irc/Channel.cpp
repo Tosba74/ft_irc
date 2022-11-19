@@ -82,6 +82,29 @@ void							Channel::addClient(Client& client) {
 void							Channel::removeClient(Client& client, std::map<int, Client&> lst) {
 	lst.erase(client.getSock());
 }
+
+void                                                    Channel::addModo(std::string newModo)
+{
+        for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
+        {
+                if ((*it) == newModo)
+                        return;
+        }
+	std::cout << std::endl << "Debug: push new modo\n\n";
+        _modo.push_back(newModo);
+}
+
+bool                                                    Channel::isModo(std::string queried)
+{
+        for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
+        {
+                if ((*it) == queried)
+                        return 0;
+        }
+        return 1;
+}
+
+
 // Channel&						operator<<(Channel& chan, std::string const& msg) {
 	// for (std::map<int, Client&>::iterator it = chan._clients.begin(); it != chan._clients.end(); ++it)
 		// it->second << msg;
