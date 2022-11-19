@@ -6,7 +6,7 @@
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/11/18 10:12:11 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2022/11/19 15:32:14 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,11 @@ NAME := ircserv
 FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
 FILES_USER			:= Client ACommand
+<<<<<<< HEAD
 FILES_COMMAND		:= NICK PASS JOIN USER VERSION MODE LIST OPER AWAY PING PRIVMSG ME 
+=======
+FILES_COMMAND		:= NICK PASS JOIN PRIVMSG USER VERSION MODE LIST OPER ME AWAY PING
+>>>>>>> origin/privmsg
 FILES_REPLY			:= ${addprefix ${PATH_U}/, REPLY}
 
 FILES				= ${addprefix ${PATH_IRC}/, ${FILES_IRC}} \
