@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/19 14:59:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 16:35:57 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int				Server::joinChannel(std::string const &name, Client& client) {
 
 int				Server::leaveChannel(std::string const &name, Client& client) {
 	if (_channels.find(name) != _channels.end()) {
-		_channels.at(name)->removeClient(client, _channels.at(name)->getClients());
+		_channels.at(name)->removeClient(client);
 		client.setCurrchan(name);
 		return 1;
 	}
