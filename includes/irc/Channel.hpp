@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:48:22 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 16:53:32 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ class Channel {
 		void							setLimit(unsigned long nb);
 		void							addClient(Client& client);
 		void							removeClient(Client& client);
-		void							addClientBan(Client& client);
-		void							removeClientBan(Client& client);
+		void							addBan(Client& client);
+		void							removeBan(Client& client);
 		bool							isBan(Client& client) {
                 void                                                    addModo(std::string newModo);
                 bool                                                    isModo(std::string queried);

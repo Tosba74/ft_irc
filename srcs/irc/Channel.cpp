@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:45:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 16:53:14 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,17 @@ void							Channel::addClient(Client& client) {
 	//ATTENTION ADD BANCLIENT
 void							Channel::removeClient(Client& client) {
 	// attention si le client est seule dans le channel
-	_clients.erase(client.getSock());
+	if (_clients.size() > 1)
+		_clients.erase(client.getSock());
 }
 
-void							Channel::addClientBan(Client& client) {
+void							Channel::addBan(Client& client) {
 	if (_ban.find(client.getSock()) != _ban.end())
 		return ;
 	_ban.insert(std::pair<int, Client&>(client.getSock(), client));
 }
 	
-void							Channel::removeClientBan(Client& client) {
+void							Channel::removeBan(Client& client) {
 	_ban.erase(client.getSock());
 }
 
