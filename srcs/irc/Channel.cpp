@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:29:39 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 16:33:56 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ void							Channel::removeClient(Client& client) {
 	_clients.erase(client.getSock());
 }
 
+void							Channel::addClientBan(Client& client) {
+	if (_ban.find(client.getSock()) != _ban.end())
+		return ;
+	_ban.insert(std::pair<int, Client&>(client.getSock(), client));
+}
+	
+void							Channel::removeClientBan(Client& client) {
+	_ban.erase(client.getSock());
+}
 void                                                    Channel::addModo(std::string newModo)
 {
         for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
