@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/19 15:22:34 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 16:29:39 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ void							Channel::addClient(Client& client) {
 }
 
 	//ATTENTION ADD BANCLIENT
-void							Channel::removeClient(Client& client, std::map<int, Client&> lst) {
-	lst.erase(client.getSock());
+void							Channel::removeClient(Client& client) {
+	// attention si le client est seule dans le channel
+	_clients.erase(client.getSock());
 }
 
 void                                                    Channel::addModo(std::string newModo)
