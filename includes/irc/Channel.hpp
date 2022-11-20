@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:54:49 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 18:13:14 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ class Channel {
 		std::string						getKey() const;
 		unsigned int					getLimit() const;
 		bool							getVip() const;
+		std::string						getStringUser() const;
 		
 		void							setName(std::string name);
 		void							setKey(std::string key);
@@ -54,11 +55,13 @@ class Channel {
 		void							addBan(Client& client);
 		void							removeBan(Client& client);
 		bool							isBan(Client& client);
-                void                                                    addModo(std::string newModo);
-                bool                                                    isModo(std::string queried);
-		void                                                    msgToUsers(std::string msg);
+        void							addModo(std::string newModo);
+		bool							isModo(std::string const& queried) const;
+        // bool							isModo(std::string queried);
+		void							msgToUsers(std::string msg);
 // Channel&						operator<<(Channel& chan, std::string const& msg);
 };
 
+// / std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);
 		// Channel&						operator<<(std::string const& msg);
 // std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);

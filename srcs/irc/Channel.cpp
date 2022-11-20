@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:53:39 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:53:14 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 16:53:14bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,20 @@ std::string						Channel::getKey() const { return _key; }
 unsigned int					Channel::getLimit() const { return _limit; }
 
 bool							Channel::getVip() const { return _vip; }
+
+std::string						Channel::getStringUser() const {
+
+	std::string ret;
+	if (_clients.size() > 0) {
+		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
+			ret += " ";
+			if (isModo(it->second.getNickname()) == true)
+				ret += "@";
+			ret += it->second.getNickname();
+		}
+	}
+	return ret;
+} 
 
 void							Channel::setName(std::string name) { _name = name; }
 
@@ -105,19 +119,27 @@ bool							Channel::isBan(Client& client) {
 	
 void                                                    Channel::addModo(std::string newModo)
 {
-        for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
-        {
-                if ((*it) == newModo)
-                        return;
-        }
+    for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
+    {
+            if ((*it) == newModo)
+                    return;
+    }
 	std::cout << std::endl << "Debug: push new modo\n\n";
-        _modo.push_back(newModo);
+    _modo.push_back(newModo);
 }
 
-bool                                                    Channel::isModo(std::string queried)
-{
-        for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
-        {
+// bool                                                    Channel::isModo(std::string queried)
+// {
+        // for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
+        // {
+                // if ((*it) == queried)
+                        // return 0;
+        // }
+        // return 1;
+// }
+
+bool                                                    Channel::isModo(std::string const& queried) const {
+        for (std::vector<std::string>::const_iterator it = _modo.begin(); it != _modo.end(); it++) {
                 if ((*it) == queried)
                         return 0;
         }
@@ -125,7 +147,6 @@ bool                                                    Channel::isModo(std::str
 }
 
 void							Channel::msgToUsers(std::string msg) {
-
 	std::map<int, Client&>	clients = getClients();
 	 for (std::map<int, Client&>::iterator it = clients.begin(); it != clients.end(); ++it) {
 		 it->second.simpleMessage(msg);

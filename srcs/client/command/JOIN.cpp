@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/19 14:55:29 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 17:56:28 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     
     std::cout << "\e[32m--------ICI!--------" << std::endl;
 	std::string	reply = RPL_NAMREPLY(args[1], clicli.getNickname());
+	std::string	reply2 = RPL_NAMREPLY(args[1], clicli.getNickname());
 	std::map<int, Client&>	clients = _serv->getChannel(args[1])->getClients();
 	for (std::map<int, Client&>::iterator i = clients.begin(); i != clients.end(); i++)
 	{
@@ -126,7 +127,9 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         std::cout << "#" << i->first << " " << i->second.getNickname() << std::endl;
 	}
     std::cout << "--------------------\e[0m" << std::endl;
+	reply2 += _serv->getChannel(args[1])->getStringUser();
 	clicli << reply;
+	clicli << reply2;
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;
 }
