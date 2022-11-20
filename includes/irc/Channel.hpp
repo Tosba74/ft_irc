@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:53:32 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 16:54:49 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ class Channel {
 		void							removeClient(Client& client);
 		void							addBan(Client& client);
 		void							removeBan(Client& client);
-		bool							isBan(Client& client) {
+		bool							isBan(Client& client);
                 void                                                    addModo(std::string newModo);
                 bool                                                    isModo(std::string queried);
 		void                                                    msgToUsers(std::string msg);
