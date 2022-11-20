@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/18 16:44:02 by gaubert          ###   ########.fr       */
+/*   Updated: 2022/11/20 14:44:40 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 PRIVMSG::PRIVMSG(PRIVMSG const& src) : ACommand(src) {
 	if (this != &src) {
-        this->_serv = src._serv;
+		this->_serv = src._serv;
 	}
 }
 
@@ -38,10 +38,42 @@ int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 	(void)args;
 	return 0;
 }
+//  implementer   	ERR_NORECIPIENT    no nick before :
+//                  ERR_NOTEXTTOSEND   no text after :
+
+
+void PRIVMSG::sendMsg(Client &clicli, std::string target, std::string msg) {
+	Client	*user = _serv->getClient(target);
+	Channel *chan = _serv->getChannel(target);
+	std::string away;
+	std::string tmp;
+
+	if (!user && !chan)
+	{
+		if (target[0] != '#')
+			clicli << ERR_NOSUCHNICK(target);
+		else
+			clicli << ERR_CANNOTSENDTOCHAN(target);
+	}
+	else if (user)
+	{
+		if (user->getAway())
+		{
+			away = " 301 " + user->getNickname() + " :" + user->getAwayMsg();
+			user->simpleMessage(away); //TODO: Probablement pas fonctionnel, c'est un placeholder
+		}
+		else
+		{
+			tmp = ":" + clicli.getNickname() + " " + "PRIVMSG " + " " + user->getNickname() + " " + msg;
+			user->simpleMessage(tmp);
+		}
+	}
+	else
+		chan->msgToUsers(msg); //TODO: need fix
+}
 
 int PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
-	Client	*target = _serv->getClient(args[1]);
-	std::string message = "PRIVMSG " + clicli.getNickname() + " :";
+	std::string message;// = "PRIVMSG " + clicli.getNickname() + " ";
 	for(int i = 2; args.size() >= (size_t)i; i++)
 	{
 		if (i != 2)
@@ -49,10 +81,16 @@ int PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
 		message += args[i];
 	}
 
-	if (!target)
-		clicli << ERR_NOSUCHNICK(args[0]);
-	else
-		*target << message;
+	size_t pos = 0;
+	std::string token;
+	while ((pos = args[1].find(",")) != std::string::npos) {
+		token = args[1].substr(0, pos);
+		//std::cout << token << std::endl;
+		sendMsg(clicli, token, message);
+		args[1].erase(0, pos + 1);
+	}
+	//std::cout << args[1] << std::endl;
+	sendMsg(clicli, args[1], message);
 	return 0;
 }
 
