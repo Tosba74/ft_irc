@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 14:44:40 by gaubert          ###   ########.fr       */
+/*   Updated: 2022/11/20 15:36:02 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void PRIVMSG::sendMsg(Client &clicli, std::string target, std::string msg) {
 }
 
 int PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
-	std::string message;// = "PRIVMSG " + clicli.getNickname() + " ";
+	std::string message;
 	for(int i = 2; args.size() >= (size_t)i; i++)
 	{
 		if (i != 2)
@@ -81,15 +81,22 @@ int PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
 		message += args[i];
 	}
 
+	if (args[1].at(0) == ':'){
+		clicli << ERR_NORECIPIENT(args[0]);
+		return 1;
+	}
+	else if (args[2].length() <= 1){
+		clicli << ERR_NOTEXTTOSEND();
+		return 1;
+	}
+
 	size_t pos = 0;
 	std::string token;
 	while ((pos = args[1].find(",")) != std::string::npos) {
 		token = args[1].substr(0, pos);
-		//std::cout << token << std::endl;
 		sendMsg(clicli, token, message);
 		args[1].erase(0, pos + 1);
 	}
-	//std::cout << args[1] << std::endl;
 	sendMsg(clicli, args[1], message);
 	return 0;
 }
