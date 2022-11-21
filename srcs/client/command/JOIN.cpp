@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/20 17:56:28 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 18:18:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         std::cout << "#" << i->first << " " << i->second.getNickname() << std::endl;
 	}
     std::cout << "--------------------\e[0m" << std::endl;
-	reply2 += _serv->getChannel(args[1])->getStringUser();
+	reply2 += "\e[91m" + _serv->getChannel(args[1])->getStringUser() + "\e[0m";
 	clicli << reply;
 	clicli << reply2;
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());

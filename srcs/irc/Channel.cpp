@@ -57,7 +57,7 @@ std::string						Channel::getStringUser() const {
 	if (_clients.size() > 0) {
 		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
 			ret += " ";
-			if (isModo(it->second.getNickname()) == true)
+			if (isModo(it->second.getNickname()) == false)
 				ret += "@";
 			ret += it->second.getNickname();
 		}
@@ -90,6 +90,8 @@ void							Channel::addClient(Client& client) {
 	if (_clients.find(client.getSock()) != _clients.end())
 		return ;
 	_clients.insert(std::pair<int, Client&>(client.getSock(), client));
+	if (_clients.size() == 1)
+		addModo(client.getNickname());
 }
 
 	//ATTENTION ADD BANCLIENT
@@ -117,7 +119,7 @@ bool							Channel::isBan(Client& client) {
 	return false;
 }
 	
-void                                                    Channel::addModo(std::string newModo)
+void							Channel::addModo(std::string newModo)
 {
     for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
     {
@@ -138,7 +140,7 @@ void                                                    Channel::addModo(std::st
         // return 1;
 // }
 
-bool                                                    Channel::isModo(std::string const& queried) const {
+bool							Channel::isModo(std::string const& queried) const {
         for (std::vector<std::string>::const_iterator it = _modo.begin(); it != _modo.end(); it++) {
                 if ((*it) == queried)
                         return 0;
