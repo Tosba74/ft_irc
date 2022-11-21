@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:18 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/18 09:56:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 16:46:45 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Server const*   ACommand::getServ() const {
 	return this->_serv;
 }
 
-int		        ACommand::checkChannel(Client &clicli, std::string arg) {
+bool			ACommand::verifNameChan(Client &clicli, std::string const& arg) {
 	if ((arg[0] != '#' && arg[0] != '&' ) || arg.size() < 2 || arg.size() > 20) {
 		clicli << ERR_NOSUCHCHANNEL(arg);
 		return true;

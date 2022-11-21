@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/21 14:53:41 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 15:53:50 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,11 @@ JOIN::~JOIN() {}
 
 int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
     // Check Ban ERR #474
-    // if (clicli.isBanned(args[1])) {
-        // clicli << ERR_BANNEDFROMCHAN(args[1]);
-        // return 1;
-        // for (std::map<int, Client&>::const_iterator it = _serv->getChannel(args[1])->getBan().begin(); it != _serv->getChannel(args[1])->getBan().end(); it++) {
-            // if (it->second == clicli) {
-            //    clicli << ERR_BANNEDFROMCHAN(args[1]);
-            //    return 1;
-            // }
-        // }
-    // }
-   if (!checkChannel(clicli, args[1])) {
+    if (clicli.isBanned(args[1])) {
+        clicli << ERR_BANNEDFROMCHAN(args[1]);
+        return 1;
+    }
+    if (!verifNameChan(clicli, args[1])) {
         return 1;
     }
     // Check How many channels have a client & Channel-s limits ERR #405 #471
@@ -57,7 +51,6 @@ int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
         clicli << ERR_CHANNELISFULL(args[1]);
         return 1;
     }
-    
     if (clicli.isBanned(args[1])) {
         clicli << ERR_BANNEDFROMCHAN(args[1]);
         return 1;
@@ -96,7 +89,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 
     // New Channel or not !?
 	if (_serv->getChannel(args[1]) == NULL) {
-        if (!checkChannel(clicli, args[1])) {
+        if (!verifNameChan(clicli, args[1])) {
 	        _serv->joinChannel(args[1], clicli);
 		_serv->getChannel(args[1])->addModo(clicli.getNickname()); // si new chan, passer le createur modo
 	}

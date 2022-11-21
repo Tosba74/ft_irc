@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/21 15:32:53 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 16:43:32 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,16 @@ int		MODE::checkMode(Client &clicli, std::string arg) {
 }
 */
 
-int		MODE::checkChannel(Client &clicli, std::string arg) {
-	if (arg[0] != '#' || !_serv->getChannel(arg)) {
-		clicli << ERR_NOSUCHCHANNEL(arg);
-		return 1;
-	} else if (!_serv->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
-		clicli << ERR_NOTONCHANNEL(arg);
-		return 1;
-	}
-	return 0;
-}
+// int		MODE::verifNameChan(Client &clicli, std::string arg) {
+	// if (arg[0] != '#' || !_serv->getChannel(arg)) {
+		// clicli << ERR_NOSUCHCHANNEL(arg);
+		// return 1;
+	// } else if (!_serv->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
+		// clicli << ERR_NOTONCHANNEL(arg);
+		// return 1;
+	// }
+	// return 0;
+// }
 
 int		MODE::checkMode(Client &clicli, std::string arg, const char *cmp) {
 	std::string::iterator it = arg.begin();
@@ -133,34 +133,58 @@ int		MODE::checkMode(Client &clicli, std::string arg, const char *cmp) {
 }
 
 int		MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
-// int		MODE:verifArgs(Client &clicli, std::vector<std::string> args) {
-	if (args[1][0] == '#') {
+	if (!verifNameChan(clicli, args[1])) {
 		if (!_serv->getChannel(args[1])) {
 			clicli << ERR_NOSUCHCHANNEL(args[1]);
+			return 1;
+		} else if (args[1].compare(clicli.getCurrchan())) {
+			clicli << ERR_NOTONCHANNEL(args[1]);
 			return -1;
-		} else {
-			if (args[1].compare(clicli.getCurrchan())) {
-				clicli << ERR_NOTONCHANNEL(args[1]);
-				return -1;
-			} else {
-				if (checkMode(clicli, args[2], "psimtknvlob") == -1)
-					return -1;
-				else
-					return 0;
-			}
 		}
-	} else {
-		if (!_serv->getClient(args[1])) {
-			clicli << ERR_NOSUCHNICK(args[1]);
+		if (checkMode(clicli, args[2], "psimtknvlob") == -1) {
+			clicli << ERR_UMODEUNKNOWNFLAG();
 			return -1;
-		} else {
-			if (checkMode(clicli, args[2], "iswo") == 1)
-				return -1;
-			else
-				return 1;
+		}
+	} else if (_serv->getClient(args[1])) {
+		if (checkMode(clicli, args[2], "iswo") == -1) {
+			clicli << ERR_UMODEUNKNOWNFLAG();
+			return 1;
 		}
 	}
-	return -1;
+	else {
+		descr(clicli);
+		// clicli << ERR_NOSUCHNICK(args[1]);
+		return 1;
+	}
+	return 0;
+	
+	// if (args[1][0] == '#') {
+		// if (!_serv->getChannel(args[1])) {
+			// clicli << ERR_NOSUCHCHANNEL(args[1]);
+			// return -1;
+		// } else {
+			// if (args[1].compare(clicli.getCurrchan())) {
+				// clicli << ERR_NOTONCHANNEL(args[1]);
+				// return -1;
+			// } else {
+				// if (checkMode(clicli, args[2], "psimtknvlob") == -1)
+					// return -1;
+				// else
+					// return 0;
+			// }
+		// }
+	// } else {
+		// if (!_serv->getClient(args[1])) {
+			// clicli << ERR_NOSUCHNICK(args[1]);
+			// return -1;
+		// } else {
+			// if (checkMode(clicli, args[2], "iswo") == 1)
+				// return -1;
+			// else
+				// return 1;
+		// }
+	// }
+	// return -1;
 }
 
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
@@ -235,7 +259,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		return 1;
 	}
 	std::cout << "Parser passe !!!";
-	if (checkChannel(clicli, args[1]))
+	if (verifNameChan(clicli, args[1]))
 		return 1;
 	if (checkMode(clicli, args[2]))
 		return 1;

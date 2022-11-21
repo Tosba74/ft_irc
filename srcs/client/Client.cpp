@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:37:51 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 15:40:43 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,13 @@ bool								Client::isInChannel(std::string name) const {
 
 // typedef std::map<std::string, Channel*>     listChannel;
 bool                                Client::isBanned(std::string chan) const {
-	for (std::map<std::string ,Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
-		if (!it->first.compare(chan))
-			for (std::map<int, Client&>::const_iterator it2 = it->second->getBan().begin(); it2 != it->second->getBan().end(); it2++)
-				if (it2->second == *this)
-					return true;
+	if (_channels.find(chan) != _channels.end())
+		return _channels.at(chan)->isBan(*this);
+	// for (std::map<std::string ,Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
+		// if (!it->first.compare(chan))
+			// for (std::map<int, Client&>::const_iterator it2 = it->second->getBan().begin(); it2 != it->second->getBan().end(); it2++)
+				// if (it2->second == *this)
+					// return true;
 	return false;
 }
 

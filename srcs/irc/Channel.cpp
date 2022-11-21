@@ -110,9 +110,9 @@ void							Channel::removeBan(Client& client) {
 	_ban.erase(client.getSock());
 }
 
-bool							Channel::isBan(Client& client) {
+bool							Channel::isBan(Client const& client) const {
 	if (!_ban.empty())
-		for (std::map<int, Client&>::iterator it = _ban.begin(); it != _ban.end(); ++it)
+		for (std::map<int, Client&>::const_iterator it = _ban.begin(); it != _ban.end(); ++it)
 			if (it->second == client)
 				return true;
 	return false;

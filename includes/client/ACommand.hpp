@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/19 13:55:04 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 16:46:41 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ class ACommand : public ICommand {
         
         const Server *          getServ() const;
         
-        int		checkChannel(Client &clicli, std::string arg);
+        bool        verifNameChan(Client &clicli, std::string const& arg);
 };
 
 
