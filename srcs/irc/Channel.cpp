@@ -52,7 +52,6 @@ unsigned int					Channel::getLimit() const { return _limit; }
 bool							Channel::getVip() const { return _vip; }
 
 std::string						Channel::getStringUser() const {
-
 	std::string ret;
 	if (_clients.size() > 0) {
 		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
