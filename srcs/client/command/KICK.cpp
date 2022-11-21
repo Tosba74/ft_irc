@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:29:04 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 00:53:18 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 13:39:02 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		KICK::execute(Client &clicli, std::vector<std::string> args) {
 
 	for (std::vector<std::string>::iterator i = targets.begin(); i != targets.end(); i++)
 	{
-		_serv->getChannel(args[1])->removeClient(*(_serv->getClient(*i)), _serv->getChannel(args[1])->getClients());
+		_serv->getChannel(args[1])->removeClient(*(_serv->getClient(*i)));
 		std::string	msg = ":" + clicli.getNickname() + " KICK " + args[1] + " " + (*i);
 		if (args.size() == 4)
 			msg += " :" + args[4];
