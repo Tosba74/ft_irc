@@ -155,6 +155,12 @@ void							Channel::msgToUsers(std::string msg) {
 	 return;
 }
 	
+Channel &						Channel::operator<<(std::string const& reply) {
+	for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
+		it->second << reply;
+	}
+	return *this;
+}
 // Channel&						operator<<(Channel& chan, std::string const& msg) {
 	// for (std::map<int, Client&>::iterator it = chan._clients.begin(); it != chan._clients.end(); ++it)
 		// it->second << msg;

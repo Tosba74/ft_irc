@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/21 13:35:34 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 19:22:37 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ class Channel {
         // bool							isModo(std::string queried);
 		void							msgToUsers(std::string msg);
 // Channel&						operator<<(Channel& chan, std::string const& msg);
+		Channel &						operator<<(std::string const& reply);
 };
 
 // / std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/17 22:43:35 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 19:05:56 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #define RPL_CREATED(created) " 003 This server was created " + created
 #define RPL_MYINFO(nick, serv, version) " 004 " + nick + " " + serv + " " + version + " none " + "none."
 
-#define RPL_JOIN(nick, serv, channel) ":0 " + nick + "!" + nick + "@" + serv + " JOIN #" + channel
+// #define RPL_JOIN(nick, serv, channel) ":0 " + nick + "!" + nick + "@" + serv + " JOIN #" + channel
+#define RPL_JOIN(nick, chan) ": " + nick + " JOIN :" + chan
 
 // Pour répondre à une requête au sujet du mode du client, RPL_UMODEIS est renvoyé.
 #define RPL_UMODEIS(mode) " 221 " + mode
