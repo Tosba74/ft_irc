@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/21 18:47:15 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 18:57:47 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     
     Client *Edwige = TESTEUSE("Edwige");
     Edwige->setCurrchan(args[1]);
+    _serv->getChannel(args[1])->addModo(Edwige->getNickname());
     _serv->joinChannel(args[1], *Edwige);
     
     std::cout << "\e[32m------------------------------------\e[0m" << std::endl;
