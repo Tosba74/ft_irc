@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 01:49:57 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 22:43:35 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@
 // L'exception à cela est lorsqu'un message NAMES est env
 
 // Reponse du server indiquant les utilisateurs connectes a un channel lors d'un JOIN
-#define RPL_NAMREPLY(chan, nick) " 353 " + nick + " = #" + chan + " :" 
+#define RPL_NAMREPLY(chan, nick) " 353 " + nick + " = " + chan + " :" 
 
 // Reponse du server indiquant la fin de liste des utilisateurs lors d'un JOIN
-#define RPL_ENDOFNAMES(chan, nick) " 366 " + nick + " #" + chan + " :End of NAMES list"
+#define RPL_ENDOFNAMES(chan, nick) " 366 " + nick + " " + chan + " :End of NAMES list"
 
 // "<canal> <identification de bannissement>"
 #define RPL_BANLIST(canal, id) " 367 " + canal + " " + id
@@ -182,9 +182,18 @@
 // introuvable
 #define ERR_BADCHANMASK(canal) " 476 " + canal + " :Cannot use this mask"
 
+// Toute commande qui requiert le privilège d'opérateur pour opérer doit retourner
+// cette erreur pour indiquer son échec.
+#define ERR_NOPRIVILEGES() " 481 :Permission Denied- You're not an IRC operator"
+
 // Toute commande qui requiert les privilèges 'chanop' (tels les messages MODE) doit
 // retourner ce message à un client qui l'utilise sans être chanop sur le canal spécifié.
 #define ERR_CHANOPRIVSNEEDED(canal) " 482 " + canal + " :You're not channel operator"
+
+// Toute tentative d'utiliser la commande KILL sur un serveur doit être refusée et
+// cette erreur renvoyée directement au client.
+#define ERR_CANTKILLSERVER()" 483 :You cant kill a server!"
+
 
 // Si un client envoie un message OPER et que le serveur n'a pas été configuré pour autoriser
 // les connexions d'opérateurs de cet hôte, cette erreur doit être retournée.

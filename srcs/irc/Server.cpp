@@ -6,15 +6,15 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/18 14:34:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/20 16:35:57 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
 #include "client/command/NICK.hpp"
 #include "client/command/PASS.hpp"
-#include "client/command/USER.hpp"
 #include "client/command/JOIN.hpp"
+#include "client/command/USER.hpp"
 #include "client/command/LIST.hpp"
 #include "client/command/MODE.hpp"
 #include "client/command/OPER.hpp"
@@ -23,7 +23,7 @@
 #include "client/command/ME.hpp"
 #include "client/command/PING.hpp"
 // #include "client/command/HELP.hpp"
-// #include "client/command/KICK.hpp"
+#include "client/command/KICK.hpp"
 // #include "client/command/QUIT.hpp"
 // #include "client/command/BAN.hpp"
 // #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
@@ -33,19 +33,19 @@
 
 Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), _password(password) {
 	_commandes["NICK"] = new NICK(this);
+	_commandes["PRIVMSG"] = new PRIVMSG(this);
 	_commandes["PASS"] = new PASS(this);
 	_commandes["JOIN"] = new JOIN(this);
-	_commandes["PRIVMSG"] = new PRIVMSG(this);
 	_commandes["MSG"] = new PRIVMSG(this);
 	_commandes["USER"] = new USER(this);
 	_commandes["MODE"] = new MODE(this);
 	_commandes["LIST"] = new LIST(this);
 	_commandes["OPER"] = new OPER(this);
-	_commandes["ME"] = new ME(this);
 	_commandes["AWAY"] = new AWAY(this);
 	_commandes["PING"] = new PING(this);
+	_commandes["ME"] = new ME(this);
 //	_commandes["HELP"] = new HELP(this);
-//	_commandes["KICK"] = new KICK(this);
+	_commandes["KICK"] = new KICK(this);
 //	_commandes["QUIT"] = new QUIT(this);
 //	_commandes["BAN"] = new BAN(this);
 }
@@ -70,11 +70,13 @@ Client*			Server::getClient(const std::string& name) const {
 	return NULL;
 }
 Channel*		Server::getChannel(const std::string& name) const {
-	for (ChannelMap::const_iterator it = _channels.begin(); it != _channels.end(); ++it) {
-		Channel*		chan = static_cast<Channel*>(it->second);
-		if (!chan->getName().compare(name))
-			return chan;
-	}
+	if (_channels.find(name) != _channels.end())
+		return _channels.at(name);
+	// for (ChannelMap::const_iterator it = _channels.begin(); it != _channels.end(); ++it) {
+		// Channel*		chan = static_cast<Channel*>(it->second);
+		// if (!chan->getName().compare(name))
+			// return chan;
+	// }
 	return NULL;
 }
 
@@ -153,15 +155,15 @@ int				Server::joinChannel(std::string const &name, Client& client) {
 	if (_channels.find(name) == _channels.end())
 		createChannel(name);
 	// if (!client.isInChannel(name))
-	_channels.at(name)->addClient(client, _channels.at(name)->getClients());
+	_channels.at(name)->addClient(client);
 	client.setCurrchan(name);
 	return 0;
 }
 
 int				Server::leaveChannel(std::string const &name, Client& client) {
 	if (_channels.find(name) != _channels.end()) {
-		_channels.at(name)->removeClient(client, _channels.at(name)->getClients());
-		client.setCurrchan("");
+		_channels.at(name)->removeClient(client);
+		client.setCurrchan(name);
 		return 1;
 	}
 	return 0;

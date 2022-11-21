@@ -6,17 +6,18 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 01:07:10 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/19 13:55:04 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
 #include <string>
 #include <vector>
 #include <iostream>
 #include "client/Client.hpp"
 
-# define CHAN_PER_USER      100
+# define CHAN_PER_USER      10
 
 # define MOD_CHAN_PRIVE     0b00000001
 # define MOD_CHAN_SECRET    0b00000010
@@ -53,6 +54,8 @@ class ACommand : public ICommand {
         ACommand& operator=(ACommand const& rhs);
         
         const Server *          getServ() const;
+        
+        int		checkChannel(Client &clicli, std::string arg);
 };
 
 

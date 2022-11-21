@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "client/command/PRIVMSG.hpp"
 #include "irc/Server.hpp"
 
 PRIVMSG::PRIVMSG(PRIVMSG const& src) : ACommand(src) {
@@ -26,7 +27,6 @@ PRIVMSG::~PRIVMSG() {}
 	//	clicli << ERR_NOTOPLEVEL(masque);
 	// 	clicli << ERR_WILDTOPLEVEL(masque);
 	//	clicli << ERR_CANNOTSENDTOCHAN(canal);
-
 	//	clicli << ERR_NOTEXTTOSEND();
 	//	clicli << ERR_NORECIPIENT(args[0]);
 	//	clicli << ERR_TOOMANYTARGETS(args[1]);
@@ -38,9 +38,6 @@ int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 	(void)args;
 	return 0;
 }
-//  implementer   	ERR_NORECIPIENT    no nick before :
-//                  ERR_NOTEXTTOSEND   no text after :
-
 
 void PRIVMSG::sendMsg(Client &clicli, std::string target, std::string msg) {
 	Client	*user = _serv->getClient(target);

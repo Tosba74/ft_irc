@@ -28,6 +28,8 @@ echo "" >> srcs/client/command/$1.cpp
 echo "$1::~$1() {}" >> srcs/client/command/$1.cpp
 echo "int $1::execute(Client &clicli, std::vector<std::string> args) {}" >> srcs/client/command/$1.cpp
 echo "" >> srcs/client/command/$1.cpp
+echo "int             $1::secureArgs(Client &clicli, std::vector<std::string> args) {}" >> srcs/client/command/$1.cpp
+echo "" >> srcs/client/command/$1.cpp
 echo "void    $1::descr(Client& clicli) {" >> srcs/client/command/$1.cpp
 echo "    clicli << "\e[31mExemple\e[0m\n";" >> srcs/client/command/$1.cpp
 echo "}" >> srcs/client/command/$1.cpp
@@ -54,6 +56,7 @@ echo "    public:" >> includes/client/command/$1.hpp
 echo "        $1(Server *serv);" >> includes/client/command/$1.hpp
 echo "        $1($1 const& src);" >> includes/client/command/$1.hpp
 echo "        ~$1();" >> includes/client/command/$1.hpp
+echo "          virtual int             secureArgs(Client &clicli, std::vector<std::string> args) = 0;" >> includes/client/command/$1.hpp
 echo "        int     execute(Client &clicli, std::vector<std::string> args);" >> includes/client/command/$1.hpp
 echo "		void	descr(Client& clicli);" >> includes/client/command/$1.hpp
 echo "};" >> includes/client/command/$1.hpp
