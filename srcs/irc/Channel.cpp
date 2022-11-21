@@ -110,6 +110,7 @@ void							Channel::removeBan(Client& client) {
 	_ban.erase(client.getSock());
 }
 
+<<<<<<< HEAD
 bool							Channel::isBan(Client& client) {
 	if (!_ban.empty())
 		for (std::map<int, Client&>::iterator it = _ban.begin(); it != _ban.end(); ++it)
@@ -119,6 +120,16 @@ bool							Channel::isBan(Client& client) {
 }
 	
 void							Channel::addModo(std::string newModo)
+=======
+/*bool							Channel::userIsInChan(std::string queried)
+{
+	if (_clients.find(_serv->getClient(queried)) != _clients.end())
+		return 0;
+	return 1;
+}*/
+
+void                                                    Channel::addModo(std::string newModo)
+>>>>>>> a60c75a7d8aa3859e4d5d7c7e32c82717a8d49d9
 {
     for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
     {

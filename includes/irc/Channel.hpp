@@ -51,6 +51,7 @@ class Channel {
 		void							setKey(std::string key);
 		void							setLimit(unsigned long nb);
 		void							addClient(Client& client);
+<<<<<<< HEAD
 		void							removeClient(Client& client);
 		void							addBan(Client& client);
 		void							removeBan(Client& client);
@@ -59,6 +60,13 @@ class Channel {
 		bool							isModo(std::string const& queried) const;
         // bool							isModo(std::string queried);
 		void							msgToUsers(std::string msg);
+=======
+		void							removeClient(Client& client, std::map<int, Client&> lst);
+		//bool                                                    userIsInChan(std::string queried);
+                void                                                    addModo(std::string newModo);
+                bool                                                    isModo(std::string queried);
+		void                                                    msgToUsers(std::string msg);
+>>>>>>> a60c75a7d8aa3859e4d5d7c7e32c82717a8d49d9
 // Channel&						operator<<(Channel& chan, std::string const& msg);
 };
 
