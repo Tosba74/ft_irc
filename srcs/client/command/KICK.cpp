@@ -70,7 +70,7 @@ int		KICK::execute(Client &clicli, std::vector<std::string> args) {
 		_serv->getChannel(args[1])->removeClient(*(_serv->getClient(*i)));
 		std::string	msg = ":" + clicli.getNickname() + " KICK " + args[1] + " " + (*i);
 		if (args.size() == 4)
-			msg += " :" + args[4];
+			msg += " " + args[3];
 		else
 			msg += " :" + clicli.getNickname();
 		_serv->getChannel(args[1])->msgToUsers(msg);

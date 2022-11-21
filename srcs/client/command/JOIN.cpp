@@ -116,20 +116,8 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     
     std::cout << "\e[32m--------ICI!--------" << std::endl;
 	std::string	reply = RPL_NAMREPLY(args[1], clicli.getNickname());
-	std::string	reply2 = RPL_NAMREPLY(args[1], clicli.getNickname());
-	std::map<int, Client&>	clients = _serv->getChannel(args[1])->getClients();
-	for (std::map<int, Client&>::iterator i = clients.begin(); i != clients.end(); i++)
-	{
-		reply += " ";
-		if (_serv->getChannel(args[1])->isModo(i->second.getNickname()) == 0)
-                        reply += "@";
-		reply += i->second.getNickname();
-        std::cout << "#" << i->first << " " << i->second.getNickname() << std::endl;
-	}
-    std::cout << "--------------------\e[0m" << std::endl;
-	reply2 += "\e[91m" + _serv->getChannel(args[1])->getStringUser() + "\e[0m";
+	reply += _serv->getChannel(args[1])->getStringUser();
 	clicli << reply;
-	clicli << reply2;
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;
 }
