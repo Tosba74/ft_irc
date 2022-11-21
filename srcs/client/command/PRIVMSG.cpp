@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/18 10:14:10 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/19 15:32:26 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ PRIVMSG::~PRIVMSG() {}
 	//	clicli << ERR_NOTOPLEVEL(masque);
 	// 	clicli << ERR_WILDTOPLEVEL(masque);
 	//	clicli << ERR_CANNOTSENDTOCHAN(canal);
-	
+
 	//	clicli << ERR_NOTEXTTOSEND();
 	//	clicli << ERR_NORECIPIENT(args[0]);
 	//	clicli << ERR_TOOMANYTARGETS(args[1]);
@@ -42,8 +42,14 @@ int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 
 int PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
 	Client	*target = _serv->getClient(args[1]);
-	std::string message = "PRIVMSG " + clicli.getNickname() + " :" + args[2];
-	
+	std::string message = "PRIVMSG " + clicli.getNickname() + " :";
+	for(int i = 2; args.size() >= (size_t)i; i++)
+	{
+		if (i != 2)
+			message += " ";
+		message += args[i];
+	}
+
 	if (!target)
 		clicli << ERR_NOSUCHNICK(args[0]);
 	else
