@@ -51,6 +51,7 @@ class Channel {
 		void							setLimit(unsigned long nb);
 		void							addClient(Client& client);
 		void							removeClient(Client& client, std::map<int, Client&> lst);
+		//bool                                                    userIsInChan(std::string queried);
                 void                                                    addModo(std::string newModo);
                 bool                                                    isModo(std::string queried);
 		void                                                    msgToUsers(std::string msg);

@@ -83,6 +83,13 @@ void							Channel::removeClient(Client& client, std::map<int, Client&> lst) {
 	lst.erase(client.getSock());
 }
 
+/*bool							Channel::userIsInChan(std::string queried)
+{
+	if (_clients.find(_serv->getClient(queried)) != _clients.end())
+		return 0;
+	return 1;
+}*/
+
 void                                                    Channel::addModo(std::string newModo)
 {
         for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)

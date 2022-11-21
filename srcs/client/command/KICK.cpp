@@ -52,14 +52,7 @@ int		KICK::execute(Client &clicli, std::vector<std::string> args) {
 	}
 
 	// TODO, impossible sans avoir acces a un getClient() d'un chan
-	//int	verif = 1;
-	//std::map<int, Client&>  clients = _serv->getChannel(args[1])->getClients();
-        //for (std::map<int, Client&>::iterator i = clients.begin(); i != clients.end(); i++)
-        //{
-        //        if (i->second.getNickname() == clicli.getNickname())
-        //                verif = 0;
-        //}
-	//if (verif != 0)
+	//if (_serv->getChannel(args[1]).userIsInChan(clicli.getNickname()) != 0)
 	//	clicli << ERR_NOTONCHANNEL(args[1]);
 	if (args.size() < 3)
 	{
