@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:24 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/15 00:44:29 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 18:33:11 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@
     // :WiZ JOIN #Twilight_zone ; message JOIN de WiZ
 
 class JOIN : public ACommand {
+    private:
+        Client* TESTEUSE(std::string name);
+        
     public:
         JOIN(Server *serv);
         JOIN(JOIN const& src);

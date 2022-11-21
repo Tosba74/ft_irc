@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:35:57 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 18:08:52 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ int				Server::joinChannel(std::string const &name, Client& client) {
 	// if (!client.isInChannel(name))
 	_channels.at(name)->addClient(client);
 	client.setCurrchan(name);
+	std::cout << "\e[94mClient(" << client << ")addressChan :" << _channels.at(name) << "\e[0m" << std::endl;
 	return 0;
 }
 
