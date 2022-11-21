@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/20 18:18:16 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 14:53:41 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,6 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 	//clicli.simpleMessage(validation);
 	_serv->getChannel(args[1])->msgToUsers(validation);
 	clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
-    
-    std::cout << "\e[32m--------ICI!--------" << std::endl;
 	std::string	reply = RPL_NAMREPLY(args[1], clicli.getNickname());
 	reply += _serv->getChannel(args[1])->getStringUser();
 	clicli << reply;
