@@ -19,9 +19,9 @@
 #include "client/command/MODE.hpp"
 #include "client/command/OPER.hpp"
 #include "client/command/AWAY.hpp"
-#include "client/command/PING.hpp"
 #include "client/command/PRIVMSG.hpp"
 #include "client/command/ME.hpp"
+#include "client/command/PING.hpp"
 // #include "client/command/HELP.hpp"
 #include "client/command/KICK.hpp"
 // #include "client/command/QUIT.hpp"
@@ -36,6 +36,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["PRIVMSG"] = new PRIVMSG(this);
 	_commandes["PASS"] = new PASS(this);
 	_commandes["JOIN"] = new JOIN(this);
+	_commandes["MSG"] = new PRIVMSG(this);
 	_commandes["USER"] = new USER(this);
 	_commandes["MODE"] = new MODE(this);
 	_commandes["LIST"] = new LIST(this);
