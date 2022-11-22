@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/21 19:22:37 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/22 13:57:42 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ class Channel {
 		Channel &						operator<<(std::string const& reply);
 };
 
+std::ostream &						operator<<(std::ostream & o, Channel const &rhs);
 // / std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);
 		// Channel&						operator<<(std::string const& msg);
 // std::ostream&                       operator<<(std::ostream& o, Channel const& rhs);

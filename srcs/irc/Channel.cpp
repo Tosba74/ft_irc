@@ -162,6 +162,15 @@ Channel &						Channel::operator<<(std::string const& reply) {
 	}
 	return *this;
 }
+
+std::ostream &						operator<<(std::ostream & o, Channel const &rhs) {
+	if (_clients.size() > 0) {
+		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
+			isModo(it->second.getNickname()) == false ? o << "@" : o << "";
+			o << it->second.getNickname() << std::endl;
+		}
+	return o;
+}
 // Channel&						operator<<(Channel& chan, std::string const& msg) {
 	// for (std::map<int, Client&>::iterator it = chan._clients.begin(); it != chan._clients.end(); ++it)
 		// it->second << msg;
