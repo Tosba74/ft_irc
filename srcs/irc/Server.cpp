@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/19 15:32:59 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/22 16:25:36 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 #include "client/command/AWAY.hpp"
 #include "client/command/PING.hpp"
 #include "client/command/PRIVMSG.hpp"
-#include "client/command/ME.hpp"
 // #include "client/command/HELP.hpp"
-// #include "client/command/KICK.hpp"
+#include "client/command/KICK.hpp"
 // #include "client/command/QUIT.hpp"
 // #include "client/command/BAN.hpp"
 // #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
@@ -36,6 +35,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["PRIVMSG"] = new PRIVMSG(this);
 	_commandes["PASS"] = new PASS(this);
 	_commandes["JOIN"] = new JOIN(this);
+	// _commandes["MSG"] = new PRIVMSG(this);
 	_commandes["USER"] = new USER(this);
 	_commandes["MODE"] = new MODE(this);
 	_commandes["LIST"] = new LIST(this);
@@ -44,7 +44,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["PING"] = new PING(this);
 	_commandes["ME"] = new ME(this);
 //	_commandes["HELP"] = new HELP(this);
-//	_commandes["KICK"] = new KICK(this);
+	_commandes["KICK"] = new KICK(this);
 //	_commandes["QUIT"] = new QUIT(this);
 //	_commandes["BAN"] = new BAN(this);
 }
@@ -161,7 +161,7 @@ int				Server::joinChannel(std::string const &name, Client& client) {
 
 int				Server::leaveChannel(std::string const &name, Client& client) {
 	if (_channels.find(name) != _channels.end()) {
-		_channels.at(name)->removeClient(client, _channels.at(name)->getClients());
+		_channels.at(name)->removeClient(client);
 		client.setCurrchan(name);
 		return 1;
 	}

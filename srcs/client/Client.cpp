@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/18 08:46:00 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/22 14:32:05 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Client::Client(Client const &rhs) : SocketConnection(rhs), _nickname(rhs._nickna
 
 Client::~Client() throw() {
 	for (listChannel::iterator it = _channels.begin(); it != _channels.end(); it++)
-		it->second->removeClient(*this, it->second->getClients());
+		it->second->removeClient(*this);
 	_channels.clear();
 }
 
@@ -126,12 +126,12 @@ Client &Client::operator<<(std::string const &reply)
 	return *this;
 }
 
-Client &Client::simpleMessage(std::string &reply)
+Client &Client::simpleMessage(std::string const& reply)
 {
 	// tentative bypass le ": getHostName()"
 	std::cout << "\e[33m" << "Reply : " << "\e[0m" << reply << std::endl;
-	reply += "\r\n";
-	SocketConnection::operator<<(reply);
+	std::string msg = reply + "\r\n";
+	SocketConnection::operator<<(msg);
 	return *this;
 
 }

@@ -6,12 +6,13 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/19 14:55:29 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/22 16:18:19 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/command/JOIN.hpp"
 #include "irc/Server.hpp"
+#include <unistd.h>
 
 JOIN::JOIN(Server *serv): ACommand(serv) {}
 
@@ -32,6 +33,24 @@ JOIN::~JOIN() {}
 // clicli << ERR_NOSUCHCHANNEL(args[1]);
 // clicli << ERR_NEEDMOREPARAMS(args[0]);
 
+static int static_fd = 12;
+
+Client* JOIN::TESTEUSE(std::string name) {
+    struct sockaddr_in  addr = {};
+    Client *Testeuse = new Client((int)static_fd, addr);
+    Testeuse->setNickname(name);
+    Testeuse->setUsername(name);
+    Testeuse->setRealName(name);
+    Testeuse->setHostname("0");
+    Testeuse->setNameserver("ircserv");
+    Testeuse->setVersion("1.3");
+    Testeuse->setPass("lol");
+    Testeuse->setRegister(true);
+    Testeuse->_mod = MOD_USER_INVIS;
+    static_fd++;
+
+    return Testeuse;
+}
 
 int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
     // Check Ban ERR #474
@@ -62,16 +81,16 @@ int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
         clicli << ERR_BANNEDFROMCHAN(args[1]);
         return 1;
     }
-    int tmp = 0;
+    // int tmp = 0;
     if (_serv->getChannel(args[1])->_mod != 0) {
-        if (!(tmp | (_serv->getChannel(args[1])->_mod & MOD_CHAN_VIP))) {
+        if (!(_serv->getChannel(args[1])->_mod & MOD_CHAN_VIP)) {
             // if (clicli._mod & MOD_USER_VIP) {
                 clicli << ERR_INVITEONLYCHAN(args[1]);
                 return 1;
             // }
         // } else if (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY ) {
-        } else if (!(tmp | (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY))) {
-            std::cout << (tmp | (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY)) << std::endl;
+        } else if (!(_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY)) {
+            std::cout << (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY) << std::endl;
             if (args.size() != 3 || !_serv->getChannel(args[1])->getKey().compare(args[2])) {
                 clicli << ERR_BADCHANNELKEY(args[1]);
                 return 1;
@@ -96,8 +115,10 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 
     // New Channel or not !?
 	if (_serv->getChannel(args[1]) == NULL) {
-        if (!checkChannel(clicli, args[1])) 
-	        _serv->joinChannel(args[1], clicli);
+        if (checkChannel(clicli, args[1]))
+            return 1;
+	    _serv->joinChannel(args[1], clicli);
+		_serv->getChannel(args[1])->addModo(clicli.getNickname()); // si new chan, passer le createur modo
         if (args.size() == 3)
             _serv->getChannel(args[1])->setKey(args[2]);
     } else {
@@ -107,21 +128,42 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
             _serv->joinChannel(args[1], clicli);
         }
     }
-	std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
-	clicli.simpleMessage(validation);
-	clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
     
-    std::cout << "\e[32m--------ICI!--------" << std::endl;
-	std::string	reply = RPL_NAMREPLY(args[1], clicli.getNickname());
-	std::map<int, Client&>	clients = _serv->getChannel(args[1])->getClients();
-	for (std::map<int, Client&>::iterator i = clients.begin(); i != clients.end(); i++)
-	{
-		reply += " ";
-		reply += i->second.getNickname();
-        std::cout << "#" << i->first << " " << i->second.getNickname() << std::endl;
-	}
-    std::cout << "--------------------\e[0m" << std::endl;
-	clicli << reply;
+    std::cout << "\e[32m--------J'AI PLEIN DE COPINE--------\e[0m" << std::endl;
+    
+    Client *Julie = TESTEUSE("Julie");
+    Julie->setCurrchan(args[1]);
+    _serv->joinChannel(args[1], *Julie);
+    std::cout << Julie;
+    
+    Client *Sophie = TESTEUSE("Sophie");
+    Sophie->setCurrchan(args[1]);
+    _serv->joinChannel(args[1], *Sophie);
+    
+    Client *Martine = TESTEUSE("Martine");
+    Martine->setCurrchan(args[1]);
+    _serv->joinChannel(args[1], *Martine);
+    
+    Client *Edwige = TESTEUSE("Edwige");
+    Edwige->setCurrchan(args[1]);
+    _serv->getChannel(args[1])->addModo(Edwige->getNickname());
+    _serv->joinChannel(args[1], *Edwige);
+    
+    std::cout << "\e[32m------------------------------------\e[0m" << std::endl;
+    /*
+    // On dirait RPL_JOIN
+	std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
+	//clicli.simpleMessage(validation);
+	_serv->getChannel(args[1])->msgToUsers(validation);
+    */
+	// std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
+	// *_serv->getChannel(args[1]) << validation;
+    
+	std::cout << *_serv->getChannel(args[1]);
+
+	*_serv->getChannel(args[1]) << RPL_JOIN(clicli.getNickname(), args[1]);
+    clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
+	clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;
 }

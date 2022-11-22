@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 21:13:41 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/19 15:32:40 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/22 16:27:11 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@
 
 class PRIVMSG : public ACommand
 {
+	private:
+		void	sendMsg(Client &clicli, std::string target, std::string message);
 	public:
 		PRIVMSG(Server *serv);
 		PRIVMSG(PRIVMSG const& src);

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/19 15:01:35 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/19 15:21:58 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 							clicli << ERR_NOSUCHNICK(*it);
 							return 1;
 						} else {
+							//ATTENTION A LA LISTE DE BAN ET PAS ADDCLIENT
 							// chan->addClient(*(_serv->getClient(*it)), chan->getBan());
 							chan->addClient(*(_serv->getClient(*it)));
 						}

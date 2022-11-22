@@ -6,11 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:38:35 by bmangin           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/18 10:07:49 by bmangin          ###   ########lyon.fr   */
-=======
-/*   Updated: 2022/11/18 14:34:08 by bmangin          ###   ########lyon.fr   */
->>>>>>> origin/privmsg
+/*   Updated: 2022/11/22 16:26:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
