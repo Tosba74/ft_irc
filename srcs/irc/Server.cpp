@@ -25,7 +25,7 @@
 // #include "client/command/HELP.hpp"
 #include "client/command/KICK.hpp"
 // #include "client/command/QUIT.hpp"
-// #include "client/command/BAN.hpp"
+#include "client/command/BAN.hpp"
 // #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
 #include <unistd.h>
 
@@ -47,7 +47,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 //	_commandes["HELP"] = new HELP(this);
 	_commandes["KICK"] = new KICK(this);
 //	_commandes["QUIT"] = new QUIT(this);
-//	_commandes["BAN"] = new BAN(this);
+	_commandes["BAN"] = new BAN(this);
 }
 
 Server::~Server() throw() {

@@ -73,7 +73,9 @@ int		KICK::execute(Client &clicli, std::vector<std::string> args) {
 			msg += " " + args[3];
 		else
 			msg += " :" + clicli.getNickname();
-		_serv->getChannel(args[1])->msgToUsers(msg);
+		//_serv->getChannel(args[1])->msgToUsers(msg);
+		*(_serv->getChannel(args[1])) << msg;
+		// ni l'un ni l'autre n'envoie a un user NC, a tester avec 2 clients weechat
 	}
         return 0;
 }

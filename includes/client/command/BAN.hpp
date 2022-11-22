@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 
 #pragma once
-#include "client/ACommand/BAN.hpp"
-#include "irc/Channel.hpp"
+#include "client/ACommand.hpp"
 
 class BAN : public ACommand
 {

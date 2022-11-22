@@ -129,7 +129,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         }
     }
     
-    std::cout << "\e[32m--------J'AI PLEIN DE COPINE--------\e[0m" << std::endl;
+/*    std::cout << "\e[32m--------J'AI PLEIN DE COPINE--------\e[0m" << std::endl;
     
     Client *Julie = TESTEUSE("Julie");
     Julie->setCurrchan(args[1]);
@@ -149,7 +149,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     _serv->getChannel(args[1])->addModo(Edwige->getNickname());
     _serv->joinChannel(args[1], *Edwige);
     
-    std::cout << "\e[32m------------------------------------\e[0m" << std::endl;
+    std::cout << "\e[32m------------------------------------\e[0m" << std::endl;*/
     /*
     // On dirait RPL_JOIN
 	std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
@@ -164,6 +164,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 	*_serv->getChannel(args[1]) << RPL_JOIN(clicli.getNickname(), args[1]);
     clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
 	clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
+	std::cout << "\n\n\n" << _serv->getChannel(args[1])->getStringUser() << "\n\n\n";;
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;
 }
