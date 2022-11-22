@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "irc/Channel.hpp"
+#include "client/ACommand.hpp"
 
 
 Channel::Channel(std::string name) : _name(name), _key(""), _vip(false), _limit(4096), _mod(0) {}
@@ -55,10 +56,12 @@ std::string						Channel::getStringUser() const {
 	std::string ret;
 	if (_clients.size() > 0) {
 		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
-			ret += " ";
-			if (isModo(it->second.getNickname()) == false)
-				ret += "@";
-			ret += it->second.getNickname();
+			// if (!(it->second._mod & MOD_USER_INVIS)) {
+				ret += " ";
+				if (isModo(it->second.getNickname()) == false)
+					ret += "@";
+				ret += it->second.getNickname();
+			// }
 		}
 	}
 	return ret;
@@ -157,18 +160,27 @@ void							Channel::msgToUsers(std::string msg) {
 	
 Channel &						Channel::operator<<(std::string const& reply) {
 	for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
-		it->second.simpleMessage(reply);
+		if (!(it->second._mod & MOD_USER_INVIS)) {
+			it->second.simpleMessage(reply);
+		}
 		// it->second << reply;
 	}
 	return *this;
 }
 
 std::ostream &						operator<<(std::ostream & o, Channel const &rhs) {
-	if (_clients.size() > 0) {
-		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
-			isModo(it->second.getNickname()) == false ? o << "@" : o << "";
-			o << it->second.getNickname() << std::endl;
+	if (rhs.getClients().size() > 0) {
+		for (std::map<int, Client&>::const_iterator it = rhs.getClients().begin(); it != rhs.getClients().end(); ++it) {
+			//ADD if () to string user too
+			if (it->second._mod & MOD_USER_INVIS) {
+				rhs.isModo(it->second.getNickname()) == false ? o << "@" : o << "";
+				o << "mysterious user" << std::endl;
+			} else {
+				rhs.isModo(it->second.getNickname()) == false ? o << "@" : o << "";
+				o << it->second.getNickname() << std::endl;
+			}
 		}
+	}
 	return o;
 }
 // Channel&						operator<<(Channel& chan, std::string const& msg) {

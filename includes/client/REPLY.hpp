@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/21 19:05:56 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/22 15:25:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #define RPL_MYINFO(nick, serv, version) " 004 " + nick + " " + serv + " " + version + " none " + "none."
 
 // #define RPL_JOIN(nick, serv, channel) ":0 " + nick + "!" + nick + "@" + serv + " JOIN #" + channel
-#define RPL_JOIN(nick, chan) ": " + nick + " JOIN :" + chan
+#define RPL_JOIN(nick, chan) ":" + nick + " JOIN :" + chan
 
 // Pour répondre à une requête au sujet du mode du client, RPL_UMODEIS est renvoyé.
 #define RPL_UMODEIS(mode) " 221 " + mode
@@ -66,7 +66,7 @@
 // L'exception à cela est lorsqu'un message NAMES est env
 
 // Reponse du server indiquant les utilisateurs connectes a un channel lors d'un JOIN
-#define RPL_NAMREPLY(chan, nick) " 353 " + nick + " = " + chan + " :" 
+#define RPL_NAMREPLY(chan, nick, list) " 353 " + nick + " = " + chan + " :" + list 
 
 // Reponse du server indiquant la fin de liste des utilisateurs lors d'un JOIN
 #define RPL_ENDOFNAMES(chan, nick) " 366 " + nick + " " + chan + " :End of NAMES list"

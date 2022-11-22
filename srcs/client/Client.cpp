@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/20 16:37:51 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/22 14:32:05 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,12 @@ Client &Client::operator<<(std::string const &reply)
 	return *this;
 }
 
-Client &Client::simpleMessage(std::string &reply)
+Client &Client::simpleMessage(std::string const& reply)
 {
 	// tentative bypass le ": getHostName()"
 	std::cout << "\e[33m" << "Reply : " << "\e[0m" << reply << std::endl;
-	reply += "\r\n";
-	SocketConnection::operator<<(reply);
+	std::string msg = reply + "\r\n";
+	SocketConnection::operator<<(msg);
 	return *this;
 
 }

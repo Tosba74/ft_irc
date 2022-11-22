@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/22 14:01:39 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/22 16:18:19 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ Client* JOIN::TESTEUSE(std::string name) {
     Testeuse->setVersion("1.3");
     Testeuse->setPass("lol");
     Testeuse->setRegister(true);
+    Testeuse->_mod = MOD_USER_INVIS;
     static_fd++;
 
     return Testeuse;
@@ -114,10 +115,10 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 
     // New Channel or not !?
 	if (_serv->getChannel(args[1]) == NULL) {
-        if (!checkChannel(clicli, args[1])) {
-	        _serv->joinChannel(args[1], clicli);
+        if (checkChannel(clicli, args[1]))
+            return 1;
+	    _serv->joinChannel(args[1], clicli);
 		_serv->getChannel(args[1])->addModo(clicli.getNickname()); // si new chan, passer le createur modo
-	}
         if (args.size() == 3)
             _serv->getChannel(args[1])->setKey(args[2]);
     } else {
@@ -133,6 +134,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     Client *Julie = TESTEUSE("Julie");
     Julie->setCurrchan(args[1]);
     _serv->joinChannel(args[1], *Julie);
+    std::cout << Julie;
     
     Client *Sophie = TESTEUSE("Sophie");
     Sophie->setCurrchan(args[1]);
@@ -154,12 +156,14 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 	//clicli.simpleMessage(validation);
 	_serv->getChannel(args[1])->msgToUsers(validation);
     */
+	// std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
+	// *_serv->getChannel(args[1]) << validation;
+    
+	std::cout << *_serv->getChannel(args[1]);
+
 	*_serv->getChannel(args[1]) << RPL_JOIN(clicli.getNickname(), args[1]);
-	std::cout << _serv->getChannel(args[1]);
     clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
-	std::string	reply = RPL_NAMREPLY(args[1], clicli.getNickname());
-	reply += _serv->getChannel(args[1])->getStringUser();
-	clicli << reply;
+	clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;
 }
