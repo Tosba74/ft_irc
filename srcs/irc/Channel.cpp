@@ -183,6 +183,7 @@ std::ostream &						operator<<(std::ostream & o, Channel const &rhs) {
 	}
 	return o;
 }
+
 // Channel&						operator<<(Channel& chan, std::string const& msg) {
 	// for (std::map<int, Client&>::iterator it = chan._clients.begin(); it != chan._clients.end(); ++it)
 		// it->second << msg;
