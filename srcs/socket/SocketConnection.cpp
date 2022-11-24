@@ -58,11 +58,18 @@ void SocketConnection::flush() {
 int  SocketConnection::receive() {
     char buffer[4096];
     int  n;
-
-    n = ::read(this->sock, buffer, 4096);
-    buffer[n] = '\0';
-    if (n > 0)
-        this->readBuffer += buffer;
+    int i = -1;
+    do
+    {
+        n = ::read(this->sock, buffer, 4096);
+        buffer[n] = '\0';
+        if (n > 0)
+            this->readBuffer += buffer;
+        i = -1;
+        while(this->readBuffer[++i])
+            //printf("debug:%x %c\n", this->readBuffer.at(i),this->readBuffer.at(i));
+            ;
+    } while (this->readBuffer[i - 1] != '\n');
     return n;
 }
 
