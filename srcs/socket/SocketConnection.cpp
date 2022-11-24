@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:18 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/15 02:04:48 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 22:18:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,27 @@ void SocketConnection::flush() {
 int  SocketConnection::receive() {
     char buffer[4096];
     int  n;
-
-    n = ::read(this->sock, buffer, 4096);
-    buffer[n] = '\0';
-    if (n > 0)
-        this->readBuffer += buffer;
+    int i = -1;
+    do
+    {
+        n = ::read(this->sock, buffer, 4096);
+        buffer[n] = '\0';
+        if (n > 0)
+            this->readBuffer += buffer;
+        i = -1;
+        while(this->readBuffer[++i])
+            //printf("debug:%x %c\n", this->readBuffer.at(i),this->readBuffer.at(i));
+            ;
+    } while (this->readBuffer[i - 1] != '\n');
     return n;
+    // char buffer[4096];
+    // int  n;
+
+    // n = ::read(this->sock, buffer, 4096);
+    // buffer[n] = '\0';
+    // if (n > 0)
+    //     this->readBuffer += buffer;
+    // return n;
 }
 
 SocketConnection &SocketConnection::operator<<(std::string const &msg) {

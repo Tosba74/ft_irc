@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/24 14:27:13 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 15:54:10 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,10 @@ int		MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
 }
 
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
-	if (args.size() < 2) {
-		clicli << ERR_NEEDMOREPARAMS(args[0]);
-		return 1;
-	}
+	// if (args.size() < 2) {
+		// // clicli << ERR_NEEDMOREPARAMS(args[0]);
+		// // return 1;
+	// }
 	int i = secureArgs(clicli, args);
 	if (i == 1) {
 		return 1;
@@ -201,7 +201,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		++it; 
 		for (; it != args[2].end(); ++it) {
 			int		index = indexage(*it, "psimtknvlob") + 1;
-			if (index < 9) {
+			if (index < 8) {
 				chan->_mod ^= (1 << index);
 			} else if (index == 8) {
 				std::cout << "size: " << args.size() << std::endl;
@@ -218,6 +218,8 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 				// clicli + o;
 				;
 			} else if (index == 10) {
+				clicli << "HA WE SUPER\n";
+				_serv->getChannel(args[1])->removeClient(*_serv->getClient(args[3]));	
 				_serv->getChannel(args[1])->addBan(*_serv->getClient(args[3]));	
 				// if (args.size() == 3) {
 					// clicli << ERR_NEEDMOREPARAMS(args[0]);
