@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:28:18 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/24 22:18:22 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 22:21:01 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int  SocketConnection::receive() {
             this->readBuffer += buffer;
         i = -1;
         while(this->readBuffer[++i])
-            //printf("debug:%x %c\n", this->readBuffer.at(i),this->readBuffer.at(i));
             ;
     } while (this->readBuffer[i - 1] != '\n');
     return n;
