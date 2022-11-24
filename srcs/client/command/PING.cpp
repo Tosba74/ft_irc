@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/15 02:24:57 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 17:26:11 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		PING::execute(Client &clicli, std::vector<std::string> args) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	} else {
-		std::string	pong = "PONG";
+		std::string	pong = " PONG";
 		for (unsigned long i = 1; i < args.size(); i++)
 			pong += (" " + args[i]);
 		clicli << pong;

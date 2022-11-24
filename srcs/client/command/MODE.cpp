@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/19 15:21:58 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 14:27:13 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,18 +133,31 @@ int		MODE::checkMode(Client &clicli, std::string arg, const char *cmp) {
 }
 
 int		MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
-// int		MODE:verifArgs(Client &clicli, std::vector<std::string> args) {
-	if (args[1][0] == '#') {
+    if (!splitArgs(args[1]).empty()) { 
+    	clicli << ERR_NEEDMOREPARAMS(args[0]); // this->decr();
+        return 1;
+    } else {
+    	std::vector<std::string> newargs = splitArgs(args[1]);
+    	args.erase(newargs.begin() + 1);
+    	args.insert(args.begin() + 1, newargs.begin(), newargs.end());
+    }
+
+	for (std::vector<std::string>::iterator it = args.begin(); it != args.end(); ++it)
+		std::cout << " " << *it << std::endl;
+
+
+	
+	if (args[1][0] == '#' || args[1][0] == '&') {
 		if (!_serv->getChannel(args[1])) {
 			clicli << ERR_NOSUCHCHANNEL(args[1]);
-			return -1;
+			return 1;
 		} else {
 			if (args[1].compare(clicli.getCurrchan())) {
 				clicli << ERR_NOTONCHANNEL(args[1]);
-				return -1;
+				return 1;
 			} else {
 				if (checkMode(clicli, args[2], "psimtknvlob") == -1)
-					return -1;
+					return 1;
 				else
 					return 0;
 			}
@@ -152,24 +165,24 @@ int		MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
 	} else {
 		if (!_serv->getClient(args[1])) {
 			clicli << ERR_NOSUCHNICK(args[1]);
-			return -1;
+			return 1;
 		} else {
-			if (checkMode(clicli, args[2], "iswo") == 1)
-				return -1;
-			else
+			if (checkMode(clicli, args[2], "iswo") == -1)
 				return 1;
+			else
+				return 0;
 		}
 	}
-	return -1;
+	return 0;
 }
 
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
-	if (args.size() < 3) {
+	if (args.size() < 2) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	}
 	int i = secureArgs(clicli, args);
-	if (i == -1) {
+	if (i == 1) {
 		return 1;
 	} else if (i == 1) {
 		std::cout << "args[2] is a Client" << std::endl;
@@ -190,7 +203,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 			int		index = indexage(*it, "psimtknvlob") + 1;
 			if (index < 9) {
 				chan->_mod ^= (1 << index);
-			} else if (index == 9) {
+			} else if (index == 8) {
 				std::cout << "size: " << args.size() << std::endl;
 				if (args.size() == 3) {
 					clicli << ERR_NEEDMOREPARAMS(args[0]);
@@ -201,27 +214,28 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 					// if (std::strtoul(args[3].c_str()) > 0)
 						// chan->setLimit(std::strtoul(args[3].c_str()));
 				}
-			} else if (index == 10) {
+			} else if (index == 9) {
 				// clicli + o;
 				;
-			} else if (index == 11) {
-				if (args.size() == 3) {
-					clicli << ERR_NEEDMOREPARAMS(args[0]);
-					return 1;
-				} else {
-					std::vector<std::string>::iterator it = args.begin();
-					++it;
-					for (; it != args.end(); ++it) {
-						if (!_serv->getClient(*it)) {
-							clicli << ERR_NOSUCHNICK(*it);
-							return 1;
-						} else {
-							//ATTENTION A LA LISTE DE BAN ET PAS ADDCLIENT
-							// chan->addClient(*(_serv->getClient(*it)), chan->getBan());
-							chan->addClient(*(_serv->getClient(*it)));
-						}
-					}
-				}
+			} else if (index == 10) {
+				_serv->getChannel(args[1])->addBan(*_serv->getClient(args[3]));	
+				// if (args.size() == 3) {
+					// clicli << ERR_NEEDMOREPARAMS(args[0]);
+					// return 1;
+				// } else {
+					// std::vector<std::string>::iterator it = args.begin();
+					// ++it;
+					// for (; it != args.end(); ++it) {
+						// if (!_serv->getClient(*it)) {
+							// clicli << ERR_NOSUCHNICK(*it);
+							// return 1;
+						// } else {
+							// // ATTENTION A LA LISTE DE BAN ET PAS ADDCLIENT
+							// // chan->addClient(*(_serv->getClient(*it)), chan->getBan());
+							// chan->addClient(*(_serv->getClient(*it)));
+						// }
+					// }
+				// }
 			}
 		}
 	}

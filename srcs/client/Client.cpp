@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/22 14:32:05 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 17:31:03 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <string>
 
 Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr), _nickname(""), _username(""),
-											_hostname(""), _servername("ircserv"), _version("1.3"), _realname(""),
+											_hostname(""), _servername("ircserv"), _version("3.4.1"), _realname(""),
 											_pass(""), _currChan(""), _awayMsg(""), _register(false), _away(false), _mod(0) {}
 
 Client::Client(Client const &rhs) : SocketConnection(rhs), _nickname(rhs._nickname), _username(rhs._username),

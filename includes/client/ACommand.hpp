@@ -6,15 +6,15 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/19 13:55:04 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 13:13:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
 #include "client/Client.hpp"
 
 # define CHAN_PER_USER      10
@@ -56,6 +56,7 @@ class ACommand : public ICommand {
         const Server *          getServ() const;
         
         int		checkChannel(Client &clicli, std::string arg);
+        std::vector<std::string>	splitArgs(std::string arg);
 };
 
 

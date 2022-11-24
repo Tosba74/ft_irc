@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #pragma once
-#include "client/ACommand/NAMES.hpp"
+#include "client/ACommand.hpp"
 #include "irc/Channel.hpp"
 
 // Commande: NAMES [<canal>{,<canal>}]
@@ -43,7 +43,7 @@ class NAMES : public ACommand
         NAMES(NAMES const& src);
         ~NAMES();
 
-        virtual int             secureArgs(Client &clicli, std::vector<std::string> args) = 0;
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
         int     execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

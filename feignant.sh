@@ -47,7 +47,7 @@ echo "/*                                                                        
 echo "/* ************************************************************************** */" >> includes/client/command/$1.hpp
 echo "" >> includes/client/command/$1.hpp
 echo "#pragma once" >> includes/client/command/$1.hpp
-echo "#include \"client/ACommand/$1.hpp\"" >> includes/client/command/$1.hpp
+echo "#include \"client/ACommand.hpp\"" >> includes/client/command/$1.hpp
 echo "#include \"irc/Channel.hpp\"" >> includes/client/command/$1.hpp
 echo "" >> includes/client/command/$1.hpp
 echo "class $1 : public ACommand" >> includes/client/command/$1.hpp

@@ -6,13 +6,14 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:18 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/22 16:19:11 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 16:09:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/ACommand.hpp"
 #include "irc/Server.hpp"
-
+#include <cstring>
+#include <iomanip>
 ACommand::ACommand(Server *serv) : _serv(serv) {}
 
 ACommand::ACommand(ACommand const& src)  : _serv(src._serv) {
@@ -33,9 +34,7 @@ ACommand&       ACommand::operator=(ACommand const& rhs) {
 	return *this;
 }
 
-Server const*   ACommand::getServ() const {
-	return this->_serv;
-}
+Server const*   ACommand::getServ() const { return this->_serv; }
 
 int		        ACommand::checkChannel(Client &clicli, std::string arg) {
 	if (arg.size() < 2 || ((arg[0] != '#' && arg[0] != '&' )) || arg.size() > 20) {
@@ -47,4 +46,31 @@ int		        ACommand::checkChannel(Client &clicli, std::string arg) {
 		// return 1;
 	// }
 	return false;
+}
+
+// Protected Usage:
+// if (splitArgs(arg).empty()) { 
+	// clicli << ERR_NEEDMOREPARAMS(args[0]); // this->decr();
+// } else {
+	// std::vector<std::string> newargs = splitArgs(arg);
+	// newargs.insert(newargs.begin(), args[0]);
+// }
+std::vector<std::string>	ACommand::splitArgs(std::string arg) {
+	std::vector<std::string> args;
+    size_t i = 0;
+    int pos = 0;
+
+    args.push_back(arg);
+	while (args[pos].find(",") != std::string::npos) {
+        i = args[pos].find(",");
+        if (i == 0)
+			return std::vector<std::string>();
+        args.push_back(args[pos].substr(i + 1, std::string::npos));
+        args[pos].erase(i);
+        for (std::vector<std::string>::iterator it = args.begin(); it != args.end(); it++)
+            if (!it->compare(",") || !it->compare(""))
+                args.erase(it);
+        pos++;
+    }
+    return args;
 }

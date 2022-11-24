@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/22 16:25:36 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 16:10:16 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "client/command/USER.hpp"
 #include "client/command/LIST.hpp"
 #include "client/command/MODE.hpp"
+#include "client/command/NAMES.hpp"
 #include "client/command/OPER.hpp"
 #include "client/command/AWAY.hpp"
 #include "client/command/PING.hpp"
@@ -24,7 +25,7 @@
 // #include "client/command/HELP.hpp"
 #include "client/command/KICK.hpp"
 // #include "client/command/QUIT.hpp"
-// #include "client/command/BAN.hpp"
+#include "client/command/BAN.hpp"
 // #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
 #include <unistd.h>
 
@@ -39,6 +40,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["USER"] = new USER(this);
 	_commandes["MODE"] = new MODE(this);
 	_commandes["LIST"] = new LIST(this);
+	_commandes["NAMES"] = new NAMES(this);
 	_commandes["OPER"] = new OPER(this);
 	_commandes["AWAY"] = new AWAY(this);
 	_commandes["PING"] = new PING(this);
@@ -46,7 +48,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 //	_commandes["HELP"] = new HELP(this);
 	_commandes["KICK"] = new KICK(this);
 //	_commandes["QUIT"] = new QUIT(this);
-//	_commandes["BAN"] = new BAN(this);
+	_commandes["BAN"] = new BAN(this);
 }
 
 Server::~Server() throw() {
@@ -124,10 +126,10 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 	str.push_back(message.substr(i, pos - i));
 	
 	//print split
-	std::cout << "\e[34msplit : " << message << std::endl;
-	for (std::vector<std::string>::iterator it = str.begin(); it != str.end(); ++it)
-		std::cout << *it << std::endl;	
-	std::cout << "**********" << std::endl;	
+	// std::cout << "\e[34msplit : " << message << std::endl;
+	// for (std::vector<std::string>::iterator it = str.begin(); it != str.end(); ++it)
+		// std::cout << *it << std::endl;	
+	// std::cout << "**********" << std::endl;	
 	// a delete apres
 
 	CommandMap::iterator it = _commandes.find(str[0]);

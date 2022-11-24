@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/22 16:18:19 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 17:32:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,17 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         if (checkChannel(clicli, args[1]))
             return 1;
 	    _serv->joinChannel(args[1], clicli);
-		_serv->getChannel(args[1])->addModo(clicli.getNickname()); // si new chan, passer le createur modo
+		_serv->getChannel(args[1])->addModo(clicli.getNickname());
+        // si new chan, passer le createur modo
         if (args.size() == 3)
             _serv->getChannel(args[1])->setKey(args[2]);
     } else {
-        if (!secureArgs(clicli, args)) {
-            if (clicli.getCurrchan().compare(""))
-                _serv->leaveChannel(clicli.getCurrchan(), clicli);
-            _serv->joinChannel(args[1], clicli);
-        }
+        std::cout << "Not new channel" << std::endl;
+        if (checkChannel(clicli, args[1]))
+            return 1;
+            // if (clicli.getCurrchan().compare(""))
+                // _serv->leaveChannel(clicli.getCurrchan(), clicli);
+        _serv->joinChannel(args[1], clicli);
     }
     
     std::cout << "\e[32m--------J'AI PLEIN DE COPINE--------\e[0m" << std::endl;
@@ -150,14 +152,6 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     _serv->joinChannel(args[1], *Edwige);
     
     std::cout << "\e[32m------------------------------------\e[0m" << std::endl;
-    /*
-    // On dirait RPL_JOIN
-	std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
-	//clicli.simpleMessage(validation);
-	_serv->getChannel(args[1])->msgToUsers(validation);
-    */
-	// std::string validation = ":" + clicli.getNickname() + " JOIN :" + args[1];
-	// *_serv->getChannel(args[1]) << validation;
     
 	std::cout << *_serv->getChannel(args[1]);
 

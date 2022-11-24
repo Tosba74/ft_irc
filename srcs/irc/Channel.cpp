@@ -60,6 +60,8 @@ std::string						Channel::getStringUser() const {
 				ret += " ";
 				if (isModo(it->second.getNickname()) == false)
 					ret += "@";
+				if (isBan(it->second))
+					ret += "*";
 				ret += it->second.getNickname();
 			// }
 		}
@@ -80,15 +82,6 @@ void							Channel::setKey(std::string key) {
 void							Channel::setLimit(unsigned long nb) { _limit = nb; } 
 
 void							Channel::addClient(Client& client) {
-	// for (std::map<int, Client&>::iterator it = lst.begin(); it != lst.end(); ++it)
-		// if (it->second == client)
-			// return ;
-	// lst.insert(std::pair<int, Client&>(client.getSock(), client));
-	
-	// if (lst.find(client.getSock()) != lst.end())
-		// return ;
-	// lst.insert(std::pair<int, Client&>(client.getSock(), client));
-	
 	if (_clients.find(client.getSock()) != _clients.end())
 		return ;
 	_clients.insert(std::pair<int, Client&>(client.getSock(), client));
@@ -113,9 +106,9 @@ void							Channel::removeBan(Client& client) {
 	_ban.erase(client.getSock());
 }
 
-bool							Channel::isBan(Client& client) {
+bool							Channel::isBan(Client& client) const {
 	if (!_ban.empty())
-		for (std::map<int, Client&>::iterator it = _ban.begin(); it != _ban.end(); ++it)
+		for (std::map<int, Client&>::const_iterator it = _ban.begin(); it != _ban.end(); ++it)
 			if (it->second == client)
 				return true;
 	return false;
