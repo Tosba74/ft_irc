@@ -131,28 +131,6 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         _serv->joinChannel(args[1], clicli);
     }
     
-    std::cout << "\e[32m--------J'AI PLEIN DE COPINE--------\e[0m" << std::endl;
-    
-    Client *Julie = TESTEUSE("Julie");
-    Julie->setCurrchan(args[1]);
-    _serv->joinChannel(args[1], *Julie);
-    std::cout << Julie;
-    
-    Client *Sophie = TESTEUSE("Sophie");
-    Sophie->setCurrchan(args[1]);
-    _serv->joinChannel(args[1], *Sophie);
-    
-    Client *Martine = TESTEUSE("Martine");
-    Martine->setCurrchan(args[1]);
-    _serv->joinChannel(args[1], *Martine);
-    
-    Client *Edwige = TESTEUSE("Edwige");
-    Edwige->setCurrchan(args[1]);
-    _serv->getChannel(args[1])->addModo(Edwige->getNickname());
-    _serv->joinChannel(args[1], *Edwige);
-    
-    std::cout << "\e[32m------------------------------------\e[0m" << std::endl;
-    
 	std::cout << *_serv->getChannel(args[1]);
 
 	*_serv->getChannel(args[1]) << RPL_JOIN(clicli.getNickname(), args[1]);
