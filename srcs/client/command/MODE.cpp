@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/24 15:54:10 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/25 13:32:37 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ int		MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
 	return 0;
 }
 
+/*
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	// if (args.size() < 2) {
 		// // clicli << ERR_NEEDMOREPARAMS(args[0]);
@@ -243,39 +244,16 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	}
 	return 0;
 }
+*/
 
-/*
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
-	if (args.size() < 3) {
+	if (args.size() < 2) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	}
-	std::cout << "Parser passe !!!";
-	if (checkChannel(clicli, args[1]))
-		return 1;
-	if (checkMode(clicli, args[2]))
-		return 1;
 	
-	std::cout << "Verif arguments !";
-	if (args[2][1] == 'p') {
-		std::cout << "parser P";
-		if (args[2][0] == '+')
-			_serv->getChannel(args[2])->_mod ^= MOD_CHAN_VIP;
-		if (args[2][0] == '-')
-			_serv->getChannel(args[2])->_mod |= MOD_CHAN_VIP;
-	}
-	// if (_serv->getChannel(clicli.getCurrchan()) ==  NULL) {
-		// clicli << ERR_NOTONCHANNEL(args[1]);
-		// return 1;
-	// } else if (_serv->getChannel(args[1])) {
-		// clicli << ERR_NOSUCHCHANNEL(args[1]);
-		// return 1;
-	// }
-	(void)clicli;
-	(void)args;
 	return 0;
 }
-*/
 
 void	MODE::descr(Client& clicli) {
 	clicli << "Usage: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]\n";

@@ -32,32 +32,25 @@ int             NAMES::secureArgs(Client &clicli, std::vector<std::string> args)
 
 int NAMES::execute(Client &clicli, std::vector<std::string> args) {
     if (args.size() == 1) {
-        std::cout << "--------ONE_ARG-----------" << std::endl;
         for (std::map<std::string, Channel*>::iterator it = _serv->_channels.begin(); it != _serv->_channels.end(); ++it)
             if (!(it->second->_mod & MOD_CHAN_SECRET || it->second->_mod & MOD_CHAN_VIP)) {
                 clicli << it->second->getName();
                 clicli << it->second->getStringUser();
-                // clicli << it->second;
             }
     } else {
-        std::cout << "------MOULT_ARG-----------" << std::endl;
-        if (!splitArgs(args[1]).empty()) { 
+        std::vector<std::string> chans= splitArgs(args[1]);
+        if (!chans.empty()) { 
         	clicli << ERR_NEEDMOREPARAMS(args[0]); // this->decr();
             return 1;
-        } else {
-        	std::vector<std::string> newargs = splitArgs(args[1]);
-        	args.erase(newargs.begin() + 1);
-        	args.insert(newargs.begin(), args[0]);
         }
-        
-        for (size_t i = 1; i != args.size(); ++i) {
-            if (!_serv->getChannel(args[i])) {
-                clicli << ERR_NOSUCHCHANNEL(args[i]);
+        for (size_t i = 1; i != chans.size(); ++i) {
+            if (!_serv->getChannel(chans[i])) {
+                clicli << _serv->getChannel(chans[i])->getName();
+                clicli << _serv->getChannel(chans[i])->getStringUser();
             } else {
-                clicli << _serv->getChannel(args[i])->getName();
-                clicli << _serv->getChannel(args[i])->getStringUser();
-                // clicli << *(_serv->getChannel(args[i]));
-            }
+                clicli << ERR_NOSUCHCHANNEL(chans[i]);
+                return 1;
+            } 
         } 
     }
 	// clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
