@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "socket/SocketConnection.hpp"
+#include "color.hpp"
 
 SocketConnection::SocketConnection(int sock, sockaddr_in &addr) throw() : Socket(sock), addr(addr), addrsize(sizeof(addr)) {
     sock = fcntl(sock, F_SETFL, O_NONBLOCK);
@@ -58,18 +59,23 @@ void SocketConnection::flush() {
 int  SocketConnection::receive() {
     char buffer[4096];
     int  n;
-    int i = -1;
-    do
-    {
-        n = ::read(this->sock, buffer, 4096);
-        buffer[n] = '\0';
-        if (n > 0)
-            this->readBuffer += buffer;
-        i = -1;
-        while(this->readBuffer[++i])
-            ;
-    } while (this->readBuffer[i - 1] != '\n');
-    return n;
+    //int i = -1;
+
+    n = ::read(this->sock, buffer, 4095);
+    buffer[n] = '\0';
+    if (n > 0)
+        this->readBuffer += buffer;
+
+    return 0;
+    // i = -1;
+    // while(this->readBuffer[++i])
+    //     ;
+    // if (this->readBuffer[i - 1] != '\n');
+    //     return 0;
+    // return 1;
+
+    //(╯°□°）╯︵ ┻━┻
+
     // char buffer[4096];
     // int  n;
 
@@ -99,8 +105,23 @@ SocketConnection &SocketConnection::operator<<(std::string const &msg) {
 
 SocketConnection &SocketConnection::operator>>(std::string &msg) {
     receive();
-    msg = this->readBuffer;
-    this->readBuffer.clear();
+    // au dessu, nous avons eventuellement un \n au milieu / fin (ou pas lol)
+
+
+    int n_idx = this->readBuffer.find('\n',0);
+    if ((const unsigned long)n_idx == this->readBuffer.npos)
+    {
+        msg = ""; 
+        return *this;
+    }
+    msg = this->readBuffer.substr(0, n_idx);
+    this->readBuffer = this->readBuffer.substr(n_idx + 1, this->readBuffer.npos);
+
+	std::cout << HGRN << "msg = |" << msg << "|" << std::endl;
+	std::cout << HGRN << "buffer = |" << this->readBuffer << "|" << std::endl  << END;
+
+    //msg = this->readBuffer.subs;
+    //this->readBuffer.clear();
     return *this;
 }
 
