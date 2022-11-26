@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/24 14:18:24 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/26 16:44:20 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Channel {
 		unsigned long					_limit;
 		std::map<int, Client&>			_clients;
 		std::map<int, Client&>			_ban;
-		std::vector<std::string>                _modo;
+		std::vector<std::string>        _modo;
 		
 	protected:
 
@@ -57,7 +57,7 @@ class Channel {
 		bool							isBan(Client& client) const;
         void							addModo(std::string newModo);
 		bool							isModo(std::string const& queried) const;
-        // bool							isModo(std::string queried);
+		void							removeModo(std::string modo);
 		void							msgToUsers(std::string msg);
 // Channel&						operator<<(Channel& chan, std::string const& msg);
 		Channel &						operator<<(std::string const& reply);

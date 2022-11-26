@@ -6,12 +6,14 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/25 13:32:37 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/26 17:18:51 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/command/MODE.hpp"
 #include "irc/Server.hpp"
+#include <memory>
+#include <vector>
 // #include <ios>
 
 // Commande: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]
@@ -58,15 +60,15 @@ MODE::MODE(MODE const& src) : ACommand(src) {
 MODE::~MODE() {}
 
 // REPLY :
-	// clicli << RPL_CHANNELMODEIS(args[1], clicli.getMode(), args[5]);
 	// clicli << ERR_CHANOPRIVSNEEDED(args[1]);
-	// clicli << RPL_BANLIST(args[1], args[5]);
-	// clicli << RPL_ENDOFBANLIST(args[1]);
 	// clicli << ERR_KEYSET(args[1]);
 	// clicli << ERR_USERSDONTMATCH();
-	// clicli << RPL_UMODEIS(clicli.getMode());
 	// clicli << ERR_UMODEUNKNOWNFLAG();
 	
+	// clicli << RPL_CHANNELMODEIS(args[1], clicli.getMode(), args[5]);
+	// clicli << RPL_UMODEIS(clicli.getMode());
+	// clicli << RPL_ENDOFBANLIST(args[1]);
+	// clicli << RPL_BANLIST(args[1], args[5]);
 	// clicli << ERR_UNKNOWNMODE(char);
 	// clicli << ERR_NOSUCHNICK(args[4]);
 	
@@ -105,19 +107,19 @@ int		MODE::checkMode(Client &clicli, std::string arg) {
 */
 
 int		MODE::checkChannel(Client &clicli, std::string arg) {
-	if (arg[0] != '#' || !_serv->getChannel(arg)) {
+	if (arg[0] != '#' || arg[0] != '&' || !_serv->getChannel(arg)) {
 		clicli << ERR_NOSUCHCHANNEL(arg);
 		return 1;
-	} else if (!_serv->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
-		clicli << ERR_NOTONCHANNEL(arg);
-		return 1;
+	// } else if (!_serv->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
+		// clicli << ERR_NOTONCHANNEL(arg);
+		// return 1;
 	}
 	return 0;
 }
 
 int		MODE::checkMode(Client &clicli, std::string arg, const char *cmp) {
 	std::string::iterator it = arg.begin();
-	if (!(*it == '+' || *it == '-')) {
+	if ((*it != '+' || *it != '-') || arg.size() < 2) {
 		clicli << ERR_UMODEUNKNOWNFLAG();
 		return 1;
 	}
@@ -125,13 +127,30 @@ int		MODE::checkMode(Client &clicli, std::string arg, const char *cmp) {
 	for (; it != arg.end(); ++it) {
 		std::cout << *it << std::endl;
 		if (indexage(*it, cmp) == -1) {
-			clicli << ERR_USERSDONTMATCH();
+			clicli << ERR_UMODEUNKNOWNFLAG();
+			// clicli << ERR_USERSDONTMATCH();
 			return 1;
 		}
 	}
 	return 0;
 }
-
+// int		MODE::checkClient(Client &clicli, std::vector<std::string> client) {
+	// for (std::vector<std::string>::iterator it = client.begin(); it != client.end(); ++it) {
+		// if (!_serv->getClient(*it)) {
+			// clicli << ERR_NOSUCHNICK(*it);
+			// return 1;
+		// }
+	// }
+	// return 0;
+// }
+int		MODE::checkClient(Client &clicli, std::string client) {
+	if (!_serv->getClient(client)) {
+		clicli << ERR_NOSUCHNICK(client);
+		return 1;
+	}
+	return 0;
+}
+/*
 int		MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
     if (!splitArgs(args[1]).empty()) { 
     	clicli << ERR_NEEDMOREPARAMS(args[0]); // this->decr();
@@ -176,7 +195,6 @@ int		MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
 	return 0;
 }
 
-/*
 int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	// if (args.size() < 2) {
 		// // clicli << ERR_NEEDMOREPARAMS(args[0]);
@@ -246,15 +264,87 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 }
 */
 
-int		MODE::execute(Client &clicli, std::vector<std::string> args) {
-	if (args.size() < 2) {
+int     MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
+	if (args.size() < 3) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	}
-	
 	return 0;
 }
-
+int		MODE::execute(Client &clicli, std::vector<std::string> args) {
+	if (secureArgs(clicli, args)) {
+		return 1;
+	}
+	if (!checkClient(clicli, args[1]) && !checkMode(clicli, args[2], "iswo")) {
+		std::cout << "MODEClient checkmode:";
+		std::cout << "\e[32mGUT!\e[0m" << std::endl;
+		
+	} else if (!checkChannel(clicli, args[1]) && !checkMode(clicli, args[2],  "psimtknvlob")) {
+		std::cout << "MODEChannel checkmode:";
+		if (!_serv->getChannel(args[1])) {
+			clicli << ERR_NOSUCHCHANNEL(args[1]);
+			return 1;
+		}
+		Channel	*chan = _serv->getChannel(args[1]);
+		std::string::iterator it = args[2].begin() + 1;
+		
+		for (; it != args[2].end(); ++it) {
+			clicli << RPL_UMODEIS(args[2]);
+			int		idx = indexage(*it, "psimtknvlob") + 1;
+			if (idx < 8)
+				chan->_mod ^= (1 << idx);
+			if (idx > 4) {
+				if (args.size() == 3) {
+					clicli << ERR_NEEDMOREPARAMS(args[0]);
+					return 1;
+				}
+				if (idx != 8) {
+					if (!_serv->getClient(args[3])) {
+						clicli << ERR_NOSUCHNICK(args[3]);
+						return 1;
+					}
+				}
+			}
+			std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
+			if (idx == 6) {
+				clicli << ERR_KEYSET(args[1]);
+				return 1;
+			} else if (idx == 8) {
+				if (std::strtoul(args[3].c_str(), NULL, 10))
+					chan->setLimit(std::strtoul(args[3].c_str(), NULL, 10));
+				chan->setLimit(std::strtoul(args[3].c_str(), NULL, 10));
+			} else if (idx == 9) {
+				if (args[2][0] == '+') {
+					if (_serv->getClient(args[3])->isInChannel(args[1]) == false) {
+						clicli << ERR_NOTONCHANNEL(args[1]);
+						return 1;
+					}
+					chan->addModo(args[1]);
+				} else if (args[2][0] == '-') {
+					if (chan->isModo(args[3]))
+						chan->removeModo(args[3]);
+				}
+			} else if (idx == 10) {
+				if (args[2][0] == '+') {
+					if (_serv->getClient(args[3])->isInChannel(args[1]) == false) {
+						clicli << ERR_NOTONCHANNEL(args[1]);
+						return 1;
+					}
+					chan->addBan(*_serv->getClient(args[3]));
+					chan->removeClient(*_serv->getClient(args[3]));
+					clicli << RPL_BANLIST(args[1], args[3]);
+				} else if (args[2][0] == '-') {
+					chan->removeBan(*_serv->getClient(args[3]));
+					clicli << RPL_ENDOFBANLIST(args[1]);
+				}
+			}
+			clicli << RPL_CHANNELMODEIS(args[1], args[2], *it);
+		}
+	}
+	std::cout << "\e[32mGUT!\e[0m" << std::endl;
+	return 0;
+}
+	
 void	MODE::descr(Client& clicli) {
 	clicli << "Usage: MODE <canal> {[+|-]|o|p|s|i|t|n|b|v} [<limite>] [<utilisateur>] [<masque de bannissement >]\n";
 	clicli << "Usage: MODE <pseudonyme> {[+|-]|i|w|s|o}\n";

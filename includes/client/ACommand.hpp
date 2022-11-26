@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/23 13:13:22 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/25 18:25:02 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ class ACommand : public ICommand {
         
         ACommand& operator=(ACommand const& rhs);
         
-        const Server *          getServ() const;
+        const Server *              getServ() const;
         
-        int		checkChannel(Client &clicli, std::string arg);
+        int		                    checkChannel(Client &clicli, std::string arg);
         std::vector<std::string>	splitArgs(std::string arg);
 };
 

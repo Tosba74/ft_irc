@@ -31,7 +31,7 @@ int     OPER::secureArgs(Client &clicli, std::vector<std::string> args) {
 int		OPER::execute(Client &clicli, std::vector<std::string> args) {
 	if (args.size() != 3)
 		clicli << ERR_NEEDMOREPARAMS(args[0]); 
-	else if (clicli.getUsername().compare(args[1]))
+	else if (clicli.getNickname().compare(args[1]))
 		clicli << ERR_NOOPERHOST();
 	else if (_serv->getPassword().compare(args[2]))
 		clicli << ERR_PASSWDMISMATCH();

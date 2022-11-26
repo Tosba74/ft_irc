@@ -103,7 +103,8 @@ void							Channel::addBan(Client& client) {
 }
 	
 void							Channel::removeBan(Client& client) {
-	_ban.erase(client.getSock());
+	if (_ban.find(client.getSock()) != _ban.end())
+		_ban.erase(client.getSock());
 }
 
 bool							Channel::isBan(Client& client) const {
@@ -125,6 +126,12 @@ void							Channel::addModo(std::string newModo)
     _modo.push_back(newModo);
 }
 
+void							Channel::removeModo(std::string modo) {
+    for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
+		if ((*it) == modo) {
+			_modo.erase(it);
+		}
+}
 // bool                                                    Channel::isModo(std::string queried)
 // {
         // for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
@@ -136,11 +143,11 @@ void							Channel::addModo(std::string newModo)
 // }
 
 bool							Channel::isModo(std::string const& queried) const {
-        for (std::vector<std::string>::const_iterator it = _modo.begin(); it != _modo.end(); it++) {
-                if ((*it) == queried)
-                        return 0;
-        }
-        return 1;
+    for (std::vector<std::string>::const_iterator it = _modo.begin(); it != _modo.end(); it++) {
+        if ((*it) == queried)
+            return 0;
+    }
+    return 1;
 }
 
 void							Channel::msgToUsers(std::string msg) {
