@@ -6,12 +6,13 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/26 17:18:51 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/26 18:13:29 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client/command/MODE.hpp"
 #include "irc/Server.hpp"
+#include <cstdlib>
 #include <memory>
 #include <vector>
 // #include <ios>
@@ -264,8 +265,19 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 }
 */
 
+bool	MODE::passNoGood(std::string pass) {
+	if (pass.size() > 512 || pass.size() < 2)
+		return false;	
+	std::string::iterator it = pass.begin();
+	for (; it != pass.end(); ++it) {
+		if (*it == ' ' || *it == '#' || *it == '&' || *it == '\t' || *it == '\r' || *it == '\n')
+			return false;
+	}
+	return true;
+}
+
 int     MODE::secureArgs(Client &clicli, std::vector<std::string> args) {
-	if (args.size() < 3) {
+	if (args.size() < 2) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	}
@@ -275,9 +287,26 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	if (secureArgs(clicli, args)) {
 		return 1;
 	}
+	if (args.size() == 2) {
+		return 0;
+	}
 	if (!checkClient(clicli, args[1]) && !checkMode(clicli, args[2], "iswo")) {
 		std::cout << "MODEClient checkmode:";
-		std::cout << "\e[32mGUT!\e[0m" << std::endl;
+		Client					*client = _serv->getClient(args[1]);
+		std::string::iterator	it = args[2].begin() + 1;
+
+		std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
+		for (; it != args[2].end(); ++it) {
+			int		idx = indexage(*it, "iswo") + 1;
+			if (args[2][0] == '+') {
+				client->_mod ^= (1 << idx);
+			} else if (args[2][0] == '-') {
+				client->_mod |= (1 << idx);
+			}
+			*client << RPL_UMODEIS(args[2]);
+		}
+		std::cout << "\e[32mGUT!\e[0m(" << client->_mod << ")" << std::endl << "Execute: ";
+
 		
 	} else if (!checkChannel(clicli, args[1]) && !checkMode(clicli, args[2],  "psimtknvlob")) {
 		std::cout << "MODEChannel checkmode:";
@@ -289,7 +318,6 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		std::string::iterator it = args[2].begin() + 1;
 		
 		for (; it != args[2].end(); ++it) {
-			clicli << RPL_UMODEIS(args[2]);
 			int		idx = indexage(*it, "psimtknvlob") + 1;
 			if (idx < 8)
 				chan->_mod ^= (1 << idx);
@@ -308,6 +336,15 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 			std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
 			if (idx == 6) {
 				clicli << ERR_KEYSET(args[1]);
+				if (clicli._mod & MOD_USER_OP)
+					clicli << ERR_CHANOPRIVSNEEDED(args[1]);
+				if (passNoGood(args[3]))
+					return 1;
+				if (args[2][0] == '+') {
+					chan->setKey(args[3]);
+				} else if (args[2][0] == '-') {
+					chan->setKey("");
+				}
 				return 1;
 			} else if (idx == 8) {
 				if (std::strtoul(args[3].c_str(), NULL, 10))
@@ -338,6 +375,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 					clicli << RPL_ENDOFBANLIST(args[1]);
 				}
 			}
+			*_serv->getClient(args[3]) << RPL_UMODEIS(args[2]);
 			clicli << RPL_CHANNELMODEIS(args[1], args[2], *it);
 		}
 	}

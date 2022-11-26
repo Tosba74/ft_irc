@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:52 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/26 17:13:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/11/26 18:14:14 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ class MODE : public ACommand {
 		int		checkClient(Client &clicli, std::string client);
 		// int		checkClient(Client &clicli, std::vector<std::string> client);
 		int		indexage(char c, const char *ismode);
-		
+		bool	passNoGood(std::string pass);
 	public:
 		MODE(Server *serv);
 		MODE(MODE const& src);
