@@ -6,7 +6,7 @@
 #    By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/14 11:09:51 by bmangin           #+#    #+#              #
-#    Updated: 2022/11/23 16:11:35 by bmangin          ###   ########lyon.fr    #
+#    Updated: 2022/12/05 23:28:06 by bmangin          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ NAME := ircserv
 FILES_IRC			:= Server Channel
 FILES_SOCK			:= Socket SocketConnection SocketListener SocketServer
 FILES_USER			:= Client ACommand
-FILES_COMMAND		:= NICK PASS JOIN USER VERSION MODE LIST OPER AWAY PING PRIVMSG ME KICK NAMES BAN
+FILES_COMMAND		:= NICK PASS JOIN USER VERSION MODE LIST OPER AWAY PING \
+					PRIVMSG ME KICK NAMES BAN PART
 
 FILES_REPLY			:= ${addprefix ${PATH_U}/, REPLY}
 

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "irc/Channel.hpp"
+#include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_size_t.h"
 #include "client/ACommand.hpp"
 
 
@@ -48,7 +49,7 @@ std::map<int, Client&> const&	Channel::getBan() const { return _ban; }
 
 std::string						Channel::getKey() const { return _key; }
 
-unsigned int					Channel::getLimit() const { return _limit; }
+size_t							Channel::getLimit() const { return _limit; }
 
 bool							Channel::getVip() const { return _vip; }
 
@@ -57,12 +58,12 @@ std::string						Channel::getStringUser() const {
 	if (_clients.size() > 0) {
 		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
 			// if (!(it->second._mod & MOD_USER_INVIS)) {
-				ret += " ";
 				if (isModo(it->second.getNickname()) == false)
 					ret += "@";
 				if (isBan(it->second))
 					ret += "*";
 				ret += it->second.getNickname();
+				ret += " ";
 			// }
 		}
 	}
@@ -74,12 +75,12 @@ void							Channel::setName(std::string name) { _name = name; }
 void							Channel::setKey(std::string key) {
 	_key = key;
 	if (!_key.compare(""))
-		_mod ^= (1 << 6);
+		_mod ^= (1 << 5);
 	else
-		_mod |= (1 << 6);
+		_mod |= (1 << 5);
 }
 
-void							Channel::setLimit(unsigned long nb) { _limit = nb; } 
+void							Channel::setLimit(size_t nb) { _limit = nb; } 
 
 void							Channel::addClient(Client& client) {
 	if (_clients.find(client.getSock()) != _clients.end())
@@ -92,7 +93,7 @@ void							Channel::addClient(Client& client) {
 	//ATTENTION ADD BANCLIENT
 void							Channel::removeClient(Client& client) {
 	// attention si le client est seule dans le channel
-	if (_clients.size() > 1)
+	// if (_clients.size() > 1)
 		_clients.erase(client.getSock());
 }
 

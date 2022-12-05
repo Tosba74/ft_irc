@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:18 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/23 16:09:15 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/05 17:55:31 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ ACommand&       ACommand::operator=(ACommand const& rhs) {
 Server const*   ACommand::getServ() const { return this->_serv; }
 
 int		        ACommand::checkChannel(Client &clicli, std::string arg) {
-	if (arg.size() < 2 || ((arg[0] != '#' && arg[0] != '&' )) || arg.size() > 20) {
+	if ((arg[0] != '#' && arg[0] != '&' ) || (arg.size() < 2 || arg.size() > 20)) {
 		clicli << ERR_NOSUCHCHANNEL(arg);
-		return true;
+		return 1;
 	}
 	// } else if (!getServ()->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
 		// clicli << ERR_NOTONCHANNEL(arg);
 		// return 1;
 	// }
-	return false;
+	return 0;
 }
 
 // Protected Usage:

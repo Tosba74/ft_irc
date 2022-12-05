@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/18 01:34:43 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/06 00:01:39 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,33 @@ PART::PART(PART const& src): ACommand(src) {
 
 PART::~PART() {}
 
-int     PART::execute(Client &clicli, std::vector<std::string> args) {}
+int     PART::secureArgs(Client &clicli, std::vector<std::string> args) {
+    if (args.size() < 2) {
+        clicli << ERR_NEEDMOREPARAMS(args[0]);
+        return 1;
+    }    
+    return 0;
+}
 
-int     PART::secureArgs(Client &clicli, std::vector<std::string> args) {}
+// clicli << ERR_NOSUCHCHANNEL();
+// clicli << ERR_NOTONCHANNEL();
+int     PART::execute(Client &clicli, std::vector<std::string> args) {
+    secureArgs(clicli, args);
+    std::vector<std::string> chans= splitArgs(args[1]);
+    for (size_t i = 0; i != chans.size(); i++) {
+        if (!_serv->getChannel(chans[i])) {
+            clicli << ERR_NOSUCHCHANNEL(chans[i]);
+            return 1;
+        } else if (_serv->getChannel(chans[i])->getClients().find(clicli.getSock()) == _serv->getChannel(chans[i])->getClients().end()) {
+            clicli << ERR_NOTONCHANNEL(chans[i]);
+            return 1;  
+        } else { _serv->getChannel(chans[i])->removeClient(clicli);
+        }
+    }
+    return 0;
+}
+
 
 void    PART::descr(Client& clicli) {
-    clicli << e[31mExemplee[0mn;
+    clicli <<  "usage: PART <canal>{,< canal >}";
 }

@@ -23,8 +23,6 @@ NAMES::NAMES(NAMES const& src): ACommand(src) {
 NAMES::~NAMES() {}
 
 int             NAMES::secureArgs(Client &clicli, std::vector<std::string> args) {
-    (void)clicli;
-    (void)args;
 	clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;
@@ -53,8 +51,8 @@ int NAMES::execute(Client &clicli, std::vector<std::string> args) {
             } 
         } 
     }
-	// clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
-	// clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
+	clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
+	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;
 }
 

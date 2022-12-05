@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/23 17:32:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/05 23:14:50 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,39 +64,42 @@ int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
             // }
         // }
     // }
-   if (!checkChannel(clicli, args[1])) {
+    std::cout << "\e[34mSECUREARGS\e[0m" << std::endl;
+   if (checkChannel(clicli, args[1])) {
         return 1;
     }
     // Check How many channels have a client & Channel-s limits ERR #405 #471
-    if (clicli.getChannels().size() > CHAN_PER_USER) {
+    if (clicli.getChannels().size() >= CHAN_PER_USER) {
         clicli << ERR_TOOMANYCHANNELS(args[1]);
         return 1;
     }
-    if (_serv->getChannel(args[1])->getLimit() >= _serv->getChannel(args[1])->getClients().size()) {
-        clicli << ERR_CHANNELISFULL(args[1]);
-        return 1;
-    }
-    
-    if (clicli.isBanned(args[1])) {
-        clicli << ERR_BANNEDFROMCHAN(args[1]);
-        return 1;
-    }
-    // int tmp = 0;
-    if (_serv->getChannel(args[1])->_mod != 0) {
-        if (!(_serv->getChannel(args[1])->_mod & MOD_CHAN_VIP)) {
+    if (_serv->getChannel(args[1])) {
+        if (_serv->getChannel(args[1])->getLimit() <= _serv->getChannel(args[1])->getClients().size()) {
+            clicli << ERR_CHANNELISFULL(args[1]);
+            return 1;
+        }
+        // if (clicli.isBanned(args[1])) {
+        if (_serv->getChannel(args[1])->isBan(clicli)) { 
+            clicli << ERR_BANNEDFROMCHAN(args[1]);
+            return 1;
+        }
+        // int tmp = 0;
+        // if (_serv->getChannel(args[1])->_mod != 0) {
+        std::cout << "\e[31m[" << _serv->getChannel(args[1])->_mod << "]\e[0m" << std::endl;
+        if ((_serv->getChannel(args[1])->_mod & MOD_CHAN_VIP)) {
             // if (clicli._mod & MOD_USER_VIP) {
                 clicli << ERR_INVITEONLYCHAN(args[1]);
                 return 1;
-            // }
+        }
         // } else if (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY ) {
-        } else if (!(_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY)) {
-            std::cout << (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY) << std::endl;
-            if (args.size() != 3 || !_serv->getChannel(args[1])->getKey().compare(args[2])) {
+        if ((_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY)) {
+            // std::cout << (_serv->getChannel(args[1])->_mod & MOD_CHAN_KEY) << std::endl;
+            if (args.size() != 3 || _serv->getChannel(args[1])->getKey().compare(args[2])) {
                 clicli << ERR_BADCHANNELKEY(args[1]);
-                return 1;
+                return 1; 
+        }
             } else
                 return 0;
-        }
     }
     return 0;
 }
@@ -106,13 +109,8 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         clicli << ERR_NEEDMOREPARAMS(args[0]);
         return 1;
     }
-    // if (!secureArgs(clicli, args))
-        // return 1;
-    // if (args[1].size() < 2 || args[1].at(0) != '#') {
-        // clicli << ERR_NOSUCHCHANNEL(args[1]);
-        // return 1;
-    // }
-
+    if (secureArgs(clicli, args))
+        return 1;
     // New Channel or not !?
 	if (_serv->getChannel(args[1]) == NULL) {
         if (checkChannel(clicli, args[1]))
@@ -133,23 +131,23 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     
     std::cout << "\e[32m--------J'AI PLEIN DE COPINE--------\e[0m" << std::endl;
     
-    Client *Julie = TESTEUSE("Julie");
-    Julie->setCurrchan(args[1]);
-    _serv->joinChannel(args[1], *Julie);
-    std::cout << Julie;
+    // Client *Julie = TESTEUSE("Julie");
+    // Julie->setCurrchan(args[1]);
+    // _serv->joinChannel(args[1], *Julie);
+    // std::cout << Julie;
     
-    Client *Sophie = TESTEUSE("Sophie");
-    Sophie->setCurrchan(args[1]);
-    _serv->joinChannel(args[1], *Sophie);
+    // Client *Sophie = TESTEUSE("Sophie");
+    // Sophie->setCurrchan(args[1]);
+    // _serv->joinChannel(args[1], *Sophie);
     
-    Client *Martine = TESTEUSE("Martine");
-    Martine->setCurrchan(args[1]);
-    _serv->joinChannel(args[1], *Martine);
+    // Client *Martine = TESTEUSE("Martine");
+    // Martine->setCurrchan(args[1]);
+    // _serv->joinChannel(args[1], *Martine);
     
-    Client *Edwige = TESTEUSE("Edwige");
-    Edwige->setCurrchan(args[1]);
-    _serv->getChannel(args[1])->addModo(Edwige->getNickname());
-    _serv->joinChannel(args[1], *Edwige);
+    // Client *Edwige = TESTEUSE("Edwige");
+    // Edwige->setCurrchan(args[1]);
+    // _serv->getChannel(args[1])->addModo(Edwige->getNickname());
+    // _serv->joinChannel(args[1], *Edwige);
     
     std::cout << "\e[32m------------------------------------\e[0m" << std::endl;
     

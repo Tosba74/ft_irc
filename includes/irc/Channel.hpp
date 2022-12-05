@@ -6,12 +6,13 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/26 16:44:20 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/05 18:01:54 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
+#include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_size_t.h"
 #include "client/Client.hpp"
 #include <map>
 #include <vector>
@@ -23,7 +24,7 @@ class Channel {
 		std::string						_name;
 		std::string						_key;
 		bool							_vip;
-		unsigned long					_limit;
+		size_t							_limit;
 		std::map<int, Client&>			_clients;
 		std::map<int, Client&>			_ban;
 		std::vector<std::string>        _modo;
@@ -43,13 +44,13 @@ class Channel {
 		std::map<int, Client&> const&	getBan() const;
 		// std::string						getMode() const;
 		std::string						getKey() const;
-		unsigned int					getLimit() const;
+		size_t							getLimit() const;
 		bool							getVip() const;
 		std::string						getStringUser() const;
 		
 		void							setName(std::string name);
 		void							setKey(std::string key);
-		void							setLimit(unsigned long nb);
+		void							setLimit(size_t nb);
 		void							addClient(Client& client);
 		void							removeClient(Client& client);
 		void							addBan(Client& client);

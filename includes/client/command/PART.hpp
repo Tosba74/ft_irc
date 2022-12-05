@@ -6,12 +6,12 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:24 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/18 01:32:47 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/05 23:31:12 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "client/ACommand/PART.hpp"
+#include "client/ACommand.hpp"
 #include "irc/Channel.hpp"
 
 // Commande: PART <canal>{,< canal >}
@@ -36,7 +36,7 @@ class PART : public ACommand
         PART(PART const& src);
         ~PART();
         
-        virtual int             secureArgs(Client &clicli, std::vector<std::string> args) = 0;
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
         int     execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

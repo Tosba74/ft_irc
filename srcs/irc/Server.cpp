@@ -6,13 +6,14 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/23 16:10:16 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/05 23:29:50 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc/Server.hpp"
 #include "client/command/NICK.hpp"
 #include "client/command/PASS.hpp"
+#include "client/command/PART.hpp"
 #include "client/command/JOIN.hpp"
 #include "client/command/USER.hpp"
 #include "client/command/LIST.hpp"
@@ -35,6 +36,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["NICK"] = new NICK(this);
 	_commandes["PRIVMSG"] = new PRIVMSG(this);
 	_commandes["PASS"] = new PASS(this);
+	_commandes["PART"] = new PART(this);
 	_commandes["JOIN"] = new JOIN(this);
 	// _commandes["MSG"] = new PRIVMSG(this);
 	_commandes["USER"] = new USER(this);
