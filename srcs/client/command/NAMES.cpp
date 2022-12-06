@@ -43,8 +43,8 @@ int NAMES::execute(Client &clicli, std::vector<std::string> args) {
         // }
         for (size_t i = 0; i != chans.size(); ++i) {
             if (!_serv->getChannel(chans[i])) {
-                // clicli << _serv->getChannel(chans[i]).getName();
 	            clicli << RPL_NAMREPLY(_serv->getChannel(chans[i])->getName(), clicli.getNickname(), _serv->getChannel(chans[i])->getStringUser());
+                // clicli << _serv->getChannel(chans[i]).getName();
                 // clicli << _serv->getChannel(chans[i])->getStringUser();
             } else {
                 clicli << ERR_NOSUCHCHANNEL(chans[i]);

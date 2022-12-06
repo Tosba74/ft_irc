@@ -47,6 +47,7 @@ class Channel {
 		size_t							getLimit() const;
 		bool							getVip() const;
 		std::string const 				getStringUser() const;
+		std::string const 				getStringBan() const;
 		
 		void							setName(std::string name);
 		void							setKey(std::string key);
