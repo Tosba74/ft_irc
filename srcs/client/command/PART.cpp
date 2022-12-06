@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/12/06 00:01:39 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/06 00:17:55 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int     PART::secureArgs(Client &clicli, std::vector<std::string> args) {
     return 0;
 }
 
-// clicli << ERR_NOSUCHCHANNEL();
-// clicli << ERR_NOTONCHANNEL();
 int     PART::execute(Client &clicli, std::vector<std::string> args) {
     secureArgs(clicli, args);
     std::vector<std::string> chans= splitArgs(args[1]);

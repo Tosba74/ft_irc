@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/05 23:20:53 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/06 02:03:03 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,13 +151,14 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 	// if (!checkChannel(clicli, args[1]) && !checkMode(clicli, args[2],  "psimtknvlob")) {
 	if ((args[1][0] == '#' || args[1][0] == '&') && !checkMode(clicli, args[2],  "psimtknvlob")) {
 		std::cout << "MODEChannel checkmode:";
-		if (!checkChannel(clicli, args[1]))
+		if (checkChannel(clicli, args[1]))
 			return 1;
 		// Channel	*chan = _serv->getChannel(args[1]);
 		std::string::iterator it = args[2].begin() + 1;
 		
 		for (; it != args[2].end(); it++) {
 			int		idx = indexage(*it, "psimtknvlob");
+			std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
 			std::cout << "indexage = " << idx << std::endl;
 			if (idx < 8) {
 				if (args[2][0] == '+') {
@@ -179,7 +180,6 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 					}
 				}
 			}
-			std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
 			if (idx == 6) {
 				clicli << ERR_KEYSET(args[1]);
 				if (clicli._mod & MOD_USER_OP)
@@ -221,7 +221,9 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 					clicli << RPL_ENDOFBANLIST(args[1]);
 				}
 			}
-			*_serv->getClient(args[3]) << RPL_UMODEIS(args[2]);
+			// *_serv->getClient(args[3]) << RPL_UMODEIS(args[2]);
+			// _serv->getClient(args[3]) << RPL_UMODEIS(args[2]);
+			// << RPL_UMODEIS(args[2]);
 			clicli << RPL_CHANNELMODEIS(args[1], args[2], *it);
 		}
 	} else if (!checkClient(clicli, args[1]) && !checkMode(clicli, args[2], "iswo")) {

@@ -53,19 +53,20 @@ size_t							Channel::getLimit() const { return _limit; }
 
 bool							Channel::getVip() const { return _vip; }
 
-std::string						Channel::getStringUser() const {
+std::string const				Channel::getStringUser() const {
 	std::string ret;
-	if (_clients.size() > 0) {
-		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); ++it) {
-			// if (!(it->second._mod & MOD_USER_INVIS)) {
-				if (isModo(it->second.getNickname()) == false)
-					ret += "@";
-				if (isBan(it->second))
-					ret += "*";
-				ret += it->second.getNickname();
-				ret += " ";
-			// }
+	if (!_clients.empty()) {
+	for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); it++) {
+		if (!(it->second._mod & MOD_USER_INVIS)) {
+			if (isModo(it->second.getNickname()) == false)
+				ret += "@";
+			if (isBan(it->second))
+				ret += "*";
+			ret += it->second.getNickname();
+			ret += " ";
 		}
+	}
+
 	}
 	return ret;
 } 

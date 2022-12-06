@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/05 18:01:54 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/06 01:29:45 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ class Channel {
 		std::string						getKey() const;
 		size_t							getLimit() const;
 		bool							getVip() const;
-		std::string						getStringUser() const;
+		std::string const 				getStringUser() const;
 		
 		void							setName(std::string name);
 		void							setKey(std::string key);
