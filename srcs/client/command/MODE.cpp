@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/06 09:57:00 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/06 11:58:43 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,11 +161,11 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 			std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
 			std::cout << "indexage = " << idx << std::endl;
 			if (idx < 8) {
-				if (args[2][0] == '+') {
+				// if (args[2][0] == '+') {
 					_serv->getChannel(args[1])->_mod ^= (1 << idx);
-				} else if (args[2][0] == '-') {
-					_serv->getChannel(args[1])->_mod |= (1 << idx);
-				}
+				// } else if (args[2][0] == '-') {
+					// _serv->getChannel(args[1])->_mod |= (1 << idx);
+				// }
 
 			}
 			if (idx > 4) {
@@ -234,11 +234,11 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
 		for (; it != args[2].end(); ++it) {
 			int		idx = indexage(*it, "iswo");
-			if (args[2][0] == '+') {
+			// if (args[2][0] == '+') {
 				client->_mod ^= (1 << idx);
-			} else if (args[2][0] == '-') {
-				client->_mod |= (1 << idx);
-			}
+			// } else if (args[2][0] == '-') {
+				// client->_mod |= (1 << idx);
+			// }
 			*client << RPL_UMODEIS(args[2]);
 		}
 		std::cout << "\e[32mGUT!\e[0m(" << client->_mod << ")" << std::endl << "Execute: ";

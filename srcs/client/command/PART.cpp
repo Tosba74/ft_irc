@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/12/06 00:17:55 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/06 11:51:21 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,19 @@ int     PART::secureArgs(Client &clicli, std::vector<std::string> args) {
 }
 
 int     PART::execute(Client &clicli, std::vector<std::string> args) {
-    secureArgs(clicli, args);
+    if (secureArgs(clicli, args))
+        return 1;
     std::vector<std::string> chans= splitArgs(args[1]);
     for (size_t i = 0; i != chans.size(); i++) {
+        std::cout << "\e[33mPART " << chans[i] << "\e[0m" << std::endl;
         if (!_serv->getChannel(chans[i])) {
             clicli << ERR_NOSUCHCHANNEL(chans[i]);
             return 1;
         } else if (_serv->getChannel(chans[i])->getClients().find(clicli.getSock()) == _serv->getChannel(chans[i])->getClients().end()) {
             clicli << ERR_NOTONCHANNEL(chans[i]);
             return 1;  
-        } else { _serv->getChannel(chans[i])->removeClient(clicli);
+        } else {
+            _serv->getChannel(chans[i])->removeClient(clicli);
         }
     }
     return 0;
