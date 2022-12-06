@@ -78,11 +78,10 @@
 // Un RPL_BANLIST différent doit être utilisé pour chaque identification de bannissement.
 // Après avoir listé les identifications de bannissement (s'il y en a),
 // un RPL_ENDOFBANLIST doit être renvoyé.
-
 #define RPL_ENDOFBANLIST(canal) " 368 " + canal + " :End of channel ban list"
+
 // RPL_YOUREOPER est renvoyé à un client qui vient d'émettre un message OPER
 // et a obtenu le statut d'opérateur.
-
 #define RPL_YOUREOPER() " 381 :You are now an IRC operator"
 
 // Utilisé pour indiquer que le pseudonyme passé en paramètre à la commande

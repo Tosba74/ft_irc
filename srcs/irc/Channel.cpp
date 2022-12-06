@@ -53,20 +53,30 @@ size_t							Channel::getLimit() const { return _limit; }
 
 bool							Channel::getVip() const { return _vip; }
 
+std::string const 				Channel::getStringBan() const {
+	std::string ret;
+	if (!getBan().empty()) {
+		for (std::map<int, Client&>::const_iterator it = getBan().begin(); it != getBan().end(); it++) {
+			if (!(it->second._mod & MOD_USER_INVIS))
+				it->second.getNickname();
+		}
+	}
+	return ret;
+}
+
 std::string const				Channel::getStringUser() const {
 	std::string ret;
 	if (!_clients.empty()) {
-	for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); it++) {
-		if (!(it->second._mod & MOD_USER_INVIS)) {
-			if (isModo(it->second.getNickname()) == false)
-				ret += "@";
-			if (isBan(it->second))
-				ret += "*";
-			ret += it->second.getNickname();
-			ret += " ";
+		for (std::map<int, Client&>::const_iterator it = _clients.begin(); it != _clients.end(); it++) {
+			if (!(it->second._mod & MOD_USER_INVIS)) {
+				if (isModo(it->second.getNickname()) == false)
+					ret += "@";
+				if (isBan(it->second))
+					ret += "*";
+				ret += it->second.getNickname();
+				ret += " ";
+			}
 		}
-	}
-
 	}
 	return ret;
 } 
@@ -111,7 +121,7 @@ void							Channel::removeBan(Client& client) {
 
 bool							Channel::isBan(Client& client) const {
 	if (!_ban.empty())
-		for (std::map<int, Client&>::const_iterator it = _ban.begin(); it != _ban.end(); ++it)
+		for (std::map<int, Client&>::const_iterator it = getBan().begin(); it != getBan().end(); ++it)
 			if (it->second == client)
 				return true;
 	return false;

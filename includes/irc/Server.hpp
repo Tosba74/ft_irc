@@ -70,3 +70,4 @@ class Server: public SocketServer
 };
 
 std::ostream&			operator<<(std::ostream& o, Server const& rhs);
+

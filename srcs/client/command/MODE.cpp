@@ -218,7 +218,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 					clicli << RPL_BANLIST(args[1], args[3]);
 				} else if (args[2][0] == '-') {
 					_serv->getChannel(args[1])->removeBan(*_serv->getClient(args[3]));
-					clicli << RPL_ENDOFBANLIST(args[1]);
+					clicli << RPL_ENDOFBANLIST(_serv->getChannel(args[1])->getStringBan());
 				}
 			}
 			// *_serv->getClient(args[3]) << RPL_UMODEIS(args[2]);
