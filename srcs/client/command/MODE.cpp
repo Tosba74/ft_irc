@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/06 02:03:03 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/06 09:57:00 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 
 		std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
 		for (; it != args[2].end(); ++it) {
-			int		idx = indexage(*it, "iswo") + 1;
+			int		idx = indexage(*it, "iswo");
 			if (args[2][0] == '+') {
 				client->_mod ^= (1 << idx);
 			} else if (args[2][0] == '-') {
