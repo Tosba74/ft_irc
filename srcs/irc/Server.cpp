@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/05 23:29:50 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 16:56:30 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@
 #include "client/command/MODE.hpp"
 #include "client/command/NAMES.hpp"
 #include "client/command/OPER.hpp"
+#include "client/command/TOPIC.hpp"
 #include "client/command/AWAY.hpp"
 #include "client/command/PING.hpp"
-#include "client/command/PRIVMSG.hpp"
-// #include "client/command/HELP.hpp"
 #include "client/command/KICK.hpp"
-// #include "client/command/QUIT.hpp"
+#include "client/command/PRIVMSG.hpp"
 #include "client/command/BAN.hpp"
+#include "client/command/ME.hpp"
+// #include "client/command/HELP.hpp"
+// #include "client/command/QUIT.hpp"
 // #include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/i386/types.h"
 #include <unistd.h>
 
@@ -43,6 +45,7 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["MODE"] = new MODE(this);
 	_commandes["LIST"] = new LIST(this);
 	_commandes["NAMES"] = new NAMES(this);
+	_commandes["TOPIC"] = new TOPIC(this);
 	_commandes["OPER"] = new OPER(this);
 	_commandes["AWAY"] = new AWAY(this);
 	_commandes["PING"] = new PING(this);

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:04 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/22 14:07:42 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 16:58:47 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ class Client: public SocketConnection {
         std::string                         _realname;
         std::string                         _pass;
         std::string                         _currChan;
-        std::string                         _awayMsg; 
+        std::string                         _away;
         listChannel                         _channels;
         bool                                _register;
-        bool                                _away;
         
     public:
         int                                 _mod;
@@ -55,9 +54,8 @@ class Client: public SocketConnection {
         void                                setPass(std::string pass);
         void								setCurrchan(std::string name);
         void                                setRegister(bool register);
-        void                                setAwayMsg(std::string msg);
-        void                                setAway(bool away);
-        // void                                setOp(bool op);
+        void                                setAway(std::string msg);
+        
         std::string                         getUsername() const;
         std::string                         getNickname() const;
         std::string                         getHostname() const;
@@ -65,15 +63,12 @@ class Client: public SocketConnection {
         std::string                         getVersion() const;
         std::string                         getRealName() const;
         std::string                         getPass() const;
-        char                                getMode() const;
         std::string							getCurrchan() const;
-        std::string                         getAwayMsg() const;
+        std::string                         getAway() const;
         std::map<std::string ,Channel*>     getChannels() const;
-        bool                                getAway() const;
         bool                                getRegister() const;
+        char                                getMode() const;
         // bool                                getOp() const;
-        
-        void                                readChannels() const;
         
         bool                                isInChannel(std::string name) const;
         bool                                isBanned(std::string name) const;

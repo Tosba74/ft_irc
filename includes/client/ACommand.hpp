@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/25 18:25:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 07:42:26 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define MOD_USER_SNOTIF    0b00000010
 # define MOD_USER_WALLOP    0b00000100
 # define MOD_USER_OP        0b00001000
+# define MOD_AWAY           0b00010000
 
 class Server;
 

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:18 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/06 10:15:37 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 07:42:46 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@ int		        ACommand::checkChannel(Client &clicli, std::string arg) {
 		clicli << ERR_NOSUCHCHANNEL(arg);
 		return 1;
 	}
-	// } else if (!getServ()->getChannel(clicli.getCurrchan()) || arg.compare(clicli.getCurrchan())) {
-		// clicli << ERR_NOTONCHANNEL(arg);
-		// return 1;
-	// }
 	return 0;
 }
 

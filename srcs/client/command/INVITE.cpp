@@ -21,10 +21,31 @@ INVITE::INVITE(INVITE const& src): ACommand(src) {
 }
 
 INVITE::~INVITE() {}
-int     INVITE::secureArgs(Client &clicli, std::vector<std::string> args) {}
-int     INVITE::execute(Client &clicli, std::vector<std::string> args) {}
+
+    // clicli << ERR_NEEDMOREPARAMS(args[0]);
+    // clicli << ERR_NOSUCHNICK(args[2]);
+    // clicli << ERR_NOTONCHANNEL(args[2]);
+
+    // clicli << ERR_USERONCHANNEL();
+
+    // clicli << ERR_CHANOPRIVSNEEDED(args[2]);
+    // clicli << RPL_AWAY(args[1]);
+
+    // clicli << RPL_INVITING();
+    
+int     INVITE::secureArgs(Client &clicli, std::vector<std::string> args) {
+    // args.size == 3
+    // check args[1] == nickName;
+    // check args[2] == Channnel;
+}
+
+int     INVITE::execute(Client &clicli, std::vector<std::string> args) {
+    if (secureArgs(clicli, args))
+        return 1;
+    return 0;
+}
 
 
 void    INVITE::descr(Client& clicli) {
-    clicli << e[31mExemplee[0mn;
+    clicli << "usage: INVITE <pseudonyme> <canal>"
 }

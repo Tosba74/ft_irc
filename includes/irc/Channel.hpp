@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/06 01:29:45 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 15:15:22 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@ class Channel {
 	private:
 		std::string						_name;
 		std::string						_key;
-		bool							_vip;
+		std::string						_sujet;
 		size_t							_limit;
 		std::map<int, Client&>			_clients;
 		std::map<int, Client&>			_ban;
 		std::vector<std::string>        _modo;
 		
-	protected:
-
 	public:
 		int								_mod;
 
@@ -40,6 +38,7 @@ class Channel {
 		~Channel();
 		
 		std::string	const&				getName() const;
+		std::string						getSujet() const;
 		std::map<int, Client&> const&	getClients() const;
 		std::map<int, Client&> const&	getBan() const;
 		// std::string						getMode() const;
@@ -50,6 +49,7 @@ class Channel {
 		std::string const 				getStringBan() const;
 		
 		void							setName(std::string name);
+		void							setSujet(std::string name);
 		void							setKey(std::string key);
 		void							setLimit(size_t nb);
 		void							addClient(Client& client);

@@ -15,7 +15,7 @@
 #include "client/ACommand.hpp"
 
 
-Channel::Channel(std::string name) : _name(name), _key(""), _vip(false), _limit(4096), _mod(0) {}
+Channel::Channel(std::string name) : _name(name), _key(""),  _sujet(""), _limit(4096), _mod(0) {}
 
 Channel::Channel(Channel const &src) {
 	if (this != &src)
@@ -27,7 +27,7 @@ Channel & Channel::operator=(Channel const &rhs) {
 		_name = rhs._name;
 		_key = rhs._key;
 		_mod = rhs._mod;
-		_vip = rhs._vip;
+		_sujet = rhs._sujet;
 		_limit = rhs._limit;
 		for (std::map<int, Client&>::const_iterator it = rhs.getClients().begin(); it != rhs.getClients().end(); ++it)
 			_clients.insert(std::pair<int, Client&>(it->first, it->second));
@@ -41,17 +41,15 @@ Channel::~Channel() {}
 
 std::string	const&				Channel::getName() const { return _name; }
 
+std::string						Channel::getSujet() const { return _sujet; }
+
 std::map<int, Client&> const&	Channel::getClients() const { return _clients; }
 
 std::map<int, Client&> const&	Channel::getBan() const { return _ban; }
 
-// std::string						Channel::getMode() const { return _mode; }
-
 std::string						Channel::getKey() const { return _key; }
 
 size_t							Channel::getLimit() const { return _limit; }
-
-bool							Channel::getVip() const { return _vip; }
 
 std::string const 				Channel::getStringBan() const {
 	std::string ret;
@@ -82,6 +80,8 @@ std::string const				Channel::getStringUser() const {
 } 
 
 void							Channel::setName(std::string name) { _name = name; }
+
+void							Channel::setSujet(std::string sujet) { _sujet = sujet; }
 
 void							Channel::setKey(std::string key) {
 	_key = key;
@@ -130,10 +130,8 @@ bool							Channel::isBan(Client& client) const {
 void							Channel::addModo(std::string newModo)
 {
     for (std::vector<std::string>::iterator it = _modo.begin(); it != _modo.end(); it++)
-    {
-            if ((*it) == newModo)
-                    return;
-    }
+        if ((*it) == newModo)
+            return;
 	std::cout << std::endl << "Debug: push new modo\n\n";
     _modo.push_back(newModo);
 }

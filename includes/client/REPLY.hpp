@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/05 18:35:38 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/08 14:02:08 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,14 @@
 // 255 RPL_LUSERME
 // ":I have <entier> clients and <integer> servers"
 
-#define RPL_AWAY(target) " 301 " + target + " :<message d'absence>"
+// Ces trois réponses sont utilisées avec la commande AWAY (si elle est autorisée).
+// RPL_AWAY est envoyé à tout client qui envoie un PRIVMSG à un client absent. RPL_AWAY
+// n'est envoyé que par le serveur sur lequel le client est connecté. Les réponses RPL_UNAWAY
+// et RPL_NOWAWAY sont envoyées quand un client retire et définit un message AWAY.
+
+#define RPL_AWAY(target, msg) " 301 " + target + " :" + msg
+#define RPL_UNAWAY() " 305 :You are no longer marked as being away"
+#define RPL_NOWAWAY() " 306 :You have been marked as being away"
 
 // Les réponses RPL_LISTSTART, RPL_LIST, RPL_LISTEND marquent le début, les réponses
 // proprement dites, et la fin du traitement d'une commande LIST.
@@ -50,7 +57,12 @@
 // Lors de l'envoi d'un message TOPIC pour déterminer le sujet d'un canal, une de ces deux
 // réponses est envoyée. Si le sujet est défini, RPL_TOPIC est renvoyée, sinon c'est RPL_NOTOPIC.
 #define RPL_NOTOPIC(chan) " 331 " + chan + " :No topic is set"
-#define RPL_TOPIC(chan, sujet, nick) " 332 " + nick + " " + chan + " :" + sujet
+
+#define RPL_TOPIC(nick, chan, sujet) " 332 " + nick + " " + chan + " :" + sujet
+
+// Renvoyé par un serveur pour indiquer que le message INVITE a été enregistré,
+// et est en cours de transmission au client final.
+#define RPL_INVITING(chan, nick) " 341 " + chan + " " + nick
 
 // Réponse du serveur indiquant les détails de sa version. <version> est la version actuelle
 // du programme utilisé (comprenant le numéro de mise à jour) et <debuglevel> est utilisé
@@ -139,6 +151,9 @@
 
 // Renvoyé par le serveur quand un client essaie une commande affectant un canal dont il ne fait pas partie.
 #define  ERR_NOTONCHANNEL(canal) " 442 " + canal + " :You're not on that channel"
+
+// Renvoyé quand un client essaie d'inviter un utilisateur sur un canal où il est déjà.
+#define ERR_USERONCHANNEL(nick, chan) " 443 " + nick + " " + chan + " :is already on channel"
 
 // Retourné en réponse à une commande USERS si la commande est désactivée.
 // Tout serveur qui ne gère pas les USERS doit retourner cette valeur.

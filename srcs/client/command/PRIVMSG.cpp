@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/04 00:31:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/08 16:02:08 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 		std::vector<std::string> tmp = splitArgs(args[1]);
 		std::vector<std::string>::iterator it = tmp.begin();
 		for (; it != tmp.end(); ++it) {
-			if (!_serv->getClient(*it)) {
-				clicli << ERR_NOSUCHNICK(args[1]);
+			if (_serv->getClient(*it)->_mod & MOD_AWAY) {
+				clicli << RPL_AWAY(_serv->getClient(*it)->getNickname(), _serv->getClient(*it)->getAway());
 				return 1;
-			} else if (_serv->getClient(*it)->getAway()) {
-				clicli << RPL_AWAY(*it);
+			} else if (!_serv->getClient(*it)) {
+				clicli << ERR_NOSUCHNICK(args[1]);
 				return 1;
 			}
 		}
@@ -85,7 +85,8 @@ int		PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
 	if (args[1][0] == '&' || args[1][0] == '#') {
 		*_serv->getChannel(args[1]) << msg;
 	} else {
-		_serv->getClient(args[1])->simpleMessage(msg);
+		// _serv->getClient(args[1])->simpleMessage(msg);
+		*_serv->getClient(args[1]) << (msg);
 		// _serv->getClient(args[1]) << (":" + clicli.getNickname() + " PRIVMSG " + args[1] + " :" + msg);
 	}
 	return 0;

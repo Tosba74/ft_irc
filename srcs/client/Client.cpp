@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/23 17:31:03 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 17:00:26 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 Client::Client(int sock, sockaddr_in &addr) : SocketConnection(sock, addr), _nickname(""), _username(""),
 											_hostname(""), _servername("ircserv"), _version("3.4.1"), _realname(""),
-											_pass(""), _currChan(""), _awayMsg(""), _register(false), _away(false), _mod(0) {}
+											_pass(""), _currChan(""), _away(""), _register(false), _mod(0) {}
 
 Client::Client(Client const &rhs) : SocketConnection(rhs), _nickname(rhs._nickname), _username(rhs._username),
 									_hostname(rhs._hostname), _servername(rhs._servername), _version(rhs._version),
-									_realname(rhs._realname), _pass(rhs._pass), _currChan(rhs._currChan), _awayMsg(rhs._awayMsg),
-									_register(rhs._register), _away(rhs._away), _mod(rhs._mod) {
+									_realname(rhs._realname), _pass(rhs._pass), _currChan(rhs._currChan),
+									_away(rhs._away), _register(rhs._register), _mod(rhs._mod) {
 	*this = rhs;
 	_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
 }
@@ -41,7 +41,7 @@ Client								&Client::operator=(Client const &rhs) {
     	_realname = rhs.getRealName();
     	_pass = rhs.getPass();
     	_mod = rhs._mod;
-    	_awayMsg =  rhs.getAwayMsg(); 
+    	_away = rhs.getAway(); 
     	_register = rhs.getRegister();
 		_channels.insert(rhs.getChannels().begin(), rhs.getChannels().end());
 	}
@@ -55,14 +55,12 @@ void                                Client::setHostname(std::string hostname) { 
 void                                Client::setNameserver(std::string nameserver) { _servername = nameserver; }
 void                                Client::setVersion(std::string version) { _version = version; };
 void                                Client::setRealName(std::string realname) { _realname = realname; }
-void                                Client::setPass(std::string pass) { _pass= pass; }
+void                                Client::setPass(std::string pass) { _pass = pass; }
 void								Client::setCurrchan(std::string name) { _currChan = name; }
-void                                Client::setAway(bool away) { _away = away;}
-void                                Client::setAwayMsg(std::string msg) { _awayMsg = msg;}
+void                                Client::setAway(std::string msg) { _away = msg;}
 // void                                Client::setOp(bool op) { _op = op; };
 bool 							  	Client::getRegister() const { return (_register); }
-bool                                Client::getAway() const {return _away; }
-std::string                         Client::getAwayMsg() const {return _awayMsg; }
+std::string                         Client::getAway() const {return _away; }
 std::string							Client::getUsername() const { return _username; }
 std::string							Client::getNickname() const { return _nickname; }
 std::string							Client::getHostname() const { return _hostname; }
@@ -73,13 +71,6 @@ std::string							Client::getPass() const { return _pass; }
 std::string							Client::getCurrchan() const { return _currChan; }
 char								Client::getMode() const { return _mod; }
 std::map<std::string ,Channel*>     Client::getChannels() const { return _channels; }
-// bool                                Client::getOp() const { return _op; }
-
-void                                Client::readChannels() const {
-	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it) {
-		std::cout << it->first << std::endl;
-	}
-}
 
 bool								Client::isInChannel(std::string name) const {
 	if (!_currChan.compare(name)) 
