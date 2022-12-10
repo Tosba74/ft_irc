@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/12/05 23:14:50 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/10 13:57:44 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,6 @@ Client* JOIN::TESTEUSE(std::string name) {
 }
 
 int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
-    // Check Ban ERR #474
-    // if (clicli.isBanned(args[1])) {
-        // clicli << ERR_BANNEDFROMCHAN(args[1]);
-        // return 1;
-        // for (std::map<int, Client&>::const_iterator it = _serv->getChannel(args[1])->getBan().begin(); it != _serv->getChannel(args[1])->getBan().end(); it++) {
-            // if (it->second == clicli) {
-            //    clicli << ERR_BANNEDFROMCHAN(args[1]);
-            //    return 1;
-            // }
-        // }
-    // }
     std::cout << "\e[34mSECUREARGS\e[0m" << std::endl;
    if (checkChannel(clicli, args[1])) {
         return 1;
@@ -78,16 +67,11 @@ int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
             clicli << ERR_CHANNELISFULL(args[1]);
             return 1;
         }
-        // if (clicli.isBanned(args[1])) {
-        if (_serv->getChannel(args[1])->isBan(clicli)) { 
+        if (_serv->getChannel(args[1])->isBan(clicli)) { // Check Ban ERR #474
             clicli << ERR_BANNEDFROMCHAN(args[1]);
             return 1;
         }
-        // int tmp = 0;
-        // if (_serv->getChannel(args[1])->_mod != 0) {
-        std::cout << "\e[31m[" << _serv->getChannel(args[1])->_mod << "]\e[0m" << std::endl;
-        if ((_serv->getChannel(args[1])->_mod & MOD_CHAN_VIP)) {
-            // if (clicli._mod & MOD_USER_VIP) {
+        if ((_serv->getChannel(args[1])->_mod & MOD_CHAN_VIP) && !_serv->getChannel(args[1])->isVip(clicli)) {
                 clicli << ERR_INVITEONLYCHAN(args[1]);
                 return 1;
         }
@@ -116,7 +100,7 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
         if (checkChannel(clicli, args[1]))
             return 1;
 	    _serv->joinChannel(args[1], clicli);
-		_serv->getChannel(args[1])->addModo(clicli.getNickname());
+		_serv->getChannel(args[1])->addModo(clicli);
         // si new chan, passer le createur modo
         if (args.size() == 3)
             _serv->getChannel(args[1])->setKey(args[2]);
@@ -154,7 +138,12 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
 	std::cout << *_serv->getChannel(args[1]);
 
 	*_serv->getChannel(args[1]) << RPL_JOIN(clicli.getNickname(), args[1]);
-    clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
+    // clicli << RPL_JOIN(clicli.getNickname(), args[1]);
+    if (!_serv->getChannel(args[1])->getSujet().compare(""))
+        clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
+    else
+        clicli << RPL_TOPIC(args[1], _serv->getChannel(args[1])->getSujet(), clicli.getNickname());
+        // clicli << RPL_NOTOPIC(args[1]);
 	clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;

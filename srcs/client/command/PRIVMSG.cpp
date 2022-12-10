@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/08 16:02:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/08 17:50:401 bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,16 @@ PRIVMSG::~PRIVMSG() {}
 int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 	if (args.size() < 3) {
 		if (args.size() < 2)
-			clicli << ERR_NOTEXTTOSEND();
-		else
 			clicli << ERR_NEEDMOREPARAMS(args[0]); 
+		else
+			clicli << ERR_NORECIPIENT(args[0]);
 		return 1;
 	}
 	if (args[1][0] == '&' || args[1][0] == '#') {
 		if (!splitArgs(args[1]).empty()) {
-			clicli << ERR_NORECIPIENT(args[0]);
+			clicli << ERR_NOSUCHNICK(args[1]);
 			return 1;
+			
 		}
 		std::vector<std::string> tmp = splitArgs(args[1]);
 		std::vector<std::string>::iterator it = tmp.begin();
@@ -82,11 +83,22 @@ int		PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
 			msg += " " + args[i];
 		}
 	}
+	if (msg[0] != ':') {
+		clicli << ERR_NOTEXTTOSEND();
+		return 1;
+	}
+	// msg.erase(0);
 	if (args[1][0] == '&' || args[1][0] == '#') {
-		*_serv->getChannel(args[1]) << msg;
+		std::vector<std::string> tmp = splitArgs(args[1]);
+		std::vector<std::string>::iterator it = tmp.begin();
+		for (; it != tmp.end(); ++it)
+			*_serv->getChannel(*it) << msg;
 	} else {
+		std::vector<std::string> tmp = splitArgs(args[1]);
+		std::vector<std::string>::iterator it = tmp.begin();
+		for (; it != tmp.end(); ++it)
+			*_serv->getClient(args[1]) << (msg);
 		// _serv->getClient(args[1])->simpleMessage(msg);
-		*_serv->getClient(args[1]) << (msg);
 		// _serv->getClient(args[1]) << (":" + clicli.getNickname() + " PRIVMSG " + args[1] + " :" + msg);
 	}
 	return 0;

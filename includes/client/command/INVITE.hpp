@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #pragma once
-#include "client/ACommand/INVITE.hpp"
+#include "client/ACommand.hpp"
 #include "irc/Channel.hpp"
 
 // Commande: INVITE <pseudonyme> <canal>
@@ -45,7 +45,7 @@ class INVITE : public ACommand
         INVITE(INVITE const& src);
         ~INVITE();
 
-        virtual int             secureArgs(Client &clicli, std::vector<std::string> args) = 0;
+        int     secureArgs(Client &clicli, std::vector<std::string> args);
         int     execute(Client &clicli, std::vector<std::string> args);
 		void	descr(Client& clicli);
 };

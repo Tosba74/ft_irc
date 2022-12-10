@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:29:04 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/21 13:39:02 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 20:52:13 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		KICK::execute(Client &clicli, std::vector<std::string> args) {
 		clicli << ERR_NEEDMOREPARAMS(args[0]);
 		return 1;
 	}
-	if (_serv->getChannel(args[1])->isModo(clicli.getNickname()))
+	if (_serv->getChannel(args[1])->isModo(clicli))
 	{
 		clicli << ERR_CHANOPRIVSNEEDED(args[1]);
 		return 1;

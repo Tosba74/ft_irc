@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/06 11:58:43 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/10 12:55:53 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,10 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		std::cout << "MODEChannel checkmode:";
 		if (checkChannel(clicli, args[1]))
 			return 1;
-		// Channel	*chan = _serv->getChannel(args[1]);
+		if (!_serv->getChannel(args[1])) {
+			clicli << ERR_NOSUCHCHANNEL(args[1]);
+			return 1;
+		}
 		std::string::iterator it = args[2].begin() + 1;
 		
 		for (; it != args[2].end(); it++) {
@@ -161,11 +164,15 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 			std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
 			std::cout << "indexage = " << idx << std::endl;
 			if (idx < 8) {
-				// if (args[2][0] == '+') {
+				if (args[2][0] == '+') {
+					if (_serv->getChannel(args[1])->_mod & (1 << idx))
+						return 0;
 					_serv->getChannel(args[1])->_mod ^= (1 << idx);
-				// } else if (args[2][0] == '-') {
-					// _serv->getChannel(args[1])->_mod |= (1 << idx);
-				// }
+				} else if (args[2][0] == '-') {
+					if (!(_serv->getChannel(args[1])->_mod & (1 << idx)))
+						return 0;
+					_serv->getChannel(args[1])->_mod ^= (1 << idx);
+				}
 
 			}
 			if (idx > 4) {
@@ -180,7 +187,16 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 					}
 				}
 			}
-			if (idx == 6) {
+			if (idx == 2) { // -i
+				if (args[2][0] == '+') {
+					if (_serv->getChannel(args[1])->getVip().size() == 0) {
+						for (std::map<int, Client&>::const_iterator it = _serv->getChannel(args[1])->getClients().begin(); it != _serv->getChannel(args[1])->getClients().end(); ++it)
+							_serv->getChannel(args[1])->addVip(it->second);
+					}
+					_serv->getChannel(args[1])->addModo(clicli);
+					_serv->getChannel(args[1])->addVip(clicli);
+				}
+			} else if (idx == 6) { // -k
 				clicli << ERR_KEYSET(args[1]);
 				if (clicli._mod & MOD_USER_OP)
 					clicli << ERR_CHANOPRIVSNEEDED(args[1]);
@@ -192,22 +208,34 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 					_serv->getChannel(args[1])->setKey("");
 				}
 				return 1;
-			} else if (idx == 8) {
+			} else if (idx == 8) { // -l
 				if (std::strtoul(args[3].c_str(), NULL, 10))
 					_serv->getChannel(args[1])->setLimit(std::strtoul(args[3].c_str(), NULL, 10));
 				_serv->getChannel(args[1])->setLimit(std::strtoul(args[3].c_str(), NULL, 10));
-			} else if (idx == 9) {
+			// } else if (idx == 9) {
+				// if (args[2][0] == '+') {
+					// if (_serv->getClient(args[3])->isInChannel(args[1]) == false) {
+						// clicli << ERR_NOTONCHANNEL(args[1]);
+						// return 1;
+					// }
+					// _serv->getChannel(args[1])->addModo(args[1]);
+				// } else if (args[2][0] == '-') {
+					// if (_serv->getChannel(args[1])->isModo(args[3]))
+						// _serv->getChannel(args[1])->removeModo(args[3]);
+				// }
+			} else if (idx == 9) { // -o
 				if (args[2][0] == '+') {
 					if (_serv->getClient(args[3])->isInChannel(args[1]) == false) {
 						clicli << ERR_NOTONCHANNEL(args[1]);
 						return 1;
 					}
-					_serv->getChannel(args[1])->addModo(args[1]);
+					_serv->getChannel(args[1])->addModo(*_serv->getClient(args[3]));
+					*_serv->getClient(args[3]) << RPL_YOUREOPER();
 				} else if (args[2][0] == '-') {
-					if (_serv->getChannel(args[1])->isModo(args[3]))
-						_serv->getChannel(args[1])->removeModo(args[3]);
+					if (_serv->getChannel(args[1])->isModo(*_serv->getClient(args[3])))
+						_serv->getChannel(args[1])->removeModo(*_serv->getClient(args[3]));
 				}
-			} else if (idx == 10) {
+			} else if (idx == 10) { // -b
 				if (args[2][0] == '+') {
 					if (clicli.isInChannel(args[1]) == false) {
 						clicli << ERR_NOTONCHANNEL(args[1]);

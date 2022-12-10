@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/08 14:02:08 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/10 13:51:09 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #define RPL_MYINFO(nick, serv, version) " 004 " + nick + " " + serv + " " + version + " none " + "none."
 
 // #define RPL_JOIN(nick, serv, channel) ":0 " + nick + "!" + nick + "@" + serv + " JOIN #" + channel
-#define RPL_JOIN(nick, chan) ":" + nick + " JOIN :" + chan
+#define RPL_JOIN(nick, chan) " :" + nick + " JOIN :" + chan
 
 // Pour répondre à une requête au sujet du mode du client, RPL_UMODEIS est renvoyé.
 #define RPL_UMODEIS(mode) " 221 " + mode

@@ -31,7 +31,7 @@ int             TOPIC::secureArgs(Client &clicli, std::vector<std::string> args)
         clicli << ERR_NOTONCHANNEL(args[1]);
         return 1;
     }
-    if (_serv->getChannel(args[1])->isModo(clicli.getNickname())) {
+    if (_serv->getChannel(args[1])->isModo(clicli)) {
         clicli << ERR_CHANOPRIVSNEEDED(args[1]);
         return 1;
     }

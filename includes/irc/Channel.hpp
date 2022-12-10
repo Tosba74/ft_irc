@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/07 15:15:22 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 20:40:54 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ class Channel {
 		std::string						_sujet;
 		size_t							_limit;
 		std::map<int, Client&>			_clients;
+		std::map<int, Client&>			_modo;
 		std::map<int, Client&>			_ban;
-		std::vector<std::string>        _modo;
+		std::map<int, Client&>			_vip;
+		// std::vector<std::string>        _modo;
 		
 	public:
 		int								_mod;
@@ -40,11 +42,12 @@ class Channel {
 		std::string	const&				getName() const;
 		std::string						getSujet() const;
 		std::map<int, Client&> const&	getClients() const;
+		std::map<int, Client&> const&	getModo() const;
 		std::map<int, Client&> const&	getBan() const;
+		std::map<int, Client&> const&	getVip() const;
 		// std::string						getMode() const;
 		std::string						getKey() const;
 		size_t							getLimit() const;
-		bool							getVip() const;
 		std::string const 				getStringUser() const;
 		std::string const 				getStringBan() const;
 		
@@ -55,11 +58,17 @@ class Channel {
 		void							addClient(Client& client);
 		void							removeClient(Client& client);
 		void							addBan(Client& client);
-		void							removeBan(Client& client);
 		bool							isBan(Client& client) const;
-        void							addModo(std::string newModo);
-		bool							isModo(std::string const& queried) const;
-		void							removeModo(std::string modo);
+		void							removeBan(Client& client);
+		void							addModo(Client& client);
+		bool							isModo(Client& client) const;
+		void							removeModo(Client& client);
+        // void							addModo(std::string modo);
+		// bool							isModo(std::string const& name) const;
+		// void							removeModo(std::string modo);
+		void							addVip(Client& client);
+		bool							isVip(Client& client) const;
+		void							removeVip(Client& client);
 		void							msgToUsers(std::string msg);
 // Channel&						operator<<(Channel& chan, std::string const& msg);
 		Channel &						operator<<(std::string const& reply);
