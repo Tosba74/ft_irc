@@ -37,7 +37,8 @@ int     NAMES::execute(Client &clicli, std::vector<std::string> args) {
             }
     } else {
         std::vector<std::string> chans = splitArgs(args[1]);
-        if (!chans.empty()) { 
+        std::cout << "Ret splitArgs - case[0] " << chans[0] <<std::endl;
+        if (chans.empty()) { 
         	clicli << ERR_NEEDMOREPARAMS(args[0]); // this->decr();
             return 1;
         }

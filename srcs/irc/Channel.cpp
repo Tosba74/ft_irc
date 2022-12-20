@@ -196,10 +196,11 @@ bool							Channel::isVip(Client& client) const {
 	return false;
 }
 
-void							Channel::msgToUsers(std::string msg) {
+void							Channel::msgToUsers(Client& client, std::string msg) {
 	std::map<int, Client&>	clients = getClients();
 	 for (std::map<int, Client&>::iterator it = clients.begin(); it != clients.end(); ++it) {
-		 it->second.simpleMessage(msg);
+		if (it->second.getNickname() != client.getNickname())
+			it->second.simpleMessage(msg);
 	}
 	 return;
 }

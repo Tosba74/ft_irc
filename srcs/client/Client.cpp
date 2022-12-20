@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 22:40:56 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/07 17:00:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/19 17:54:28 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,13 @@ char								Client::getMode() const { return _mod; }
 std::map<std::string ,Channel*>     Client::getChannels() const { return _channels; }
 
 bool								Client::isInChannel(std::string name) const {
-	if (!_currChan.compare(name)) 
+	for (std::map<std::string ,Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
+		if (!it->first.compare(name))
 			return true;
 	return false;
+	// if (!_currChan.compare(name)) 
+			// return true;
+	// return false;
 }
 
 // typedef std::map<std::string, Channel*>     listChannel;
@@ -105,9 +109,9 @@ void Client::updateRegister() {
 
 Client &Client::operator<<(std::string const &reply)
 {
-	std::string		msg_send = ":" + getHostname() + " " + reply + "\r\n";
-	std::string		msg = getHostname() + reply + "\n";
-	std::cout << "\e[33m" << "Reply : " << "\e[0m" << msg;
+	std::string		msg_send = ":" + getHostname() + reply + "\r\n";
+	// std::string		msg = getHostname() + reply + "\r\n";
+	std::cout << "\e[33m" << "Reply for " << getNickname() << "\e[0m" << msg_send;
 	SocketConnection::operator<<(msg_send);
 	flush();
 	// std::string		msg = reply + "\n";
@@ -120,7 +124,7 @@ Client &Client::operator<<(std::string const &reply)
 Client &Client::simpleMessage(std::string const& reply)
 {
 	// tentative bypass le ": getHostName()"
-	std::cout << "\e[33m" << "Reply : " << "\e[0m" << reply << std::endl;
+	std::cout << "\e[33m" << "Reply for " << getNickname() << "\e[0m" << reply << std::endl;
 	std::string msg = reply + "\r\n";
 	SocketConnection::operator<<(msg);
 	return *this;

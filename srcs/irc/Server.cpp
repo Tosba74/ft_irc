@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:44:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/09 15:37:10 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/14 20:54:15 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@
 #include "client/command/LIST.hpp"
 #include "client/command/AWAY.hpp"
 #include "client/command/KICK.hpp"
+#include "client/command/KILL.hpp"
 #include "client/command/ME.hpp"
 #include "client/command/BAN.hpp"
 #include "client/command/NAMES.hpp"
 #include "client/command/TOPIC.hpp"
 #include "client/command/INVITE.hpp"
+#include "client/command/NOTICE.hpp"
 #include "client/command/PRIVMSG.hpp"
 // #include "client/command/HELP.hpp"
 // #include "client/command/QUIT.hpp"
@@ -47,11 +49,13 @@ Server::Server(int port, std::string password) : SocketServer("0.0.0.0", port), 
 	_commandes["LIST"] = new LIST(this);
 	_commandes["AWAY"] = new AWAY(this);
 	_commandes["KICK"] = new KICK(this);
+	_commandes["KILL"] = new KILL(this);
 	_commandes["ME"] = new ME(this);
 	_commandes["BAN"] = new BAN(this);
 	_commandes["NAMES"] = new NAMES(this);
 	_commandes["TOPIC"] = new TOPIC(this);
 	_commandes["INVITE"] = new INVITE(this);
+	_commandes["NOTICE"] = new NOTICE(this);
 	_commandes["PRIVMSG"] = new PRIVMSG(this);
 //	_commandes["HELP"] = new HELP(this);
 //	_commandes["QUIT"] = new QUIT(this);
@@ -145,8 +149,7 @@ void			Server::parseCommand(std::string const &message, Client& client) {
 			command->descr(client);
 		else
 			command->execute(client, str);
-	}
-	else
+	} else if (!message.compare(""))
 		client << ERR_UNKNOWNCOMMAND(str[0]);
 }
 

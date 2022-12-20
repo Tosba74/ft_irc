@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:32:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/09 20:40:54 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/16 14:29:24 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ class Channel {
 		void							addVip(Client& client);
 		bool							isVip(Client& client) const;
 		void							removeVip(Client& client);
-		void							msgToUsers(std::string msg);
+		void							msgToUsers(Client& client, std::string msg);
 // Channel&						operator<<(Channel& chan, std::string const& msg);
 		Channel &						operator<<(std::string const& reply);
 };

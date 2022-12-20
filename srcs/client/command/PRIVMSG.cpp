@@ -41,14 +41,10 @@ int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 		return 1;
 	}
 	if (args[1][0] == '&' || args[1][0] == '#') {
-		if (!splitArgs(args[1]).empty()) {
-			clicli << ERR_NOSUCHNICK(args[1]);
-			return 1;
-			
-		}
 		std::vector<std::string> tmp = splitArgs(args[1]);
 		std::vector<std::string>::iterator it = tmp.begin();
 		for (; it != tmp.end(); ++it) {
+			std::cout << "ret Split Args: " << *it << std::endl;
 			if (!_serv->getChannel(*it)) {
 				clicli << ERR_NOSUCHNICK(args[1]);
 				return 1;
@@ -71,33 +67,47 @@ int     PRIVMSG::secureArgs(Client &clicli, std::vector<std::string> args) {
 			}
 		}
 	}
+	if (args[2][0] != ':') {
+		clicli << ERR_NOTEXTTOSEND();
+		return 1;
+	}
 	return 0;
 }
+
+// std::string		PRIVMSG::makemsg(Client &)
 
 int		PRIVMSG::execute(Client &clicli, std::vector<std::string> args) {
 	if (secureArgs(clicli, args))
 		return 1;
-	std::string msg = args[2];
-	if (args.size() > 2) {
-		for (size_t i = 2; i < args.size(); ++i) {
-			msg += " " + args[i];
-		}
-	}
-	if (msg[0] != ':') {
-		clicli << ERR_NOTEXTTOSEND();
-		return 1;
-	}
-	// msg.erase(0);
+	// std::string		msg = ":" + clicli.getHostname();
+	// for (size_t i = 0; i < args.size(); ++i) {
+		// msg += " " + args[i];
+	// }
 	if (args[1][0] == '&' || args[1][0] == '#') {
 		std::vector<std::string> tmp = splitArgs(args[1]);
 		std::vector<std::string>::iterator it = tmp.begin();
-		for (; it != tmp.end(); ++it)
-			*_serv->getChannel(*it) << msg;
+		for (; it != tmp.end(); ++it){
+			std::string		msg = ":" + clicli.getHostname() + " " + args[0] + " " + *it;
+			for (size_t i = 2; i < args.size(); ++i) {
+				msg += " " + args[i];
+				_serv->getChannel(*it)->msgToUsers(clicli, msg);
+	std::cout << "\e[32m" << msg << "\e[0m" << std::endl;
+			}// *_serv->getChannel(*it) << msg;
+		}
 	} else {
 		std::vector<std::string> tmp = splitArgs(args[1]);
 		std::vector<std::string>::iterator it = tmp.begin();
+	std::string		msg = ":" + clicli.getHostname();
+	for (size_t i = 0; i < args.size(); ++i) {
+		msg += " " + args[i];
+	}
+	std::cout << "\e[32m" << msg << "\e[0m" << std::endl;
+
 		for (; it != tmp.end(); ++it)
-			*_serv->getClient(args[1]) << (msg);
+			if (!it->compare(clicli.getNickname()))
+				*_serv->getClient(*it) << msg;
+				// _serv->getClient(*it)->simpleMessage(msg);
+			// *_serv->getClient(args[1]) << (msg);
 		// _serv->getClient(args[1])->simpleMessage(msg);
 		// _serv->getClient(args[1]) << (":" + clicli.getNickname() + " PRIVMSG " + args[1] + " :" + msg);
 	}

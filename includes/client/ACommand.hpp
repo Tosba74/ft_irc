@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:29 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/07 07:42:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/14 16:14:38 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <string>
 #include <vector>
 #include "client/Client.hpp"
+#include "irc/Server.hpp"
+#include "irc/Channel.hpp"
 
 # define CHAN_PER_USER      10
 

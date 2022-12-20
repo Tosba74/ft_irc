@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 23:33:27 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 01:57:26 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/14 16:41:42 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		USER::execute(Client &clicli, std::vector<std::string> args) {
 	} else if (_serv->getPassword().compare(clicli.getPass())) {
 		clicli << ERR_ALREADYREGISTRED();
 	} else {
+		clicli.setNickname(args[1]);
 		clicli.setUsername(args[1]);
 		clicli.setHostname(args[2]);
 		clicli.setNameserver(args[3]);

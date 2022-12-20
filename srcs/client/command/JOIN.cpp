@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:51 by emenella          #+#    #+#             */
-/*   Updated: 2022/12/10 13:57:44 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/19 17:45:25 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ Client* JOIN::TESTEUSE(std::string name) {
 }
 
 int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
-    std::cout << "\e[34mSECUREARGS\e[0m" << std::endl;
-   if (checkChannel(clicli, args[1])) {
+    if (args.size() < 2 || args.size() > 3) {
+        clicli << ERR_NEEDMOREPARAMS(args[0]);
+        return 1;
+    }
+    if (checkChannel(clicli, args[1])) {
         return 1;
     }
     // Check How many channels have a client & Channel-s limits ERR #405 #471
@@ -89,7 +92,7 @@ int JOIN::secureArgs(Client &clicli, std::vector<std::string> args) {
 }
     
 int JOIN::execute(Client &clicli, std::vector<std::string> args) {
-    if (args.size() < 2 || args.size() > 3) {
+    if (args.size() < 2) {
         clicli << ERR_NEEDMOREPARAMS(args[0]);
         return 1;
     }
@@ -137,13 +140,14 @@ int JOIN::execute(Client &clicli, std::vector<std::string> args) {
     
 	std::cout << *_serv->getChannel(args[1]);
 
-	*_serv->getChannel(args[1]) << RPL_JOIN(clicli.getNickname(), args[1]);
-    // clicli << RPL_JOIN(clicli.getNickname(), args[1]);
+	// *_serv->getChannel(args[1]) << RPL_JOIN(clicli.getNickname(), args[1]);
+	_serv->getChannel(args[1])->msgToUsers(clicli, RPL_JOIN(clicli.getNickname(), args[1]));
+	clicli.simpleMessage(RPL_JOIN(clicli.getNickname(), args[1]));
     if (!_serv->getChannel(args[1])->getSujet().compare(""))
         clicli << RPL_TOPIC(args[1], "Welcome", clicli.getNickname());
+        // clicli << RPL_NOTOPIC(args[1]);
     else
         clicli << RPL_TOPIC(args[1], _serv->getChannel(args[1])->getSujet(), clicli.getNickname());
-        // clicli << RPL_NOTOPIC(args[1]);
 	clicli << RPL_NAMREPLY(args[1], clicli.getNickname(), _serv->getChannel(args[1])->getStringUser());
 	clicli << RPL_ENDOFNAMES(args[1], clicli.getNickname());
     return 0;

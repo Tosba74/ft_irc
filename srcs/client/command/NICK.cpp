@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 15:07:06 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 01:53:54 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/14 16:23:00 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,29 @@ NICK::~NICK() {}
 // clicli << ERR_NICKCOLLISION(srgs[0]);
 	
 int     NICK::secureArgs(Client &clicli, std::vector<std::string> args) {
-	(void)clicli;
-	(void)args;
+	if (args.size() < 2) {
+		clicli << ERR_NONICKNAMEGIVEN();
+		return 1;
+	}
+	if ((args[1].size() < 2 || args[1].size() > 9) || (args[1][0] == '&' || args[1][0] == '#')) {
+		clicli << ERR_ERRONEUSNICKNAME(args[1]);
+		return 1;
+	}
+	if (!args[1].compare(clicli.getNickname())) {
+		clicli << ERR_NICKNAMEINUSE(args[1]);
+		return 1;
+	}
+	if (_serv->getClient(args[1]) != NULL) {
+		clicli << ERR_NICKCOLLISION(args[1]);
+		return 1;
+	}
 	return 0;
 }
 
 int NICK::execute(Client &clicli, std::vector<std::string> args) {
-	if (args.size() < 2) {
-		clicli << "Usage: NICK <nickname>\n";
-		return 0;
-	}
-	std::string nick = args[1];
-	clicli.setNickname(nick);
-	// jai mis sa pour pas init au debut des connection
-	// if (clicli.getUsername().empty())
-		// clicli.setUsername(nick);
-	// if (clicli.getRealName().empty())
-		// clicli.setRealName(nick);
+	if (secureArgs(clicli, args))
+		return 1;
+	clicli.setNickname(args[1]);
 	return 0;
 }
 

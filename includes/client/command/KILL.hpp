@@ -6,12 +6,12 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:27:24 by emenella          #+#    #+#             */
-/*   Updated: 2022/11/18 01:28:17 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/11 20:29:01 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#include "client/ACommand/KILL.hpp"
+#include "client/ACommand.hpp"
 #include "irc/Channel.hpp"
 
 // Commande: KILL <pseudonyme> <commentaire>
@@ -62,7 +62,7 @@ class KILL : public ACommand
       KILL(Server *serv);
       KILL(KILL const& src);
       ~KILL();
-      virtual int   secureArgs(Client &clicli, std::vector<std::string> args) = 0;
+      int           secureArgs(Client &clicli, std::vector<std::string> args);
       int           execute(Client &clicli, std::vector<std::string> args);
 		  void          descr(Client& clicli);
 };

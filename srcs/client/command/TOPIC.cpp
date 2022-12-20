@@ -27,11 +27,11 @@ int             TOPIC::secureArgs(Client &clicli, std::vector<std::string> args)
         clicli << ERR_NEEDMOREPARAMS(args[0]);
         return 1;
     }
-    if (_serv->getChannel(args[1])->getClients().find(clicli.getSock()) == _serv->getChannel(args[1])->getClients().end()) {
+    if (!_serv->getChannel(args[1]) || _serv->getChannel(args[1])->getClients().find(clicli.getSock()) == _serv->getChannel(args[1])->getClients().end()) {
         clicli << ERR_NOTONCHANNEL(args[1]);
         return 1;
     }
-    if (_serv->getChannel(args[1])->isModo(clicli)) {
+    if (_serv->getChannel(args[1])->isModo(clicli) && args.size() > 2) {
         clicli << ERR_CHANOPRIVSNEEDED(args[1]);
         return 1;
     }

@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 17:28:33 by bmangin           #+#    #+#             */
-/*   Updated: 2022/11/15 00:34:41 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/10 22:54:56 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,28 @@
 
 #include "client/ACommand.hpp"
 
-// Commande: KICK [message]
-// 
-// Avec le message KICK, les clients peuvent définir une chaîne de réponse
-// automatique pour toute commande PRIVMSG qui ledur est destinée (et non pas
-// à un canal sur lequel ils sont).
-// La réponse est envoyée directement par le serveur au client envoyant une commande PRIVMSG.
-// Le seul serveur à répondre est celui sur lequel le client émetteur est situé.
-// 
-// Le message KICK est utilisé soit avec un paramètre (pour définir un message KICK)
-// ou sans (pour retirer le message KICK).
+// Commande: KICK <canal> <utilisateur> [<commentaire>]
+
+// La commande KICK est utilisée pour retirer par la force un utilisateur
+// d'un canal(PART forcé).
+
+// Seul un opérateur de canal peut kicker un autre utilisateur hors d'un canal.
+// Tout serveur qui reçoit un message KICK vérifie si le message est valide
+// (c'est-à-dire si l'expéditeur est bien un opérateur du canal) avant d'ôter
+// la victime du canal.
 // 
 // Réponses numériques :
-        //    RPL_UNKICK
-		//    RPL_NOWKICK
+        //	ERR_NEEDMOREPARAMS
+		//	ERR_NOSUCHCHANNEL
+        //	ERR_BADCHANMASK   
+		//	ERR_CHANOPRIVSNEEDED
+        //	ERR_NOTONCHANNEL
+		
 // Exemples:
 // 
-// KICK :Parti déjeuner. De retour à 2 heures. ; définit le message d'absence en "Parti déjeuner. De retour à 2 heures.".
-// :WiZ KICK ; supprime l'absence de WiZ.
+// KICK &Melbourne Matthew ; Kick Matthew de &Melbourne
+// KICK #Finnish John :Speaking English ; Kick John de #Finnish en spécifiant "Speaking English" comme raison (commentaire).
+// :WiZ KICK #Finnish John ; Message KICK de WiZ pour retirer John du canal #Finnish
 
 class KICK : public ACommand
 {

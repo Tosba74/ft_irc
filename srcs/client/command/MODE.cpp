@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/10 12:55:53 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/14 22:12:43 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,20 +212,9 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 				if (std::strtoul(args[3].c_str(), NULL, 10))
 					_serv->getChannel(args[1])->setLimit(std::strtoul(args[3].c_str(), NULL, 10));
 				_serv->getChannel(args[1])->setLimit(std::strtoul(args[3].c_str(), NULL, 10));
-			// } else if (idx == 9) {
-				// if (args[2][0] == '+') {
-					// if (_serv->getClient(args[3])->isInChannel(args[1]) == false) {
-						// clicli << ERR_NOTONCHANNEL(args[1]);
-						// return 1;
-					// }
-					// _serv->getChannel(args[1])->addModo(args[1]);
-				// } else if (args[2][0] == '-') {
-					// if (_serv->getChannel(args[1])->isModo(args[3]))
-						// _serv->getChannel(args[1])->removeModo(args[3]);
-				// }
 			} else if (idx == 9) { // -o
 				if (args[2][0] == '+') {
-					if (_serv->getClient(args[3])->isInChannel(args[1]) == false) {
+					if (_serv->getClient(args[3])->isInChannel(args[1])) {
 						clicli << ERR_NOTONCHANNEL(args[1]);
 						return 1;
 					}

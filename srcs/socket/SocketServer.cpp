@@ -81,19 +81,15 @@ void SocketServer::start() {
             for (std::vector<pollfd>::iterator it = pollFds.begin(); it != ite; ++it)
             {
                 if (it->revents & POLLHUP) {
-                    std::cout << "\e[31m" << 1 << "\e[0m" << std::endl;
                     Connection* connection = fdConnectionMap[it->fd];
                     if (connection)
                         onDisconnection(*connection);
                 } else if (it->revents & POLLIN) {
-                    std::cout << "\e[31m" << 2 << "\e[0m" << std::endl;
                     if (it->fd == sock) {
-                        std::cout << "\e[31m" << 3 << "\e[0m" << std::endl;
                         int connectionFd = accept(addr);
                         if (connectionFd != -1)
                             onConnection(connectionFd, addr);
                     } else {
-                        std::cout << "\e[31m" << 4 << "\e[0m" << std::endl;
                         Connection* connection = fdConnectionMap[it->fd];
                         receiveAndSend(*connection);
                     }
