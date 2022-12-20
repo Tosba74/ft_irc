@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 01:51:55 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/14 22:12:43 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/20 21:52:24 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		
 	// if (!checkChannel(clicli, args[1]) && !checkMode(clicli, args[2],  "psimtknvlob")) {
 	if ((args[1][0] == '#' || args[1][0] == '&') && !checkMode(clicli, args[2],  "psimtknvlob")) {
-		std::cout << "MODEChannel checkmode:";
 		if (checkChannel(clicli, args[1]))
 			return 1;
 		if (!_serv->getChannel(args[1])) {
@@ -161,8 +160,6 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 		
 		for (; it != args[2].end(); it++) {
 			int		idx = indexage(*it, "psimtknvlob");
-			std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
-			std::cout << "indexage = " << idx << std::endl;
 			if (idx < 8) {
 				if (args[2][0] == '+') {
 					if (_serv->getChannel(args[1])->_mod & (1 << idx))
@@ -226,7 +223,7 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 				}
 			} else if (idx == 10) { // -b
 				if (args[2][0] == '+') {
-					if (clicli.isInChannel(args[1]) == false) {
+					if (!clicli.isInChannel(args[1]) == false) {
 						clicli << ERR_NOTONCHANNEL(args[1]);
 						return 1;
 					}
@@ -244,18 +241,12 @@ int		MODE::execute(Client &clicli, std::vector<std::string> args) {
 			clicli << RPL_CHANNELMODEIS(args[1], args[2], *it);
 		}
 	} else if (!checkClient(clicli, args[1]) && !checkMode(clicli, args[2], "iswo")) {
-		std::cout << "MODEClient checkmode:";
 		Client					*client = _serv->getClient(args[1]);
 		std::string::iterator	it = args[2].begin() + 1;
 
-		std::cout << "\e[32mGUT!\e[0m" << std::endl << "Execute: ";
 		for (; it != args[2].end(); ++it) {
 			int		idx = indexage(*it, "iswo");
-			// if (args[2][0] == '+') {
-				client->_mod ^= (1 << idx);
-			// } else if (args[2][0] == '-') {
-				// client->_mod |= (1 << idx);
-			// }
+			client->_mod ^= (1 << idx);
 			*client << RPL_UMODEIS(args[2]);
 		}
 		std::cout << "\e[32mGUT!\e[0m(" << client->_mod << ")" << std::endl << "Execute: ";

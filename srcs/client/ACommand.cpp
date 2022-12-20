@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:18 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/20 16:49:56 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/20 21:39:19 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,6 @@ int		        ACommand::checkChannel(Client &clicli, std::string arg) {
 	return 0;
 }
 
-// Protected Usage:
-// if (splitArgs(arg).empty()) { 
-	// clicli << ERR_NEEDMOREPARAMS(args[0]); // this->decr();
-// } else {
-	// std::vector<std::string> newargs = splitArgs(arg);
-	// newargs.insert(newargs.begin(), args[0]);
-// }
 std::vector<std::string>	ACommand::splitArgs(std::string arg) {
 	std::vector<std::string> args;
     size_t i = 0;

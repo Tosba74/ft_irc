@@ -128,7 +128,7 @@ void							Channel::removeBan(Client& client) {
 }
 
 bool							Channel::isBan(Client& client) const {
-	if (!_ban.empty())
+	// if (!_ban.empty())
 		for (std::map<int, Client&>::const_iterator it = getBan().begin(); it != getBan().end(); ++it)
 			if (it->second == client)
 				return true;
