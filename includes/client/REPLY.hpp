@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 23:39:08 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/19 17:43:48 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/20 14:01:01 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 // proprement dites, et la fin du traitement d'une commande LIST.
 // S'il n'y a aucun canal disponible, seules les réponses de début et de fin sont envoyées.
 #define RPL_LISTSTART() " 321 Channel :Users Name"
-#define RPL_LIST(canal, visible, sujet) " 322 " + canal + " " + visible > " :" + sujet
+#define RPL_LIST(canal, visible, sujet) " 322 " + canal + " " + visible + " :" + sujet
 #define RPL_LISTEND() " 323 :End of /LIST"
 
 // "<canal> <mode> <paramètres de mode>"

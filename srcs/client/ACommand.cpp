@@ -6,7 +6,7 @@
 /*   By: bmangin <bmangin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:46:18 by bmangin           #+#    #+#             */
-/*   Updated: 2022/12/14 15:06:19 by bmangin          ###   ########lyon.fr   */
+/*   Updated: 2022/12/20 16:49:56 by bmangin          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ std::vector<std::string>	ACommand::splitArgs(std::string arg) {
     args.push_back(arg);
 	while (args[pos].find(",") != std::string::npos) {
         i = args[pos].find(",");
-        std::cout << "ret de find: " << i <<std::endl;
         if (i == 0)
 			return args;
 			// return std::vector<std::string>();
